@@ -1,0 +1,3 @@
+
+FRONTEND_ROUTE_HOME = "/"
+FRONTEND_ROUTE_FOOD_INFO = "/food-info"
