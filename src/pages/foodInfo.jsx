@@ -90,7 +90,7 @@ export default function FoodInfoPage() {
                     onChange={handleChange}
                 />
             </div>
-            <div style={{display: "flex", justifyContent: "flex-end", gap: "15px"}}>
+            <div style={{display: "flex", justifyContent: "flex-end", gap: "16px"}}>
                 <Button variant="contained"  onClick={handleSubmit}>Add food info</Button>
                 <Link to={"/"} style={{textDecoration: "none"}}>
                 <Button variant="contained">Cancel</Button>
