@@ -26,12 +26,8 @@ export default function FoodInfoPage() {
         console.log(evt.target.name, ":",  value)
     };
 
-    function handleSubmit(evt) {
-        const value = evt.target.value;
-        setAddFood({
-            ...addFood,
-            [evt.target.name]: value
-        });
+    const handleSubmit = () => {
+     console.log("handler:", addFood)
     };
 
     return (
@@ -95,7 +91,7 @@ export default function FoodInfoPage() {
                 />
             </div>
             <div style={{display: "flex", justifyContent: "flex-end", gap: "15px"}}>
-                <Button variant="contained" >Add food info</Button>
+                <Button variant="contained"  onClick={handleSubmit}>Add food info</Button>
                 <Link to={"/"} style={{textDecoration: "none"}}>
                 <Button variant="contained">Cancel</Button>
                     </Link>
