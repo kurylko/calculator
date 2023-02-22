@@ -1,21 +1,17 @@
 import React from "react";
 import {Button} from "@mui/material";
-import {Input, TextField} from '@mui/material';
-import {useFormControl} from '@mui/material/FormControl';
+import { TextField} from '@mui/material';
 import {useState} from "react";
 import {Link} from "react-router-dom";
 
 
 export default function FoodInfoPage() {
+    const { foodName = '', fat = '', protein = '', carbohydrate = '', calories = '', weight = ''  } = {}
 
-    const [addFood, setAddFood] = useState({
-        foodName: "",
-        fat: "",
-        carbohydrate: "",
-        protein: "",
-        calories: "",
-        weight: "",
-    });
+    const lastInputFoodItem = JSON.parse(localStorage.getItem("lastInputFood"));
+
+    const [addFood, setAddFood] = useState( !!lastInputFoodItem ? lastInputFoodItem :
+    {foodName, fat, protein, carbohydrate, calories, weight});
 
     function handleChange(evt) {
         const value = evt.target.value;
@@ -23,12 +19,15 @@ export default function FoodInfoPage() {
             ...addFood,
             [evt.target.name]: value
         });
-        console.log(evt.target.name, ":",  value)
-    };
+        localStorage.setItem('lastInputFood', JSON.stringify(addFood));
+    }
 
     const handleSubmit = () => {
-     console.log("handler:", addFood)
+        localStorage.removeItem("lastInputFood");
+        console.log("handler:", addFood);
     };
+
+
 
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
