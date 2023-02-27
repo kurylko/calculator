@@ -24,9 +24,8 @@ export default function FoodInfoPage() {
 
     const handleSubmit = () => {
         localStorage.removeItem("lastInputFood");
-        console.log("handlfer:", addFood);
+        console.log("handler:", addFood);
     };
-
 
 
     return (
