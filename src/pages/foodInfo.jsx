@@ -27,7 +27,6 @@ export default function FoodInfoPage() {
         console.log("handler:", addFood);
     };
 
-
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", width: "85%"}}>
