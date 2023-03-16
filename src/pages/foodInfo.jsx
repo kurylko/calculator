@@ -1,7 +1,7 @@
 import React from "react";
 import {Button} from "@mui/material";
 import { TextField} from '@mui/material';
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 
 
@@ -23,9 +23,12 @@ export default function FoodInfoPage() {
         localStorage.setItem('lastInputFood', JSON.stringify(addFood));
     }
 
+    useEffect(() => {
+        localStorage.setItem('lastInputFood', JSON.stringify(addFood));
+    }, [addFood]);
+
     const handleSubmit = () => {
-        localStorage.removeItem("lastInputFood");
-        console.log("handler:", addFood);
+        console.log("handler of Add food btn:", addFood);
     };
 
     return (
