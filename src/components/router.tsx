@@ -8,7 +8,7 @@ import {
 import FoodInfoPage from "../pages/foodInfo";
 import Home from "../pages/home";
 
-const AppRoutes = () => {
+const AppRoutes =()=> {
 
     return (
         <Router>
