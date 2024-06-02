@@ -6,7 +6,7 @@ import {Button} from "@mui/material";
 export default function Home() {
     return (
         <div className="home">
-            <h1>Save your favourite food here! </h1>
+            <h2>Save your favourite food here! </h2>
             <div style={{display: "flex", gap: "20px", marginBottom: "30px", marginLeft: "20px"}}>
                 <img src={avocadoSmall} alt="Avocado" style={{width: '350px', height: '350px', borderRadius: '50%'}}/>
                 <div style={{marginTop:"50px"}}>{HOME_TEXT}</div>
