@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 export default function Home() {
     return (
         <div className="home">
-            <div style={{display: "flex", gap: "20px", marginBottom: "30px", marginTop: "20px"}}>
+            <div className="home-title-block" style={{display: "flex", gap: "20px", marginBottom: "30px", marginTop: "20px"}}>
                 <img src={avocadoSmall} alt="Avocado" style={{
                     width: '350px',
                     height: '350px',
@@ -21,7 +21,7 @@ export default function Home() {
                     </Typography>
                 </Box>
             </div>
-            <div style={{display: "flex", gap: "20px", marginBottom: "30px"}}>
+            <div className="home-button-block" style={{display: "flex", gap: "20px", marginBottom: "30px"}}>
                 <Typography variant="body1" gutterBottom style={{width: "80%", marginTop: "50px"}}>
                     {HOME_TEXT}
                 </Typography>

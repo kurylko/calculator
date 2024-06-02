@@ -42,3 +42,18 @@
   justify-content: center;
 }
 
+@media only screen and (max-width: 900px) {
+  .home-title-block{
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .home-button-block{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
