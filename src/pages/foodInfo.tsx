@@ -3,19 +3,30 @@ import {Button} from "@mui/material";
 import { TextField} from '@mui/material';
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
+import * as events from "events";
 
 
 export default function FoodInfoPage() {
     const { foodName = '', fat = '', protein = '', carbohydrate = '', calories = '', weight = ''  } = {}
 
-    const lastInputFoodItem = JSON.parse(localStorage.getItem("lastInputFood"));
+    const lastInputFoodItemString = localStorage.getItem("lastInputFood");
+
+    // Check if the retrieved value is not null
+    if (lastInputFoodItemString !== null) {
+        const lastInputFoodItem = JSON.parse(lastInputFoodItemString);
+        const { foodName = '', fat = '', protein = '', carbohydrate = '', calories = '', weight = '' } = lastInputFoodItem;
+    } else {
+        console.error('No data found in localStorage');
+    }
+
+    const lastInputFoodItem = lastInputFoodItemString ? JSON.parse(lastInputFoodItemString) : null;
 
     const [addFood, setAddFood] = useState( !!lastInputFoodItem ? lastInputFoodItem :
     {foodName, fat, protein, carbohydrate, calories, weight});
 
-    function handleChange(e) {
-        const value = e.target.value;
-        const { target = {event: {value}= {}}  } = e;
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        //const value = e.target.value;
+        const { target: {value}= {}} = e;
         setAddFood({
             ...addFood,
             [e.target.name]: value

@@ -8,7 +8,12 @@ import {
 import FoodInfoPage from "../pages/foodInfo";
 import Home from "../pages/home";
 
-const AppRoutes =()=> {
+interface AppRoutesProps {
+    children?: React.ReactNode;
+}
+
+
+const AppRoutes : React.FC<AppRoutesProps> = ({ children }) => {
 
     return (
         <Router>

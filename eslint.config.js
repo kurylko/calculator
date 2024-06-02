@@ -1,11 +1,25 @@
 module.exports = {
-    parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint"],
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+        ecmaFeatures: {
+            jsx: true,
+        },
+    },
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
     extends: [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:prettier/recommended', // if you use prettier
     ],
+    plugins: ['react', '@typescript-eslint'],
     rules: {
-        // Additional rules or overrides can be added here
-    }
+        // Add your custom rules here
+    },
 };
