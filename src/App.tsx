@@ -1,15 +1,17 @@
 import React from "react";
 import AppRoutes from "./components/router";
+import Menu from "./components/menu";
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-    <AppRoutes />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Menu/>
+            <h1>Hello</h1>
+            <AppRoutes/>
+        </div>
+    );
 }
-    
 
 
 export default App;
