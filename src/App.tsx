@@ -7,7 +7,7 @@ function App() {
     return (
         <div className="App">
             <Menu/>
-            <h1>Hello</h1>
+            <h1 className="hello">Hello</h1>
             <AppRoutes/>
         </div>
     );
