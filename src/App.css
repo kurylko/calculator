@@ -5,6 +5,7 @@
 .App {
   text-align: center;
   display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
@@ -34,12 +35,4 @@
   height: 100%;
 }
 
-.hello {
-  display: block;
-  background-color: brown;
-}
-
-.y {
-  background-color: #61dafb;
-}
 
