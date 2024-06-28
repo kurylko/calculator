@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import axios from 'axios';
 
 
-export default function useRecipes() {
-    const [recipe, setRecipe] = useState(null);
+export default function useFoodGoodToKnow() {
+    const [food, setFood] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
@@ -11,9 +11,9 @@ export default function useRecipes() {
         const fetchData = async () => {
             try {
                 const result = await axios('https://api.edamam.com/api/food-database/v2/parser?app_id=1ce77b14&app_key=05d47bc5520fd314000bf43e83e2ca78&nutrition-type=cooking&category=generic-foods');
-                setRecipe(result.data.hints);
+                setFood(result.data.hints);
             } catch (error) {
-                setError(error instanceof Error ? error : new Error('Can not find a recipe'));
+                setError(error instanceof Error ? error : new Error('Can not find a food data'));
             } finally {
                 setLoading(false);
             }
@@ -21,6 +21,6 @@ export default function useRecipes() {
 
         fetchData();
     }, []);
-    return {recipe, loading, error};
+    return {food: food, loading, error};
 }
 
