@@ -3,7 +3,6 @@ import {Button} from "@mui/material";
 import { TextField} from '@mui/material';
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import * as events from "events";
 
 
 export default function FoodInfoPage() {
