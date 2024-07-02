@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import useFoodGoodToKnow from "../hooks/useFoodGoodToKnow";
 import Typography from '@mui/material/Typography';
 import defaultImage from "./../images/cheese-1.png";
