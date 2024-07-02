@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import useFoodGoodToKnow from "../hooks/useFoodGoodToKnow";
 import Typography from '@mui/material/Typography';
+import defaultImage from "./../images/cheese-1.png";
 
 export default function Blog() {
     const {food, loading, error} = useFoodGoodToKnow();
@@ -21,6 +22,11 @@ export default function Blog() {
         }
     }
 
+    const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>): void => {
+        const target = e.target as HTMLImageElement;
+        target.src = defaultImage;
+    };
+
     return (
         <div>
             <Typography variant="h1" gutterBottom style={{marginTop: "25px"}}>
@@ -39,13 +45,15 @@ export default function Blog() {
                     food.map((foodItem, index) => (
                         <div key={index} className="api-food-item" style={{width: "300px"}}>
                             <p>{getShortFoodItemLabel(foodItem.food.label)}</p>
-                            {foodItem.food.image ?
-                                <img src={foodItem.food.image} alt={foodItem.food.label}
-                                     style={{
-                                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                                         borderRadius: '50%',
-                                     }}></img> : null
-                            }
+                            <img src={foodItem.food.image || defaultImage} alt={foodItem.food.label}
+                                 style={{
+                                     width: "300px",
+                                     height: "300px",
+                                     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                                     borderRadius: '50%',
+                                 }}
+                                 onError={handleImageError}
+                            ></img>
                             <div style={{display: "flex", justifyContent: "center", gap: "15px"}}>
                                 <p>Fat: {foodItem.food.nutrients.FAT}</p>
                                 <p>Carbohydrate: {foodItem.food.nutrients.CHOCDF}</p>
