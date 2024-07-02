@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import axios from 'axios';
-import {IFoodItem} from "../interfaces/foodItem";
+import {IApiFoodItem} from "../interfaces/foodItem";
 
 
 export default function useFoodGoodToKnow() {
-    const [food, setFood] = useState<IFoodItem[]>([]);
+    const [food, setFood] = useState<IApiFoodItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
