@@ -4,6 +4,7 @@ import {HOME_TEXT} from "../components/consts";
 import {Button} from "@mui/material";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import {Link} from "react-router-dom";
 
 export default function Home() {
     return (
@@ -26,7 +27,7 @@ export default function Home() {
                     {HOME_TEXT}
                 </Typography>
                 <Button
-                    variant="contained" size="medium" href="/food-info"
+                    variant="contained" size="medium" component={Link} to='/food-info'
                     style={{width: '170px'}}
                     sx={{
                         margin: 'auto',
