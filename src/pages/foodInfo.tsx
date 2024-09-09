@@ -12,14 +12,17 @@ export default function FoodInfoPage() {
 
     const lastInputFoodItemString = localStorage.getItem("lastInputFood");
 
-    // Check if the retrieved value is not null
     if (lastInputFoodItemString == null) {
         console.error('No data found in localStorage');
     }
 
     const lastInputFoodItem: IFoodItem = lastInputFoodItemString ? JSON.parse(lastInputFoodItemString) : null;
 
-    const [lastInputFoodItems, setLastInputFoodItems] = useState<IFoodItem[]>([]);
+    // Storing last added items in sessionStorage
+    const [lastInputFoodItems, setLastInputFoodItems] = useState<IFoodItem[]>(() => {
+        const savedItems = sessionStorage.getItem('lastInputFoodItems');
+        return savedItems ? JSON.parse(savedItems) : [];
+    });
 
     const [addFood, setAddFood] = useState<IFoodItem>(!!lastInputFoodItem ? lastInputFoodItem :
         {foodName, fat, protein, carbohydrate, calories, weight});
@@ -40,7 +43,9 @@ export default function FoodInfoPage() {
 
     const handleSubmit = () => {
         console.log("handler of Add food btn:", addFood);
-        setLastInputFoodItems((prevItems) => [...prevItems, addFood]);
+        const updatedItems = [...lastInputFoodItems, addFood];
+        setLastInputFoodItems(updatedItems);
+        sessionStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
         console.log(lastInputFoodItems);
     };
 
