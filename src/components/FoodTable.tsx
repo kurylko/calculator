@@ -6,11 +6,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { IFoodItem } from "../interfaces/foodItem";
+import { IFoodItem } from "../interfaces/FoodItem";
 import Box from '@mui/material/Box';
+import {INutriScorePerKg} from "../utils/getNutriValues";
+
+export type FoodWithNutriScore = IFoodItem & { nutriScorePerKg: INutriScorePerKg };
 
 interface FoodTableProps {
-    lastInputFoodItems: IFoodItem[];
+    lastInputFoodItems: FoodWithNutriScore[];
 }
 
 const FoodTable: React.FC<FoodTableProps> = ({ lastInputFoodItems }) => {

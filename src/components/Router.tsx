@@ -5,9 +5,9 @@ import {
     Routes,
     Route
 } from "react-router-dom";
-import FoodInfoPage from "../pages/foodInfo";
-import Home from "../pages/home";
-import Blog from "../pages/blog";
+import FoodInfoPage from "../pages/FoodInfo";
+import Home from "../pages/Home";
+import Blog from "../pages/Blog";
 
 interface AppRoutesProps {
     children?: React.ReactNode;
