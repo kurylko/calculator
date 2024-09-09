@@ -4,7 +4,7 @@ import {TextField} from '@mui/material';
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import {IFoodItem} from "../interfaces/foodItem";
-import LastFoodAdded from "../components/LastFoodAdded";
+import FoodTable from "../components/FoodTable";
 
 
 export default function FoodInfoPage() {
@@ -130,24 +130,18 @@ export default function FoodInfoPage() {
 
             </div>
 
-            <div style={{display: 'flex', flexDirection: 'column', gap: '30px', justifyContent: 'center', alignItems: 'center'}}>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '30px',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
                 <h2 style={{textAlign: "center", paddingBottom: "30px"}}>LAST FOOD YOU ADDED</h2>
                 {lastInputFoodItems.length > 0 ?
-                    <div style={{display: 'flex', gap: '10px', width: '80%', alignItems: 'center'}}>
-                        {lastInputFoodItems && lastInputFoodItems.length > 0 && lastInputFoodItems.map((food: IFoodItem) =>
-                            <LastFoodAdded
-                                key={food.foodName}
-                                foodName={food.foodName}
-                                fat={food.fat}
-                                protein={food.protein}
-                                carbohydrate={food.carbohydrate}
-                                calories={food.calories}
-                                weight={food.weight}
-                            />
-                        )}
-                    </div> : <h3>Add your first food!</h3>
+                    <FoodTable lastInputFoodItems={lastInputFoodItems}/>
+                    : <h3>Add your first food!</h3>
                 }
-
             </div>
         </div>
     )
