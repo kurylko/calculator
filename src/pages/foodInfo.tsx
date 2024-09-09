@@ -8,6 +8,7 @@ import FoodTable from "../components/FoodTable";
 
 
 export default function FoodInfoPage() {
+
     const {foodName = '', fat = '', protein = '', carbohydrate = '', calories = '', weight = ''} = {}
 
     const lastInputFoodItemString = localStorage.getItem("lastInputFood");
@@ -41,12 +42,23 @@ export default function FoodInfoPage() {
         localStorage.setItem('lastInputFood', JSON.stringify(addFood));
     }, [addFood]);
 
-    const handleSubmit = () => {
+    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if(event){
+            event.preventDefault();
+        }
         console.log("handler of Add food btn:", addFood);
         const updatedItems = [...lastInputFoodItems, addFood];
         setLastInputFoodItems(updatedItems);
         sessionStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
         console.log(lastInputFoodItems);
+        setAddFood({
+            foodName: '',
+            fat: '',
+            protein: '',
+            carbohydrate: '',
+            calories: '',
+            weight: '',
+        });
     };
 
     useEffect(() => {
@@ -133,7 +145,6 @@ export default function FoodInfoPage() {
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '30px',
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
