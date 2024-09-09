@@ -37,8 +37,6 @@ export default function FoodInfoPage() {
         return [];
     });
 
-    const [nutriScore, setNutriScore] = useState<any | null>(null);
-
     const [addFood, setAddFood] = useState<IFoodItem>(!!lastInputFoodItem ? lastInputFoodItem :
         {foodName, fat, protein, carbohydrate, calories, weight});
 
@@ -61,7 +59,6 @@ export default function FoodInfoPage() {
             event.preventDefault();
         }
         const nutriScorePerKg = getNutriValuesPerKg(addFood);
-        setNutriScore(nutriScorePerKg);
         const mergedItem: FoodWithNutriScore = {
             ...addFood,
             nutriScorePerKg: nutriScorePerKg || {
