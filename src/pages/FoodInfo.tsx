@@ -64,7 +64,12 @@ export default function FoodInfoPage() {
         setNutriScore(nutriScorePerKg);
         const mergedItem: FoodWithNutriScore = {
             ...addFood,
-            nutriScorePerKg
+            nutriScorePerKg: nutriScorePerKg || {
+                fatValuePerKg: 'N/A',
+                proteinValuePerKg: 'N/A',
+                carbohydrateValuePerKg: 'N/A',
+                caloriesValuePerKg: 'N/A'
+            }
         };
         console.log("handler of Add food btn:", addFood);
         const updatedItems = [...lastInputFoodItems, mergedItem];
