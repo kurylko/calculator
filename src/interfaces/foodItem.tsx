@@ -1,11 +1,11 @@
-export interface IFoodItem {
-    food : {
+export interface IApiFoodItem {
+    food: {
         category: string;
         foodId: string;
         label: string;
         image: string;
         knownAs: string;
-        nutrients : {
+        nutrients: {
             CHOCDF: number,
             ENERC_KCAL: number,
             FAT: number,
@@ -13,4 +13,13 @@ export interface IFoodItem {
             PROCNT: number,
         }
     }
+}
+
+export interface IFoodItem {
+    foodName: string;
+    fat: string;
+    protein: string;
+    carbohydrate: string;
+    calories: string;
+    weight: string;
 }
