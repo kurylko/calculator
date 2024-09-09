@@ -3,8 +3,7 @@ import App from '.././App';
 import {
     BrowserRouter as Router,
     Routes,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import FoodInfoPage from "../pages/foodInfo";
 import Home from "../pages/home";
