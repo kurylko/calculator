@@ -3,8 +3,9 @@ import {Button} from "@mui/material";
 import {TextField} from '@mui/material';
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import {IFoodItem} from "../interfaces/foodItem";
-import FoodTable from "../components/FoodTable";
+import {IFoodItem} from "../interfaces/FoodItem";
+import FoodTable, {FoodWithNutriScore} from "../components/FoodTable";
+import {getNutriValuesPerKg} from "../utils/getNutriValues";
 
 
 export default function FoodInfoPage() {
@@ -20,10 +21,23 @@ export default function FoodInfoPage() {
     const lastInputFoodItem: IFoodItem = lastInputFoodItemString ? JSON.parse(lastInputFoodItemString) : null;
 
     // Storing last added items in sessionStorage
-    const [lastInputFoodItems, setLastInputFoodItems] = useState<IFoodItem[]>(() => {
+    const [lastInputFoodItems, setLastInputFoodItems] = useState<FoodWithNutriScore[]>(() => {
         const savedItems = sessionStorage.getItem('lastInputFoodItems');
-        return savedItems ? JSON.parse(savedItems) : [];
+        if (savedItems) {
+            const parsedItems: IFoodItem[] = JSON.parse(savedItems);
+            const itemsWithNutriScore = parsedItems.map(item => {
+                if (!item.hasOwnProperty('nutriScorePerKg')) {
+                    const nutriScorePerKg = getNutriValuesPerKg(item);
+                    return { ...item, nutriScorePerKg };
+                }
+                return item as FoodWithNutriScore;
+            });
+            return itemsWithNutriScore;
+        }
+        return [];
     });
+
+    const [nutriScore, setNutriScore] = useState<any | null>(null);
 
     const [addFood, setAddFood] = useState<IFoodItem>(!!lastInputFoodItem ? lastInputFoodItem :
         {foodName, fat, protein, carbohydrate, calories, weight});
@@ -46,8 +60,19 @@ export default function FoodInfoPage() {
         if(event){
             event.preventDefault();
         }
+        const nutriScorePerKg = getNutriValuesPerKg(addFood);
+        setNutriScore(nutriScorePerKg);
+        const mergedItem: FoodWithNutriScore = {
+            ...addFood,
+            nutriScorePerKg: nutriScorePerKg || {
+                fatValuePerKg: 'N/A',
+                proteinValuePerKg: 'N/A',
+                carbohydrateValuePerKg: 'N/A',
+                caloriesValuePerKg: 'N/A'
+            }
+        };
         console.log("handler of Add food btn:", addFood);
-        const updatedItems = [...lastInputFoodItems, addFood];
+        const updatedItems = [...lastInputFoodItems, mergedItem];
         setLastInputFoodItems(updatedItems);
         sessionStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
         console.log(lastInputFoodItems);
@@ -150,7 +175,7 @@ export default function FoodInfoPage() {
             }}>
                 <h2 style={{textAlign: "center", paddingBottom: "30px"}}>LAST FOOD YOU ADDED</h2>
                 {lastInputFoodItems.length > 0 ?
-                    <FoodTable lastInputFoodItems={lastInputFoodItems}/>
+                    <FoodTable lastInputFoodItems={lastInputFoodItems} />
                     : <h3>Add your first food!</h3>
                 }
             </div>

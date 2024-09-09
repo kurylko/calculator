@@ -6,11 +6,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { IFoodItem } from "../interfaces/foodItem";
+import { IFoodItem } from "../interfaces/FoodItem";
 import Box from '@mui/material/Box';
+import {INutriScorePerKg} from "../utils/getNutriValues";
+
+export type FoodWithNutriScore = IFoodItem & { nutriScorePerKg: INutriScorePerKg | null };
 
 interface FoodTableProps {
-    lastInputFoodItems: IFoodItem[];
+    lastInputFoodItems: FoodWithNutriScore[];
 }
 
 const FoodTable: React.FC<FoodTableProps> = ({ lastInputFoodItems }) => {
@@ -20,12 +23,12 @@ const FoodTable: React.FC<FoodTableProps> = ({ lastInputFoodItems }) => {
                 <Table sx={{ width: '100%' }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Food Name</TableCell>
-                            <TableCell align="right">Calories</TableCell>
-                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                            <TableCell align="right">Weight&nbsp;(g)</TableCell>
+                            <TableCell>Food</TableCell>
+                            <TableCell align="right">Calories (/kg)</TableCell>
+                            <TableCell align="right">Fat&nbsp;(g, /kg)</TableCell>
+                            <TableCell align="right">Carbs&nbsp;(g, /kg)</TableCell>
+                            <TableCell align="right">Protein&nbsp;(g, /kg)</TableCell>
+                            <TableCell align="right">Weight&nbsp;(g, /kg)</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -37,10 +40,10 @@ const FoodTable: React.FC<FoodTableProps> = ({ lastInputFoodItems }) => {
                                 <TableCell component="th" scope="row">
                                     {food.foodName}
                                 </TableCell>
-                                <TableCell align="right">{food.calories}</TableCell>
-                                <TableCell align="right">{food.fat}</TableCell>
-                                <TableCell align="right">{food.carbohydrate}</TableCell>
-                                <TableCell align="right">{food.protein}</TableCell>
+                                <TableCell align="right">{`${food.calories} (${food?.nutriScorePerKg?.caloriesValuePerKg})`}</TableCell>
+                                <TableCell align="right">{`${food.fat} (${food?.nutriScorePerKg?.fatValuePerKg})`}</TableCell>
+                                <TableCell align="right">{`${food.carbohydrate} (${food?.nutriScorePerKg?.carbohydrateValuePerKg})`}</TableCell>
+                                <TableCell align="right">{`${food.protein} (${food?.nutriScorePerKg?.proteinValuePerKg})`}</TableCell>
                                 <TableCell align="right">{food.weight}</TableCell>
                             </TableRow>
                         ))}
