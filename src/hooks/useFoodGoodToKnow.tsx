@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from 'axios';
-import {IApiFoodItem} from "../interfaces/foodItem";
+import {IApiFoodItem} from "../interfaces/FoodItem";
 
 
 export default function useFoodGoodToKnow() {
