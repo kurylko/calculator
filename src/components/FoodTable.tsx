@@ -40,10 +40,10 @@ const FoodTable: React.FC<FoodTableProps> = ({ lastInputFoodItems }) => {
                                 <TableCell component="th" scope="row">
                                     {food.foodName}
                                 </TableCell>
-                                <TableCell align="right">{`${food.calories} (${food?.nutriScorePerKg?.caloriesValuePerKg})`}</TableCell>
-                                <TableCell align="right">{`${food.fat} (${food?.nutriScorePerKg?.fatValuePerKg})`}</TableCell>
-                                <TableCell align="right">{`${food.carbohydrate} (${food?.nutriScorePerKg?.carbohydrateValuePerKg})`}</TableCell>
-                                <TableCell align="right">{`${food.protein} (${food?.nutriScorePerKg?.proteinValuePerKg})`}</TableCell>
+                                <TableCell align="right">{`${food.calories} (${food?.nutriScorePerKg?.caloriesValuePerKg ?? '-'})`}</TableCell>
+                                <TableCell align="right">{`${food.fat} (${food?.nutriScorePerKg?.fatValuePerKg ?? '-'})`}</TableCell>
+                                <TableCell align="right">{`${food.carbohydrate} (${food?.nutriScorePerKg?.carbohydrateValuePerKg ?? '-'})`}</TableCell>
+                                <TableCell align="right">{`${food.protein} (${food?.nutriScorePerKg?.proteinValuePerKg ?? '-'})`}</TableCell>
                                 <TableCell align="right">{food.weight}</TableCell>
                             </TableRow>
                         ))}

@@ -8,9 +8,8 @@ export interface INutriScorePerKg {
 }
 
 export function getNutriValuesPerKg(foodItem: IFoodItem) :INutriScorePerKg | null {
-    const weight = parseFloat(foodItem.weight);
 
-    if (isNaN(weight) || weight <= 0 ) {
+    if (isNaN(parseFloat(foodItem.weight)) || parseFloat(foodItem.weight) <= 0 ) {
         return null;
     }
 
