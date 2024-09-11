@@ -1,17 +1,14 @@
-import React from "react";
+import React, {useMemo} from "react";
 import {Button} from "@mui/material";
 import {TextField} from '@mui/material';
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import {IFoodItem} from "../interfaces/FoodItem";
-import FoodTable, {FoodWithNutriScore} from "../components/FoodTable";
+import FoodTable from "../components/FoodTable";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 
 
 export default function FoodInfoPage() {
-
-    const {foodName = '', fat = '', protein = '', carbohydrate = '', calories = '', weight = ''} = {}
-
     const lastInputFoodItemString = localStorage.getItem("lastInputFood");
 
     if (lastInputFoodItemString == null) {
@@ -20,60 +17,36 @@ export default function FoodInfoPage() {
 
     const lastInputFoodItem: IFoodItem = lastInputFoodItemString ? JSON.parse(lastInputFoodItemString) : null;
 
-    // Storing last added items in sessionStorage
-    const [lastInputFoodItems, setLastInputFoodItems] = useState<FoodWithNutriScore[]>(() => {
-        const savedItems = sessionStorage.getItem('lastInputFoodItems');
+    // Storing last added items in localStorage
+    const [lastInputFoodItems, setLastInputFoodItems] = useState<IFoodItem[]>(() => {
+        const savedItems = localStorage.getItem('lastInputFoodItems');
         if (savedItems) {
-            const parsedItems: IFoodItem[] = JSON.parse(savedItems);
-            const itemsWithNutriScore = parsedItems.map(item => {
-                if (!item.hasOwnProperty('nutriScorePerKg')) {
-                    const nutriScorePerKg = getNutriValuesPerKg(item);
-                    return { ...item, nutriScorePerKg };
-                }
-                return item as FoodWithNutriScore;
-            });
-            return itemsWithNutriScore;
+            return JSON.parse(savedItems);
         }
         return [];
     });
 
-    const [addFood, setAddFood] = useState<IFoodItem>(!!lastInputFoodItem ? lastInputFoodItem :
-        {foodName, fat, protein, carbohydrate, calories, weight});
+    const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>(!!lastInputFoodItem ? lastInputFoodItem :
+        {foodName: '', fat: '', protein: '', carbohydrate: '', calories: '', weight: ''});
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        //const value = e.target.value;
         const {target: {value} = {}} = e;
-        setAddFood({
-            ...addFood,
+        setFoodInputsValues({
+            ...foodInputsValues,
             [e.target.name]: value
         });
-        localStorage.setItem('lastInputFood', JSON.stringify(addFood));
+        localStorage.setItem('lastInputFood', JSON.stringify(foodInputsValues));
     }
 
     useEffect(() => {
-        localStorage.setItem('lastInputFood', JSON.stringify(addFood));
-    }, [addFood]);
+        localStorage.setItem('lastInputFood', JSON.stringify(foodInputsValues));
+    }, [foodInputsValues]);
 
-    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if(event){
-            event.preventDefault();
-        }
-        const nutriScorePerKg = getNutriValuesPerKg(addFood);
-        const mergedItem: FoodWithNutriScore = {
-            ...addFood,
-            nutriScorePerKg: nutriScorePerKg || {
-                fatValuePerKg: 'N/A',
-                proteinValuePerKg: 'N/A',
-                carbohydrateValuePerKg: 'N/A',
-                caloriesValuePerKg: 'N/A'
-            }
-        };
-        console.log("handler of Add food btn:", addFood);
-        const updatedItems = [...lastInputFoodItems, mergedItem];
+    const handleSubmit = () => {
+        const updatedItems = [...lastInputFoodItems, foodInputsValues];
         setLastInputFoodItems(updatedItems);
-        sessionStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
-        console.log(lastInputFoodItems);
-        setAddFood({
+        localStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
+        setFoodInputsValues({
             foodName: '',
             fat: '',
             protein: '',
@@ -85,6 +58,10 @@ export default function FoodInfoPage() {
 
     useEffect(() => {
         console.log("lastInputFoodItems updated:", lastInputFoodItems);
+    }, [lastInputFoodItems]);
+
+    const parsedFoodItems = useMemo(() => {
+        return lastInputFoodItems.map(item => ({...item, nutriScorePerKg: getNutriValuesPerKg(item)}))
     }, [lastInputFoodItems]);
 
 
@@ -105,7 +82,7 @@ export default function FoodInfoPage() {
                             id="outlined-required"
                             label="Food name"
                             name="foodName"
-                            value={addFood.foodName}
+                            value={foodInputsValues.foodName}
                             onChange={handleChange}
                         />
                         <TextField
@@ -114,7 +91,7 @@ export default function FoodInfoPage() {
                             label="Fat"
                             type="number"
                             name="fat"
-                            value={addFood.fat}
+                            value={foodInputsValues.fat}
                             onChange={handleChange}
                         />
                         <TextField
@@ -123,7 +100,7 @@ export default function FoodInfoPage() {
                             label="Protein"
                             type="number"
                             name="protein"
-                            value={addFood.protein}
+                            value={foodInputsValues.protein}
                             onChange={handleChange}
                         />
                         <TextField
@@ -132,7 +109,7 @@ export default function FoodInfoPage() {
                             label="Carbohydrate"
                             type="number"
                             name="carbohydrate"
-                            value={addFood.carbohydrate}
+                            value={foodInputsValues.carbohydrate}
                             onChange={handleChange}
                         />
                         <TextField
@@ -141,7 +118,7 @@ export default function FoodInfoPage() {
                             label="Calories, kcal"
                             type="number"
                             name="calories"
-                            value={addFood.calories}
+                            value={foodInputsValues.calories}
                             onChange={handleChange}
                         />
                         <TextField
@@ -150,7 +127,7 @@ export default function FoodInfoPage() {
                             label="Standard pack weight, g"
                             type="number"
                             name="weight"
-                            value={addFood.weight}
+                            value={foodInputsValues.weight}
                             onChange={handleChange}
                         />
                     </div>
@@ -172,7 +149,7 @@ export default function FoodInfoPage() {
             }}>
                 <h2 style={{textAlign: "center", paddingBottom: "30px"}}>LAST FOOD YOU ADDED</h2>
                 {lastInputFoodItems.length > 0 ?
-                    <FoodTable lastInputFoodItems={lastInputFoodItems} />
+                    <FoodTable lastInputFoodItems={parsedFoodItems} />
                     : <h3>Add your first food!</h3>
                 }
             </div>

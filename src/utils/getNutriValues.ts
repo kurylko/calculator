@@ -8,8 +8,8 @@ export interface INutriScorePerKg {
 }
 
 export function getNutriValuesPerKg(foodItem: IFoodItem) :INutriScorePerKg | null {
-    const weight = parseFloat(foodItem.weight);
-    if (isNaN(weight) || weight <= 0) {
+
+    if (isNaN(parseFloat(foodItem.weight)) || parseFloat(foodItem.weight) <= 0 ) {
         return null;
     }
 
@@ -20,8 +20,6 @@ export function getNutriValuesPerKg(foodItem: IFoodItem) :INutriScorePerKg | nul
     const carbohydrateValuePerKg = Math.round(parseFloat(foodItem.carbohydrate) * weightInKg).toString();
     const caloriesValuePerKg = Math.round(parseFloat(foodItem.calories) * weightInKg).toString();
     
-    const nutriScorePerKg: INutriScorePerKg = {fatValuePerKg, proteinValuePerKg, carbohydrateValuePerKg, caloriesValuePerKg};
-
-    return nutriScorePerKg;
+    return  {fatValuePerKg, proteinValuePerKg, carbohydrateValuePerKg, caloriesValuePerKg} as INutriScorePerKg;
 }
 
