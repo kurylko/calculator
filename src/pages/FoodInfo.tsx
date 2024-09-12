@@ -6,8 +6,8 @@ import {Link} from "react-router-dom";
 import {IFoodItem} from "../interfaces/FoodItem";
 import FoodTable from "../components/FoodTable";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
-import ReactPDF from '@react-pdf/renderer';
-import {MyDocument} from "../components/FoodTablePdf";
+import {PdfFoodTable} from "../components/PdfFoodTable";
+import { pdf } from '@react-pdf/renderer';
 
 
 export default function FoodInfoPage() {
@@ -66,7 +66,16 @@ export default function FoodInfoPage() {
         return lastInputFoodItems.map(item => ({...item, nutriScorePerKg: getNutriValuesPerKg(item)}))
     }, [lastInputFoodItems]);
 
-    //ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
+
+// User can export Food table as a PDF Document
+
+    const savePDF = async () => {
+        const doc = <PdfFoodTable data={parsedFoodItems} />;
+        const asBlob = await pdf(doc).toBlob();
+
+        const url = URL.createObjectURL(asBlob);
+        window.open(url, '_blank');
+    };
 
 
     return (
@@ -156,7 +165,7 @@ export default function FoodInfoPage() {
                     <FoodTable lastInputFoodItems={parsedFoodItems} />
                     : <h3>Add your first food!</h3>
                 }
-                {lastInputFoodItems.length > 0 &&<Button variant="outlined" onClick={handleSubmit}>Export to Pdf</Button> }
+                {lastInputFoodItems.length > 0 &&<Button variant="outlined" onClick={savePDF}>Export to Pdf</Button> }
             </div>
         </div>
     )
