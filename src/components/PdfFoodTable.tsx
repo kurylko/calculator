@@ -1,18 +1,23 @@
 import React from 'react';
-import {Page, Text, View, Document, StyleSheet, Font} from '@react-pdf/renderer';
+import {Page, Text, View, Document, StyleSheet, Font, Image, Link} from '@react-pdf/renderer';
 import {IFoodItem} from "../interfaces/FoodItem";
-// @ts-ignore
-import RobotoRegular from "../assets/fonts/Roboto-Regular.ttf";
-// @ts-ignore
+import RobotoRegular from '../assets/fonts/Roboto-Regular.ttf';
 import RobotoBold from "../assets/fonts/Roboto-Bold.ttf";
+import bowl from "../assets/images/salad.png";
 
 Font.register({ family: 'Roboto', src: RobotoRegular });
 Font.register({ family: 'RobotoBold', src: RobotoBold, fontWeight: 'bold' });
 
 const styles = StyleSheet.create({
+    logo: {
+        width: "35px",
+        height: "auto",
+        marginLeft: "30px",
+        marginTop: "15px"
+    },
     title: {
         textAlign: "center",
-        paddingTop: "30px",
+        paddingTop: "20px",
         fontFamily: 'RobotoBold',
     },
     tableContainer: {
@@ -32,6 +37,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0,
         fontFamily: 'Roboto',
         fontSize: 12,
+        marginBottom: "20px"
     },
     tableRow: {
         flexDirection: "row"
@@ -47,7 +53,11 @@ const styles = StyleSheet.create({
     tableCell: {
         margin: 5,
         fontSize: 10
-    }
+    },
+    link: {
+        fontFamily: 'Roboto',
+        fontSize: 10,
+    },
 });
 
 interface PdfFoodTableProps {
@@ -55,8 +65,9 @@ interface PdfFoodTableProps {
 }
 
 export const PdfFoodTable: React.FC<PdfFoodTableProps> = ({data}) => (
-    <Document>
+    <Document title="Your food table">
         <Page size="A4">
+            <Image style={styles.logo} src={bowl}></Image>
             <Text style={styles.title}>Food with nutrition values</Text>
             <View style={styles.tableContainer}>
             <View style={styles.table}>
@@ -80,6 +91,7 @@ export const PdfFoodTable: React.FC<PdfFoodTableProps> = ({data}) => (
                     </View>
                 ))}
             </View>
+                <Link style={styles.link} src={"https://food-calculator-by-val.netlify.app/"}>Add more healthy food</Link>
             </View>
         </Page>
     </Document>

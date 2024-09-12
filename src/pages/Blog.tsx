@@ -1,7 +1,7 @@
 import React from "react";
 import useFoodGoodToKnow from "../hooks/useFoodGoodToKnow";
 import Typography from '@mui/material/Typography';
-import defaultImage from "./../images/cheese-1.png";
+import defaultImage from "../assets/images/cheese-1.png";
 
 export default function Blog() {
     const {food, loading, error} = useFoodGoodToKnow();
