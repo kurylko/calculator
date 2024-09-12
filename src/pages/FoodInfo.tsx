@@ -6,6 +6,8 @@ import {Link} from "react-router-dom";
 import {IFoodItem} from "../interfaces/FoodItem";
 import FoodTable from "../components/FoodTable";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
+import {PdfFoodTable} from "../components/PdfFoodTable";
+import { pdf } from '@react-pdf/renderer';
 
 
 export default function FoodInfoPage() {
@@ -65,8 +67,19 @@ export default function FoodInfoPage() {
     }, [lastInputFoodItems]);
 
 
+// User can export Food table as a PDF Document
+
+    const savePDF = async () => {
+        const doc = <PdfFoodTable data={parsedFoodItems} />;
+        const asBlob = await pdf(doc).toBlob();
+
+        const url = URL.createObjectURL(asBlob);
+        window.open(url, '_blank');
+    };
+
+
     return (
-        <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px'}}>
+        <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px'}}>
             <div style={{display: "flex", justifyContent: "center"}}>
                 <div style={{display: "flex", flexDirection: "column", justifyContent: "center", width: "85%"}}>
                     <h2 style={{textAlign: "center", paddingBottom: "30px"}}>ADD FOOD INFO</h2>
@@ -145,13 +158,17 @@ export default function FoodInfoPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                gap: '20px',
+                width: '85%',
+                marginBottom: '40px',
             }}>
-                <h2 style={{textAlign: "center", paddingBottom: "30px"}}>LAST FOOD YOU ADDED</h2>
+                <h2 style={{textAlign: "center"}}>LAST FOOD YOU ADDED</h2>
                 {lastInputFoodItems.length > 0 ?
                     <FoodTable lastInputFoodItems={parsedFoodItems} />
                     : <h3>Add your first food!</h3>
                 }
+                {lastInputFoodItems.length > 0 &&<Button style={{alignSelf: 'flex-end'}} variant="outlined" onClick={savePDF}>Export as Pdf</Button> }
             </div>
         </div>
     )

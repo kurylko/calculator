@@ -18,7 +18,7 @@ interface FoodTableProps {
 
 const FoodTable: React.FC<FoodTableProps> = ({ lastInputFoodItems }) => {
     return (
-        <Box display="flex" justifyContent="center" p={2} sx={{ width: '90%' }}>
+        <Box display="flex" justifyContent="center" p={2} sx={{ width: '100%' }}>
             <TableContainer component={Paper} sx={{ width: '100%', maxWidth: 1200 }}>
                 <Table sx={{ width: '100%' }} aria-label="simple table">
                     <TableHead>
