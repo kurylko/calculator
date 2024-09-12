@@ -79,7 +79,7 @@ export default function FoodInfoPage() {
 
 
     return (
-        <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px'}}>
+        <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px'}}>
             <div style={{display: "flex", justifyContent: "center"}}>
                 <div style={{display: "flex", flexDirection: "column", justifyContent: "center", width: "85%"}}>
                     <h2 style={{textAlign: "center", paddingBottom: "30px"}}>ADD FOOD INFO</h2>
@@ -158,14 +158,17 @@ export default function FoodInfoPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                gap: '20px',
+                width: '85%',
+                marginBottom: '40px',
             }}>
-                <h2 style={{textAlign: "center", paddingBottom: "30px"}}>LAST FOOD YOU ADDED</h2>
+                <h2 style={{textAlign: "center"}}>LAST FOOD YOU ADDED</h2>
                 {lastInputFoodItems.length > 0 ?
                     <FoodTable lastInputFoodItems={parsedFoodItems} />
                     : <h3>Add your first food!</h3>
                 }
-                {lastInputFoodItems.length > 0 &&<Button variant="outlined" onClick={savePDF}>Export to Pdf</Button> }
+                {lastInputFoodItems.length > 0 &&<Button  style={{alignSelf: 'flex-end'}} variant="outlined" onClick={savePDF}>Export to Pdf</Button> }
             </div>
         </div>
     )
