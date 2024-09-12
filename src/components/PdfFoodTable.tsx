@@ -1,19 +1,22 @@
 import React from 'react';
 import {Page, Text, View, Document, StyleSheet, Font, Image, Link} from '@react-pdf/renderer';
-import {IFoodItem} from "../interfaces/FoodItem";
 import RobotoRegular from '../assets/fonts/Roboto-Regular.ttf';
 import RobotoBold from "../assets/fonts/Roboto-Bold.ttf";
 import bowl from "../assets/images/salad.png";
+import { FoodWithNutriScore} from "./FoodTable";
+import avocado from  "../assets/images/avocado-small.jpg";
 
 Font.register({ family: 'Roboto', src: RobotoRegular });
 Font.register({ family: 'RobotoBold', src: RobotoBold, fontWeight: 'bold' });
 
 const styles = StyleSheet.create({
     logo: {
-        width: "35px",
+        width: "55px",
         height: "auto",
         marginLeft: "30px",
-        marginTop: "15px"
+        marginTop: "15px",
+        borderRadius: "50%",
+        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)"
     },
     title: {
         textAlign: "center",
@@ -33,14 +36,14 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderWidth: 1,
         borderColor: '#bfbfbf',
-        borderRightWidth: 0,
-        borderBottomWidth: 0,
+        borderRadius: "5px",
         fontFamily: 'Roboto',
         fontSize: 12,
         marginBottom: "20px"
     },
     tableRow: {
-        flexDirection: "row"
+        flexDirection: "row",
+        borderRadius: "5px",
     },
     tableCol: {
         width: "25%",
@@ -49,6 +52,7 @@ const styles = StyleSheet.create({
         borderColor: '#bfbfbf',
         borderLeftWidth: 0,
         borderTopWidth: 0,
+        borderRightWidth: 0,
     },
     tableCell: {
         margin: 5,
@@ -60,15 +64,16 @@ const styles = StyleSheet.create({
     },
 });
 
+
 interface PdfFoodTableProps {
-    data: IFoodItem[];
+    data: FoodWithNutriScore[];
 }
 
 export const PdfFoodTable: React.FC<PdfFoodTableProps> = ({data}) => (
     <Document title="Your food table">
         <Page size="A4">
-            <Image style={styles.logo} src={bowl}></Image>
-            <Text style={styles.title}>Food with nutrition values</Text>
+            <Image style={styles.logo} src={avocado}></Image>
+            <Text style={styles.title}>Your food list</Text>
             <View style={styles.tableContainer}>
             <View style={styles.table}>
                 <View style={styles.tableRow}>
@@ -80,14 +85,14 @@ export const PdfFoodTable: React.FC<PdfFoodTableProps> = ({data}) => (
                     <View style={styles.tableCol}><Text style={styles.tableCell}>Weight,g</Text></View>
                 </View>
 
-                {data.map((row, index) => (
-                    <View style={styles.tableRow} key={index}>
-                        <View style={styles.tableCol}><Text style={styles.tableCell}>{row.foodName}</Text></View>
-                        <View style={styles.tableCol}><Text style={styles.tableCell}>{row.calories}</Text></View>
-                        <View style={styles.tableCol}><Text style={styles.tableCell}>{row.fat}</Text></View>
-                        <View style={styles.tableCol}><Text style={styles.tableCell}>{row.protein}</Text></View>
-                        <View style={styles.tableCol}><Text style={styles.tableCell}>{row.carbohydrate}</Text></View>
-                        <View style={styles.tableCol}><Text style={styles.tableCell}>{row?.weight}</Text></View>
+                {data.map((item: FoodWithNutriScore) => (
+                    <View style={styles.tableRow} key={item.foodName}>
+                        <View style={styles.tableCol}><Text style={styles.tableCell}>{item.foodName}</Text></View>
+                        <View style={styles.tableCol}><Text style={styles.tableCell}>{`${item.calories} (${item?.nutriScorePerKg?.caloriesValuePerKg ?? '-'})`}</Text></View>
+                        <View style={styles.tableCol}><Text style={styles.tableCell}>{`${item.fat} (${item?.nutriScorePerKg?.fatValuePerKg ?? '-'})`}</Text></View>
+                        <View style={styles.tableCol}><Text style={styles.tableCell}>{item.protein}</Text></View>
+                        <View style={styles.tableCol}><Text style={styles.tableCell}>{`${item.carbohydrate} (${item?.nutriScorePerKg?.carbohydrateValuePerKg ?? '-'})`}</Text></View>
+                        <View style={styles.tableCol}><Text style={styles.tableCell}>{item?.weight}</Text></View>
                     </View>
                 ))}
             </View>
