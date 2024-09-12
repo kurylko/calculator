@@ -6,6 +6,8 @@ import {Link} from "react-router-dom";
 import {IFoodItem} from "../interfaces/FoodItem";
 import FoodTable from "../components/FoodTable";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
+import ReactPDF from '@react-pdf/renderer';
+import {MyDocument} from "../components/FoodTablePdf";
 
 
 export default function FoodInfoPage() {
@@ -63,6 +65,8 @@ export default function FoodInfoPage() {
     const parsedFoodItems = useMemo(() => {
         return lastInputFoodItems.map(item => ({...item, nutriScorePerKg: getNutriValuesPerKg(item)}))
     }, [lastInputFoodItems]);
+
+    //ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
 
 
     return (
@@ -152,6 +156,7 @@ export default function FoodInfoPage() {
                     <FoodTable lastInputFoodItems={parsedFoodItems} />
                     : <h3>Add your first food!</h3>
                 }
+                {lastInputFoodItems.length > 0 &&<Button variant="outlined" onClick={handleSubmit}>Export to Pdf</Button> }
             </div>
         </div>
     )

@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 });
 
 
-const MyDocument = () => (
+export const MyDocument = () => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
