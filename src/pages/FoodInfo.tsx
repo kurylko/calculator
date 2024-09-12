@@ -168,7 +168,7 @@ export default function FoodInfoPage() {
                     <FoodTable lastInputFoodItems={parsedFoodItems} />
                     : <h3>Add your first food!</h3>
                 }
-                {lastInputFoodItems.length > 0 &&<Button style={{alignSelf: 'flex-end'}} variant="outlined" onClick={savePDF}>Export to Pdf</Button> }
+                {lastInputFoodItems.length > 0 &&<Button style={{alignSelf: 'flex-end'}} variant="outlined" onClick={savePDF}>Export as Pdf</Button> }
             </div>
         </div>
     )
