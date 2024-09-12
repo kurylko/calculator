@@ -1,5 +1,5 @@
 import React from "react";
-import avocadoSmall from "../images/avocado-small.jpg";
+import avocadoSmall from "../assets/images/avocado-small.jpg";
 import {HOME_TEXT} from "../components/consts";
 import {Button} from "@mui/material";
 import Box from '@mui/material/Box';
