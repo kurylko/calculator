@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 export {}
 
 describe('Calculator test', () => {
