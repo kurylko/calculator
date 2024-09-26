@@ -30,3 +30,7 @@ cypress/out/
 
 # Other build artifacts
 dist/
+
+# IDE-specific files
+.vscode/
+.idea/
