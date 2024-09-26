@@ -27,3 +27,6 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 cypress/out/
+
+# Other build artifacts
+dist/
