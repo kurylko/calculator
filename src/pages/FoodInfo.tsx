@@ -82,7 +82,7 @@ export default function FoodInfoPage() {
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px'}}>
             <div style={{display: "flex", justifyContent: "center"}}>
                 <div style={{display: "flex", flexDirection: "column", justifyContent: "center", width: "85%"}}>
-                    <h2 style={{textAlign: "center", paddingBottom: "30px"}}>ADD FOOD INFO</h2>
+                    <h2 data-test="test-header" style={{textAlign: "center", paddingBottom: "30px"}}>ADD FOOD INFO</h2>
                     <div style={{
                         display: "flex",
                         flexWrap: "wrap",

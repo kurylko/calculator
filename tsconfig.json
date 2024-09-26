@@ -118,9 +118,9 @@
     "src/setupTests.ts"
   ],
   "include": [
-    "src/**/*"
+    "src/**/*", "cypress/**/*.ts"
   ],
   "types": [
-    "typePatches"
+    "typePatches", "cypress", "node"
   ]
 }
