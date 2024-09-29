@@ -82,8 +82,8 @@ export default function FoodInfoPage() {
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px'}}>
             <div style={{display: "flex", justifyContent: "center"}}>
                 <div style={{display: "flex", flexDirection: "column", justifyContent: "center", width: "85%"}}>
-                    <h2 style={{textAlign: "center", paddingBottom: "30px"}}>ADD FOOD INFO</h2>
-                    <div style={{
+                    <h2 data-test="test-header" style={{textAlign: "center", paddingBottom: "30px"}}>ADD FOOD INFO</h2>
+                    <form style={{
                         display: "flex",
                         flexWrap: "wrap",
                         gap: "10px",
@@ -143,7 +143,7 @@ export default function FoodInfoPage() {
                             value={foodInputsValues.weight}
                             onChange={handleChange}
                         />
-                    </div>
+                    </form>
                     <div style={{display: "flex", justifyContent: "flex-end", gap: "16px"}}>
                         <Button variant="contained" onClick={handleSubmit}>Add food info</Button>
                         <Link to={"/"} style={{textDecoration: "none"}}>
