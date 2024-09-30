@@ -23,3 +23,8 @@ export interface IFoodItem {
     calories: string;
     weight: string;
 }
+
+export interface IUserFoodItem extends IFoodItem {
+    id: string;
+    userID: string;
+}

@@ -10,6 +10,7 @@ export default function Menu() {
                     <Toolbar>
                         <Button color="inherit" component={Link} to="/">HOME</Button>
                         <Button color="inherit" component={Link} to="/food-info">ADD FOOD</Button>
+                        <Button color="inherit" component={Link} to="/my-food">MY FOOD</Button>
                         <Button color="inherit" component={Link} to="/blog">BLOG</Button>
                     </Toolbar>
                 </AppBar>
