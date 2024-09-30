@@ -14,13 +14,10 @@ const useFetchProducts = () => {
             try {
                 const querySnapshot = await getDocs(collection(db, "products"));
                 const items : IUserFoodItem[] = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()})) as IUserFoodItem[];
-                console.log("products", data);
                 setData(items);
 
             } catch (error) {
                 console.error("Error fetching products:", error);
-                const typedError = error as Error;
-                console.error("Typed Error fetching:", typedError.message);
             }
             finally {
                 setLoading(false);
