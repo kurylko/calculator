@@ -30,8 +30,8 @@ export interface IUserFoodItem extends IFoodItem {
 }
 
 export interface IUser {
-    id?: string,
-    userName: string,
-    email: string,
-    password: string
+    uid?: string,
+    userName?: string,
+    email?: string,
+    password?: string
 }
