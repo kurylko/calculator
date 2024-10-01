@@ -59,6 +59,7 @@ export default function FoodInfoPage() {
             carbohydrate: lastInputFoodItem.carbohydrate,
             calories: lastInputFoodItem.calories,
             weight: lastInputFoodItem.weight,
+            userID: '1',
         })  .then(() => {
             setFoodInputsValues({
                 foodName: '',
