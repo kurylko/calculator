@@ -1,12 +1,13 @@
 import {useState} from 'react';
 import {collection, addDoc} from 'firebase/firestore';
 import {db} from '../firebase';
+import {IUserFoodItem} from "../interfaces/FoodItem";
 
 const usePostProduct = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const postProduct = async (collectionName: any, data: any) => {
+    const postProduct = async (collectionName: string, data: IUserFoodItem) => {
         setLoading(true);
         setError(null);
 

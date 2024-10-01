@@ -32,7 +32,6 @@ export default function FoodInfoPage() {
     const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>(!!lastInputFoodItem ? lastInputFoodItem :
         {foodName: '', fat: '', protein: '', carbohydrate: '', calories: '', weight: ''});
 
-    const [product, setProduct] = useState<IUserFoodItem>();
     const {postProduct, loading: productLoading, error: error} = usePostProduct();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
