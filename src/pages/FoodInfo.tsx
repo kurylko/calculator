@@ -3,7 +3,7 @@ import {Button} from "@mui/material";
 import {TextField} from '@mui/material';
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import {IFoodItem, IUserFoodItem} from "../interfaces/FoodItem";
+import {IFoodItem} from "../interfaces/FoodItem";
 import FoodTable from "../components/FoodTable";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 import {PdfFoodTable} from "../components/PdfFoodTable";
@@ -36,7 +36,7 @@ export default function FoodInfoPage() {
     const {currentUser} = useAuth();
     const userID = currentUser?.uid;
 
-    const {postProduct, loading: productLoading, error: error} = usePostProduct();
+    const {postProduct} = usePostProduct();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const {target: {value} = {}} = e;
