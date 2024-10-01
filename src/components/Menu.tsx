@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Box, AppBar, Toolbar, Button} from '@mui/material';
 import {Link} from 'react-router-dom';
 import {useAuth} from "../contexts/authContext/authContext";
@@ -7,16 +7,14 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Menu() {
     const navigate = useNavigate();
-    const {currentUser} = useAuth();
     const {userLoggedIn} = useAuth();
 
     const onLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        if(userLoggedIn){
-            await doSignOut();
-            navigate("/");
+            if(userLoggedIn){
+                await doSignOut();
+                navigate("/");
+            }
         }
-    }
 
     return (
         <div className="menu-container">
@@ -30,8 +28,8 @@ export default function Menu() {
                         <Button color="inherit" component={Link} to="/blog">BLOG</Button>
                         </Box>
                         <Box sx={{ display: 'flex' }}>
-                        {!currentUser &&  <Button color="inherit" component={Link} to="/log-in">LOG IN</Button>}
-                        {currentUser && <Button color="inherit" onClick={onLogOut}>LOG OUT</Button>}
+                        {!userLoggedIn &&  <Button color="inherit" component={Link} to="/log-in">LOG IN</Button>}
+                        {userLoggedIn && <Button color="inherit" onClick={onLogOut}>LOG OUT</Button>}
                         </Box>
                     </Toolbar>
                 </AppBar>
