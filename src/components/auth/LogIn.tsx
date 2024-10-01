@@ -32,8 +32,8 @@ const Login = () => {
     return (
         <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
             {userLoggedIn && (<Navigate to={'/'} replace={true}/>)}
-            <div>User Log in screen:
-            <form onSubmit={onSubmit} style={{width: "100%", display: "flex", flexDirection: "column", gap: "10px", marginTop: "50px"}}>
+            <div style={{marginTop: "20px"}}> Log in
+            <form onSubmit={onSubmit} style={{width: "100%", display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px"}}>
                 <TextField
                     fullWidth
                     required
