@@ -23,3 +23,15 @@ export interface IFoodItem {
     calories: string;
     weight: string;
 }
+
+export interface IUserFoodItem extends IFoodItem {
+    id?: string;
+    userID?: string;
+}
+
+export interface IUser {
+    uid?: string,
+    userName?: string,
+    email?: string,
+    password?: string
+}

@@ -6,10 +6,13 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^5.0.13",
-    "@mui/material": "^5.11.0",
+    "@mui/icons-material": "^6.1.1",
+    "@mui/material": "^6.1.1",
     "@react-pdf/renderer": "^3.4.4",
+    "@toolpad/core": "^0.7.0",
     "axios": "^1.7.2",
     "dotenv": "^16.0.3",
+    "firebase": "^10.13.2",
     "react": "^18.0.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.5",
@@ -19,8 +22,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "cy:open": "cypress open --config-file tsconfig.cypress.json",
-    "cy:run": "cypress run --config-file tsconfig.cypress.json"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [

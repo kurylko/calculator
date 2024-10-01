@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import AppRoutes from './components/Router';
 import './App.css';
+import {AuthProvider} from "./contexts/authContext/authContext";
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
@@ -11,9 +12,11 @@ if (rootElement) {
 
     root.render(
         <React.StrictMode>
-            <AppRoutes>
-                <App/>
-            </AppRoutes>
+            <AuthProvider>
+                <AppRoutes>
+                    <App/>
+                </AppRoutes>
+            </AuthProvider>
         </React.StrictMode>
     );
 } else {

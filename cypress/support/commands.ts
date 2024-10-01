@@ -1,6 +1,11 @@
 
-export {}
 /// <reference types="cypress" />
+export {}
+
+Cypress.Commands.add('getDataTest', (dataTestSelector: string): Cypress.Chainable<Element>  => {
+    return cy.get(`[data-test="${dataTestSelector}"]`) as unknown as Cypress.Chainable<Element>
+})
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
