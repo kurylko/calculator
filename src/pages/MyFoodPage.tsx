@@ -2,7 +2,9 @@ import React from "react";
 import useFetchProducts from "../hooks/useFetchProducts";
 import {SavedFoodCard} from "../components/SavedFoodCard";
 import {useAuth} from "../contexts/authContext/authContext";
+import { User as FirebaseUser } from "firebase/auth";
 import {IUserFoodItem} from "../interfaces/FoodItem";
+
 
 export default function MyFoodPage() {
     const { data } = useFetchProducts();
@@ -11,7 +13,7 @@ export default function MyFoodPage() {
 
     console.log("current user:", currentUser?.uid);
 
-    const getUsersAddedFood = ({currentUser}: any): IUserFoodItem[] => {
+    const getUsersAddedFood = (currentUser: FirebaseUser | null) => {
         let usersAddedFood: IUserFoodItem[] = [];
         if(currentUser !== null){
             usersAddedFood = data;
@@ -25,7 +27,7 @@ export default function MyFoodPage() {
         return usersAddedFood;
     }
 
-    const foodList = getUsersAddedFood({currentUser});
+    const foodList = getUsersAddedFood(currentUser);
     const finalUsersFoodList = foodList.filter(food => food.userID === uid);
 
     console.log("foodList", foodList);
