@@ -34,6 +34,7 @@ export default function FoodInfoPage() {
         {foodName: '', fat: '', protein: '', carbohydrate: '', calories: '', weight: ''});
 
     const {currentUser} = useAuth();
+    const userID = currentUser?.uid;
 
     const {postProduct, loading: productLoading, error: error} = usePostProduct();
 
@@ -63,7 +64,7 @@ export default function FoodInfoPage() {
                     carbohydrate: lastInputFoodItem.carbohydrate,
                     calories: lastInputFoodItem.calories,
                     weight: lastInputFoodItem.weight,
-                    userID: '1',
+                    userID: userID,
                 });
             } catch (error) {
                 console.error("Error posting food item:", error);

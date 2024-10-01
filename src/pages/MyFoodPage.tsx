@@ -5,9 +5,11 @@ import {useAuth} from "../contexts/authContext/authContext";
 import {IUserFoodItem} from "../interfaces/FoodItem";
 
 export default function MyFoodPage() {
-    const { data, loading } = useFetchProducts();
-    const {currentUser} = useAuth();
-    console.log("current user:", currentUser?.email);
+    const { data } = useFetchProducts();
+    const {currentUser, loading} = useAuth();
+    const uid = currentUser?.uid;
+
+    console.log("current user:", currentUser?.uid);
 
     const getUsersAddedFood = ({currentUser}: any): IUserFoodItem[] => {
         let usersAddedFood: IUserFoodItem[] = [];
@@ -23,6 +25,7 @@ export default function MyFoodPage() {
     }
 
     const foodList = getUsersAddedFood({currentUser});
+    const finalUsersFoodList = foodList.filter(food => food.userID === uid);
 
     console.log("foodList", foodList);
 
@@ -32,7 +35,7 @@ export default function MyFoodPage() {
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px', marginLeft: '50px'}}>
             <h1>My food page (in development)</h1>
             <div style={{width: '100%', display: 'flex', flexWrap: "wrap", gap: '50px', alignItems: 'center', marginTop: '10px'}}>
-                {!!foodList.length && foodList.map(item =>
+                {!loading && !!finalUsersFoodList.length && finalUsersFoodList.map(item =>
                     <SavedFoodCard
                         key={item.id}
                         foodName={item.foodName}
