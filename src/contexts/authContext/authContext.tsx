@@ -38,6 +38,7 @@ export function AuthProvider ({ children } : AuthProviderProps) {
             setUserLoggedIn(true);
         } else {
             setCurrentUser(null);
+            setUserLoggedIn(false);
         }
         setLoading(false);
     }
