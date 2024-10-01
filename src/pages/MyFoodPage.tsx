@@ -16,6 +16,7 @@ export default function MyFoodPage() {
         if(currentUser !== null){
             usersAddedFood = data;
         } else {
+            console.log(2)
            const localStorageFoodItems = localStorage.getItem('lastInputFoodItems');
            if(localStorageFoodItems) {
                usersAddedFood = JSON.parse(localStorageFoodItems);
@@ -29,15 +30,13 @@ export default function MyFoodPage() {
 
     console.log("foodList", foodList);
 
-    console.log("myFood data from db:", data);
-
     return (
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px', marginLeft: '50px'}}>
-            <h1>My food page (in development)</h1>
+            <h1>MY FOOD </h1>
             <div style={{width: '100%', display: 'flex', flexWrap: "wrap", gap: '50px', alignItems: 'center', marginTop: '10px'}}>
                 {!loading && !!finalUsersFoodList.length && finalUsersFoodList.map(item =>
                     <SavedFoodCard
-                        key={item.id}
+                        key={item.foodName}
                         foodName={item.foodName}
                         fat={item.fat}
                         calories={item.calories}
