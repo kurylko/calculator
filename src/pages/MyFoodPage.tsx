@@ -2,7 +2,7 @@ import React from "react";
 import useFetchProducts from "../hooks/useFetchProducts";
 import {SavedFoodCard} from "../components/SavedFoodCard";
 import {useAuth} from "../contexts/authContext/authContext";
-import {IUser, IUserFoodItem} from "../interfaces/FoodItem";
+import {IUserFoodItem} from "../interfaces/FoodItem";
 
 export default function MyFoodPage() {
     const { data, loading } = useFetchProducts();
