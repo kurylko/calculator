@@ -10,7 +10,7 @@ export default function MyFoodPage() {
     return (
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px', marginLeft: '50px'}}>
             <h1>My food page (in development)</h1>
-            <div style={{width: '100%', display: 'flex', gap: '50px', alignItems: 'center', marginTop: '10px'}}>
+            <div style={{width: '100%', display: 'flex', flexWrap: "wrap", gap: '50px', alignItems: 'center', marginTop: '10px'}}>
                 {!!data.length && data.map(item =>
                     <SavedFoodCard
                         key={item.id}
