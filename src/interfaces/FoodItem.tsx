@@ -25,6 +25,6 @@ export interface IFoodItem {
 }
 
 export interface IUserFoodItem extends IFoodItem {
-    id: string;
+    id?: string;
     userID: string;
 }
