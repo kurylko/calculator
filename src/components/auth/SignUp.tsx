@@ -32,8 +32,8 @@ const SignUp = () => {
     return (
         <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
             {userLoggedIn && (<Navigate to={'/'} replace={true}/>)}
-            <div style={{marginTop: "20px"}}>Create an account
-                <form onSubmit={onSubmit} style={{width: "100%", display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px"}}>
+            <div style={{marginTop: "20px", width: "60%", display: "flex", flexDirection: "column", alignItems: "center" }}>Create an account
+                <form onSubmit={onSubmit} style={{width: "350px", display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px"}}>
                     <TextField
                         fullWidth
                         required
@@ -47,12 +47,12 @@ const SignUp = () => {
                         fullWidth
                         required
                         id="outlined-required"
-                        label="password"
+                        label="password (min 6 characters)"
                         name="password"
                         value={password}
                         onChange={handleChange}
                     />
-                    <Button variant="contained" type={"submit"}>Sign up</Button>
+                    <Button variant="contained" type={"submit"} style={{width: '50%', alignSelf: "center"}}>Sign up</Button>
                 </form>
             </div>
         </div>
