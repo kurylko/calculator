@@ -26,12 +26,12 @@ export interface IFoodItem {
 
 export interface IUserFoodItem extends IFoodItem {
     id?: string;
-    userID: string;
+    userID?: string;
 }
 
 export interface IUser {
-    id?: string,
-    userName: string,
-    email: string,
-    password: string
+    uid?: string,
+    userName?: string,
+    email?: string,
+    password?: string
 }

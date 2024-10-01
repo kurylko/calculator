@@ -7,8 +7,9 @@ import {IFoodItem, IUserFoodItem} from "../interfaces/FoodItem";
 import FoodTable from "../components/FoodTable";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 import {PdfFoodTable} from "../components/PdfFoodTable";
-import { pdf } from '@react-pdf/renderer';
+import {pdf} from '@react-pdf/renderer';
 import usePostProduct from "../hooks/usePostProducts";
+import {useAuth} from "../contexts/authContext/authContext";
 
 
 export default function FoodInfoPage() {
@@ -32,6 +33,9 @@ export default function FoodInfoPage() {
     const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>(!!lastInputFoodItem ? lastInputFoodItem :
         {foodName: '', fat: '', protein: '', carbohydrate: '', calories: '', weight: ''});
 
+    const {currentUser} = useAuth();
+    const userID = currentUser?.uid;
+
     const {postProduct, loading: productLoading, error: error} = usePostProduct();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -51,23 +55,28 @@ export default function FoodInfoPage() {
         const updatedItems = [...lastInputFoodItems, foodInputsValues];
         setLastInputFoodItems(updatedItems);
         localStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
-        await postProduct("products", {
-            foodName: lastInputFoodItem.foodName,
-            fat: lastInputFoodItem.fat,
-            protein: lastInputFoodItem.protein,
-            carbohydrate: lastInputFoodItem.carbohydrate,
-            calories: lastInputFoodItem.calories,
-            weight: lastInputFoodItem.weight,
-            userID: '1',
-        })  .then(() => {
-            setFoodInputsValues({
-                foodName: '',
-                fat: '',
-                protein: '',
-                carbohydrate: '',
-                calories: '',
-                weight: '',
-            });
+        if (currentUser) {
+            try {
+                await postProduct("products", {
+                    foodName: lastInputFoodItem.foodName,
+                    fat: lastInputFoodItem.fat,
+                    protein: lastInputFoodItem.protein,
+                    carbohydrate: lastInputFoodItem.carbohydrate,
+                    calories: lastInputFoodItem.calories,
+                    weight: lastInputFoodItem.weight,
+                    userID: userID,
+                });
+            } catch (error) {
+                console.error("Error posting food item:", error);
+            }
+        }
+        setFoodInputsValues({
+            foodName: '',
+            fat: '',
+            protein: '',
+            carbohydrate: '',
+            calories: '',
+            weight: '',
         });
     };
 
@@ -83,7 +92,7 @@ export default function FoodInfoPage() {
 // User can export Food table as a PDF Document
 
     const savePDF = async () => {
-        const doc = <PdfFoodTable data={parsedFoodItems} />;
+        const doc = <PdfFoodTable data={parsedFoodItems}/>;
         const asBlob = await pdf(doc).toBlob();
 
         const url = URL.createObjectURL(asBlob);
@@ -92,7 +101,14 @@ export default function FoodInfoPage() {
 
 
     return (
-        <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px'}}>
+        <div style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '50px',
+            alignItems: 'center',
+            marginTop: '50px'
+        }}>
             <div style={{display: "flex", justifyContent: "center"}}>
                 <div style={{display: "flex", flexDirection: "column", justifyContent: "center", width: "85%"}}>
                     <h2 data-test="test-header" style={{textAlign: "center", paddingBottom: "30px"}}>ADD FOOD INFO</h2>
@@ -178,10 +194,11 @@ export default function FoodInfoPage() {
             }}>
                 <h2 style={{textAlign: "center"}}>LAST FOOD YOU ADDED</h2>
                 {lastInputFoodItems.length > 0 ?
-                    <FoodTable lastInputFoodItems={parsedFoodItems} />
+                    <FoodTable lastInputFoodItems={parsedFoodItems}/>
                     : <h3>Add your first food!</h3>
                 }
-                {lastInputFoodItems.length > 0 &&<Button style={{alignSelf: 'flex-end'}} variant="outlined" onClick={savePDF}>Export as Pdf</Button> }
+                {lastInputFoodItems.length > 0 &&
+                    <Button style={{alignSelf: 'flex-end'}} variant="outlined" onClick={savePDF}>Export as Pdf</Button>}
             </div>
         </div>
     )

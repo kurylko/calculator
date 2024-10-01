@@ -33,7 +33,7 @@ const Login = () => {
         <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
             {userLoggedIn && (<Navigate to={'/'} replace={true}/>)}
             <div style={{marginTop: "20px"}}> Log in
-            <form onSubmit={onSubmit} style={{width: "100%", display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px"}}>
+            <form onSubmit={onSubmit} style={{width: "350px", display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px"}}>
                 <TextField
                     fullWidth
                     required
@@ -52,7 +52,7 @@ const Login = () => {
                     value={password}
                     onChange={handleChange}
                 />
-                <Button variant="contained" type={"submit"}>Log in</Button>
+                <Button variant="contained" type={"submit"} style={{width: '50%', alignSelf: "center"}}>Log in</Button>
             </form>
                 <p>Don't have an account?</p>
                 <Link to={"/sign-up"}>Sign up</Link>
