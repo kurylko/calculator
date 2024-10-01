@@ -3,11 +3,12 @@ import {Button} from "@mui/material";
 import {TextField} from '@mui/material';
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import {IFoodItem} from "../interfaces/FoodItem";
+import {IFoodItem, IUserFoodItem} from "../interfaces/FoodItem";
 import FoodTable from "../components/FoodTable";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 import {PdfFoodTable} from "../components/PdfFoodTable";
 import { pdf } from '@react-pdf/renderer';
+import usePostProduct from "../hooks/usePostProducts";
 
 
 export default function FoodInfoPage() {
@@ -31,6 +32,9 @@ export default function FoodInfoPage() {
     const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>(!!lastInputFoodItem ? lastInputFoodItem :
         {foodName: '', fat: '', protein: '', carbohydrate: '', calories: '', weight: ''});
 
+    const [product, setProduct] = useState<IUserFoodItem>();
+    const {postProduct, loading: productLoading, error: error} = usePostProduct();
+
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const {target: {value} = {}} = e;
         setFoodInputsValues({
@@ -44,17 +48,26 @@ export default function FoodInfoPage() {
         localStorage.setItem('lastInputFood', JSON.stringify(foodInputsValues));
     }, [foodInputsValues]);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const updatedItems = [...lastInputFoodItems, foodInputsValues];
         setLastInputFoodItems(updatedItems);
         localStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
-        setFoodInputsValues({
-            foodName: '',
-            fat: '',
-            protein: '',
-            carbohydrate: '',
-            calories: '',
-            weight: '',
+        await postProduct("products", {
+            foodName: lastInputFoodItem.foodName,
+            fat: lastInputFoodItem.fat,
+            protein: lastInputFoodItem.protein,
+            carbohydrate: lastInputFoodItem.carbohydrate,
+            calories: lastInputFoodItem.calories,
+            weight: lastInputFoodItem.weight,
+        })  .then(() => {
+            setFoodInputsValues({
+                foodName: '',
+                fat: '',
+                protein: '',
+                carbohydrate: '',
+                calories: '',
+                weight: '',
+            });
         });
     };
 
