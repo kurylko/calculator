@@ -18,7 +18,7 @@ export default function MyFoodPage() {
     const getUsersAddedFood = (currentUser: FirebaseUser | null) => {
         let usersAddedFood: IUserFoodItem[] = [];
         if(currentUser !== null){
-            usersAddedFood = data;
+            usersAddedFood = data.filter(food => food.userID === uid);
         } else {
            const localStorageFoodItems = localStorage.getItem('lastInputFoodItems');
            if(localStorageFoodItems) {
@@ -32,7 +32,7 @@ export default function MyFoodPage() {
     useEffect(() => {
         const initialFoodList = getUsersAddedFood(currentUser);
         setUsersFoodList(initialFoodList.filter(food => food.userID === uid));
-    }, [currentUser, uid, data]);
+    }, [data]);
 
 
     const deleteProductFromLocalStorage = (foodItem: IUserFoodItem) => {
@@ -40,11 +40,14 @@ export default function MyFoodPage() {
         const foodItems: IUserFoodItem[] = localStorageFoodItems ? JSON.parse(localStorageFoodItems) : [];
         const updatedFoodItems = foodItems.filter(item => item.foodName !== foodItem.foodName);
         localStorage.setItem('lastInputFoodItems', JSON.stringify(updatedFoodItems));
+        setUsersFoodList(updatedFoodItems);
     }
 
     const handleDeleteProduct = async (foodItem: IUserFoodItem): Promise<void> => {
         if (foodItem.id) {
             await deleteProduct("products", foodItem);
+            const updatedFoodItemsFromDB = getUsersAddedFood(currentUser);
+            setUsersFoodList(updatedFoodItemsFromDB);
         } if (foodItem.foodName) {
             deleteProductFromLocalStorage(foodItem);
         } else {
@@ -52,7 +55,6 @@ export default function MyFoodPage() {
         }
     };
 
-    console.log("foodList", usersFoodList);
 
     return (
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '50px', alignItems: 'center', marginTop: '50px', marginLeft: '50px'}}>

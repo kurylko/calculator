@@ -8,9 +8,6 @@ import {Link} from "react-router-dom";
 import {useAuth} from "../contexts/authContext/authContext";
 
 export default function Home() {
-    const {currentUser} = useAuth();
-
-    console.log("current user:", currentUser);
 
     return (
         <div className="home">
