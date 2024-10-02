@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import useFetchProducts from "../hooks/useFetchProducts";
 import {SavedFoodCard} from "../components/SavedFoodCard";
 import {useAuth} from "../contexts/authContext/authContext";
@@ -15,7 +15,7 @@ export default function MyFoodPage() {
     const {currentUser, loading} = useAuth();
     const uid = currentUser?.uid;
 
-    const getUsersAddedFood = (currentUser: FirebaseUser | null) => {
+    const getUsersAddedFood = useCallback((currentUser: FirebaseUser | null) => {
         let usersAddedFood: IUserFoodItem[] = [];
         if(currentUser !== null){
             usersAddedFood = data.filter(food => food.userID === uid);
@@ -26,13 +26,14 @@ export default function MyFoodPage() {
            }
         }
         return usersAddedFood;
-    }
+    }, [uid, data]);
 
 
     useEffect(() => {
-        const initialFoodList = getUsersAddedFood(currentUser);
-        setUsersFoodList(initialFoodList.filter(food => food.userID === uid));
-    }, [data]);
+        const foodList = getUsersAddedFood(currentUser);
+        const filteredFoodList = uid ? foodList.filter(food => food.userID === uid) : foodList;
+        setUsersFoodList(filteredFoodList);
+    }, [currentUser, uid, getUsersAddedFood]);
 
 
     const deleteProductFromLocalStorage = (foodItem: IUserFoodItem) => {
