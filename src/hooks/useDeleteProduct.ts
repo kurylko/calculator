@@ -13,7 +13,7 @@ const useDeleteProduct = () => {
         setError(null);
 
         if (!data.id) {
-            setError(new Error("Document ID is missing"));
+            setError(new Error("Product ID is missing"));
             setLoading(false);
             return;
         }
@@ -22,7 +22,7 @@ const useDeleteProduct = () => {
         try {
             const docRef = doc(db, collectionName, data.id);
             await deleteDoc(docRef);
-            console.log("Document deleted with ID: ", docRef.id);
+            console.log("Product deleted with ID: ", docRef.id);
         } catch (err) {
             console.error("Error deleting document: ", err);
             setError(err as Error);

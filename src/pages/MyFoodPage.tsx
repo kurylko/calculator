@@ -4,12 +4,23 @@ import {SavedFoodCard} from "../components/SavedFoodCard";
 import {useAuth} from "../contexts/authContext/authContext";
 import { User as FirebaseUser } from "firebase/auth";
 import {IUserFoodItem} from "../interfaces/FoodItem";
+import useDeleteProduct from "../hooks/useDeleteProduct";
 
 
 export default function MyFoodPage() {
     const { data } = useFetchProducts();
+    const {deleteProduct} = useDeleteProduct();
     const {currentUser, loading} = useAuth();
     const uid = currentUser?.uid;
+
+
+    const handleDeleteProduct = async (foodItem: IUserFoodItem): Promise<void> => {
+        if (foodItem.id) {
+            deleteProduct("products", foodItem);
+        } else {
+            console.error("No ID found for this food item");
+        }
+    };
 
     console.log("current user:", currentUser?.uid);
 
@@ -45,6 +56,7 @@ export default function MyFoodPage() {
                         protein={item.protein}
                         carbohydrate={item.carbohydrate}
                         weight={item.weight}
+                        onClick={() => handleDeleteProduct(item)}
                     />)
                 }
             </div>
