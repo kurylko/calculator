@@ -5,7 +5,6 @@ import {Button} from "@mui/material";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {Link} from "react-router-dom";
-import {useAuth} from "../contexts/authContext/authContext";
 
 export default function Home() {
 
