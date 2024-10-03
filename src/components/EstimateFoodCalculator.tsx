@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Button, TextField } from "@mui/material";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -11,6 +11,13 @@ import {IUserFoodItem} from "../interfaces/FoodItem";
 
 interface EstimateFoodCalculatorProps {
     usersFoodList: IUserFoodItem[]
+}
+
+interface IFoodEstimateValues {
+    fat?: string,
+    protein?: string,
+    carbohydrate?: string,
+    calories?: string,
 }
 
 const ITEM_HEIGHT = 48;
@@ -28,17 +35,36 @@ const MenuProps = {
 const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) => {
     const productNames = usersFoodList.map(item => item.foodName);
 
-    const [product, setProduct] = React.useState<string[]>([]);
+    const [products, setProducts] = React.useState<string[]>([]);
+    const [estimateFoodInputsValues, setEstimateFoodInputsValues] = useState<IFoodEstimateValues>({
+                fat: "",
+                protein: "",
+                carbohydrate: "",
+                calories: "",
+            },
+    );
 
-    const handleChange = (event: SelectChangeEvent<typeof product>) => {
+    const handleChange = (event: SelectChangeEvent<typeof products>) => {
         const {
             target: {value},
         } = event;
-        setProduct(
-            // On autofill we get a stringified value.
+        setProducts(
             typeof value === 'string' ? value.split(',') : value,
         );
     };
+
+    const handleSubmitCalculation = () => {
+        console.log('calculated for:', products);
+    }
+
+    console.log('products', products);
+
+    const calculateEstimateProducts = (products: string[], usersFoodList: IUserFoodItem[]) => {
+        const matchingFoods = usersFoodList.filter(item => products.includes(item.foodName));
+        return ( console.log("matchingFoods", matchingFoods));
+    }
+
+    console.log(calculateEstimateProducts(products, usersFoodList));
 
 
   return (
@@ -49,7 +75,7 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
                 labelId="products-multiple-checkbox-label"
                 id="products-multiple-checkbox"
                 multiple
-                value={product}
+                value={products}
                 onChange={handleChange}
                 input={<OutlinedInput label="Product" />}
                 renderValue={(selected) => selected.join(', ')}
@@ -57,7 +83,7 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
             >
                 {productNames.map((name) => (
                     <MenuItem key={name} value={name}>
-                        <Checkbox checked={product.includes(name)} />
+                        <Checkbox checked={products.includes(name)} />
                         <ListItemText primary={name} />
                     </MenuItem>
                 ))}
@@ -76,19 +102,9 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
         <TextField
           required
           id="outlined-required"
-          label="Estimate-calories"
-          name="calories"
-          value={"calories"}
-          onChange={() => {
-            console.log("1");
-          }}
-        />
-        <TextField
-          required
-          id="outlined-required"
           label="Estimate-fat"
           name="fat"
-          value={"fat"}
+          value={estimateFoodInputsValues.fat}
           onChange={() => {
             console.log("1");
           }}
@@ -98,7 +114,7 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
           id="outlined-required"
           label="Estimate-protein"
           name="protein"
-          value={"protein"}
+          value={estimateFoodInputsValues.protein}
           onChange={() => {
             console.log("1");
           }}
@@ -106,13 +122,23 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
         <TextField
           required
           id="outlined-required"
-          label="Estimate-carbs"
-          name="carbs"
-          value={"carbs"}
+          label="Estimate-carbohydrate"
+          name="carbohydrate"
+          value={estimateFoodInputsValues.carbohydrate}
           onChange={() => {
             console.log("1");
           }}
         />
+          <TextField
+              required
+              id="outlined-required"
+              label="Estimate-calories"
+              name="calories"
+              value={estimateFoodInputsValues.calories}
+              onChange={() => {
+                  console.log("1");
+              }}
+          />
       </form>
       <Button
         variant="contained"
