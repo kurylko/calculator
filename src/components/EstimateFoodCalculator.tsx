@@ -89,21 +89,23 @@ const EstimateFoodCalculator = ({
         estimateFoodInputsValues.calories as string,
       );
 
-      const caloriesCalculated = matchingFoods.reduce((totalCalories, item) => {
+      const caloriesCalculated = matchingFoods.reduce((totalCaloriesPerKg, item) => {
         const nutriValues = getNutriValuesPerKg(item);
         if (nutriValues) {
           const caloriesValue = parseFloat(nutriValues.caloriesValuePerKg);
-          return totalCalories + (isNaN(caloriesValue) ? 0 : caloriesValue);
+          return totalCaloriesPerKg + (isNaN(caloriesValue) ? 0 : caloriesValue);
         }
-        return totalCalories;
+        return totalCaloriesPerKg;
       }, 0);
+
+      const calculatedWeight = (estimateCaloriesNumber / caloriesCalculated) * 1000;
 
       const result: EstimateCalculationResult = {
         fat: "",
         protein: "",
         carbohydrate: "",
         calories: caloriesCalculated.toString(),
-        weight: "",
+        weight: `${calculatedWeight.toString()}g`,
       };
 
       return result;
