@@ -9,6 +9,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { IUserFoodItem } from "../interfaces/FoodItem";
 import { getNutriValuesPerKg } from "../utils/getNutriValues";
+import CalculationResultDisplay from "./CalculationResultDisplay";
+import Typography from "@mui/material/Typography";
 
 interface EstimateFoodCalculatorProps {
   usersFoodList: IUserFoodItem[];
@@ -22,6 +24,7 @@ interface IFoodEstimateValues {
 }
 
 interface EstimateCalculationResult {
+  foodName: string,
   fat?: string;
   protein?: string;
   carbohydrate?: string;
@@ -45,7 +48,6 @@ const EstimateFoodCalculator = ({
 }: EstimateFoodCalculatorProps) => {
   const productNames = usersFoodList.map((item) => item.foodName);
 
-  const [products, setProducts] = React.useState<string[]>([]);
   const [estimateFoodInputsValues, setEstimateFoodInputsValues] =
     useState<IFoodEstimateValues>({
       fat: "",
@@ -54,12 +56,18 @@ const EstimateFoodCalculator = ({
       calories: "",
     });
 
+  // Dropdown with products //
+  const [products, setProducts] = React.useState<string[]>([]);
+
   const handleChange = (event: SelectChangeEvent<typeof products>) => {
     const {
       target: { value },
     } = event;
     setProducts(typeof value === "string" ? value.split(",") : value);
   };
+
+
+  // Inputs with estimate nutrition values //
 
   function handleChangeInputs(e: React.ChangeEvent<HTMLInputElement>) {
     const { target: { value } = {} } = e;
@@ -69,8 +77,18 @@ const EstimateFoodCalculator = ({
     });
   }
 
+ // For calculations result //
+
   const handleSubmitCalculation = () => {
-    console.log("calculated for:", products);
+    const result = getCalculateEstimateProducts(products, usersFoodList, estimateFoodInputsValues);
+    console.log("calculated for:", products, getCalculateEstimateProducts(products, usersFoodList, estimateFoodInputsValues));
+    setEstimateFoodInputsValues({
+      fat: "",
+      protein: "",
+      carbohydrate: "",
+      calories: ""
+    })
+    return result;
   };
 
   // My calculations //
@@ -101,6 +119,7 @@ const EstimateFoodCalculator = ({
       const calculatedWeight = Math.round((estimateCaloriesNumber / caloriesCalculated) * 1000);
 
       const result: EstimateCalculationResult = {
+        foodName: "products",
         fat: "",
         protein: "",
         carbohydrate: "",
@@ -123,12 +142,11 @@ const EstimateFoodCalculator = ({
     return null;
   }
 
-  console.log("11", getCalculateEstimateProducts(products, usersFoodList, estimateFoodInputsValues));
 
   return (
     <div
       style={{
-        width: "100%",
+        width: "80%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -197,12 +215,15 @@ const EstimateFoodCalculator = ({
       <Button
         variant="contained"
         style={{ width: "fit-content", alignSelf: "flex-end" }}
-        onClick={() => {
-          console.log("submitted");
-        }}
+        onClick={handleSubmitCalculation}
       >
         Calculate
       </Button>
+      <Typography variant="h5" component="div">
+        Calculated nutrition values of {products}:
+      </Typography>
+      <CalculationResultDisplay
+      />
     </div>
   );
 };
