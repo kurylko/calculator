@@ -83,10 +83,10 @@ export default function MyFoodPage() {
         marginLeft: "50px",
       }}
     >
-        <h1>LET'S COUNT A DISH</h1>
-        <div style={{ width: "100%", display: "flex" }}>
-            <EstimateFoodCalculator usersFoodList={usersFoodList}/>
-        </div>
+      <h1>LET'S COUNT A DISH</h1>
+      <div style={{ width: "100%", display: "flex" }}>
+        <EstimateFoodCalculator usersFoodList={usersFoodList} />
+      </div>
       <h1>MY FOOD </h1>
       <div
         style={{
@@ -96,6 +96,7 @@ export default function MyFoodPage() {
           gap: "50px",
           alignItems: "center",
           marginTop: "10px",
+          marginBottom: "50px",
         }}
       >
         {!loading &&
