@@ -122,7 +122,7 @@ export default function FoodInfoPage() {
         flexDirection: "column",
         gap: "50px",
         alignItems: "center",
-        marginTop: "50px",
+        paddingTop: "50px",
       }}
     >
       <div style={{ display: "flex", justifyContent: "center" }}>
