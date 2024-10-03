@@ -3,6 +3,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
+import { INutriScorePerKg } from "../utils/getNutriValues";
+import {useState} from "react";
 
 interface SavedFoodCardProps {
   foodName: string;
@@ -12,6 +14,7 @@ interface SavedFoodCardProps {
   calories: string;
   weight: string;
   onClick?: () => void;
+  nutriValues?: INutriScorePerKg | null;
 }
 
 export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
@@ -22,9 +25,15 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
   protein,
   weight,
   onClick,
+  nutriValues,
 }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <Card sx={{ minWidth: 275, position: "relative" }}>
+    <Card sx={{ minWidth: 275, position: "relative" }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+    >
       <CardContent>
         <Button
           variant="outlined"
@@ -45,16 +54,17 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
           DELETE
         </Button>
         <Typography gutterBottom sx={{ color: "text.secondary", fontSize: 14 }}>
-          {`${calories} Cal`}
+          {isHovered ? `${nutriValues?.caloriesValuePerKg} Cal` : `${calories} Cal`}
         </Typography>
         <Typography variant="h5" component="div">
           {foodName}
         </Typography>
         <Typography
           sx={{ color: "text.secondary", mb: 1.5 }}
-        >{`${weight} g`}</Typography>
+        >{isHovered ? "1 kg" :`${weight} g`}</Typography>
         <Typography variant="body2">
-          {`Fat: ${fat}  Protein: ${protein}  Carbs: ${carbohydrate}`}
+          {isHovered ? `Fat: ${nutriValues?.fatValuePerKg}  Protein: ${nutriValues?.proteinValuePerKg}  Carbs: ${nutriValues?.carbohydrateValuePerKg}`
+              : `Fat: ${fat}  Protein: ${protein}  Carbs: ${carbohydrate}`}
         </Typography>
       </CardContent>
     </Card>

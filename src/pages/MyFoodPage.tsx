@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import useFetchProducts from "../hooks/useFetchProducts";
 import { SavedFoodCard } from "../components/SavedFoodCard";
 import { useAuth } from "../contexts/authContext/authContext";
@@ -7,6 +7,7 @@ import { IUserFoodItem } from "../interfaces/FoodItem";
 import useDeleteProduct from "../hooks/useDeleteProduct";
 import { TextField } from "@mui/material";
 import EstimateFoodCalculator from "../components/EstimateFoodCalculator";
+import {getNutriValuesPerKg, INutriScorePerKg} from "../utils/getNutriValues";
 
 export default function MyFoodPage() {
   const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
@@ -71,6 +72,8 @@ export default function MyFoodPage() {
     }
   };
 
+
+
   return (
     <div
       style={{
@@ -111,6 +114,7 @@ export default function MyFoodPage() {
               carbohydrate={item.carbohydrate}
               weight={item.weight}
               onClick={() => handleDeleteProduct(item)}
+              nutriValues={getNutriValuesPerKg(item)}
             />
           ))}
       </div>
