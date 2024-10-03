@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import {IUserFoodItem} from "../interfaces/FoodItem";
+import {getNutriValuesPerKg} from "../utils/getNutriValues";
 
 interface EstimateFoodCalculatorProps {
     usersFoodList: IUserFoodItem[]
@@ -44,6 +45,8 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
             },
     );
 
+    console.log('estimateFoodInputsValues', estimateFoodInputsValues);
+
     const handleChange = (event: SelectChangeEvent<typeof products>) => {
         const {
             target: {value},
@@ -53,23 +56,43 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
         );
     };
 
+    function handleChangeInputs (e: React.ChangeEvent<HTMLInputElement>) {
+        const { target: { value } = {} } = e;
+        setEstimateFoodInputsValues({
+            ...estimateFoodInputsValues,
+            [e.target.name]: value,
+        });
+    }
+
     const handleSubmitCalculation = () => {
         console.log('calculated for:', products);
     }
 
     console.log('products', products);
 
-    const calculateEstimateProducts = (products: string[], usersFoodList: IUserFoodItem[]) => {
+    const calculateEstimateProducts = (products: string[], usersFoodList: IUserFoodItem[], estimateFoodInputsValues: IFoodEstimateValues) => {
         const matchingFoods = usersFoodList.filter(item => products.includes(item.foodName));
-        return ( console.log("matchingFoods", matchingFoods));
+
+        const calculateCaloriesOnly = () => {
+            const estimateCaloriesNumber = parseFloat(estimateFoodInputsValues.calories as string);
+           const valueQ = matchingFoods.forEach((item) => getNutriValuesPerKg(item));
+            return (estimateCaloriesNumber)
+        };
+
+        if(estimateFoodInputsValues.fat === "" && estimateFoodInputsValues.carbohydrate === "" && estimateFoodInputsValues.protein === "" && estimateFoodInputsValues.calories !== ""){
+           return calculateCaloriesOnly;
+        }
+
+        return null;
+
     }
 
-    console.log(calculateEstimateProducts(products, usersFoodList));
+    console.log("11");
 
 
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center",  marginBottom: "50px"}}>
-        <FormControl sx={{ m: 1, width: 300 }}>
+        <FormControl sx={{ m: 1, width: 300, marginLeft: "0" }}>
             <InputLabel id="products-multiple-checkbox-label">Products</InputLabel>
             <Select
                 labelId="products-multiple-checkbox-label"
@@ -105,9 +128,7 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
           label="Estimate-fat"
           name="fat"
           value={estimateFoodInputsValues.fat}
-          onChange={() => {
-            console.log("1");
-          }}
+          onChange={handleChangeInputs}
         />
         <TextField
           required
@@ -115,9 +136,7 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
           label="Estimate-protein"
           name="protein"
           value={estimateFoodInputsValues.protein}
-          onChange={() => {
-            console.log("1");
-          }}
+          onChange={handleChangeInputs}
         />
         <TextField
           required
@@ -125,9 +144,7 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
           label="Estimate-carbohydrate"
           name="carbohydrate"
           value={estimateFoodInputsValues.carbohydrate}
-          onChange={() => {
-            console.log("1");
-          }}
+          onChange={handleChangeInputs}
         />
           <TextField
               required
@@ -135,9 +152,7 @@ const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) =>
               label="Estimate-calories"
               name="calories"
               value={estimateFoodInputsValues.calories}
-              onChange={() => {
-                  console.log("1");
-              }}
+              onChange={handleChangeInputs}
           />
       </form>
       <Button
