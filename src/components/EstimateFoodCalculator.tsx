@@ -117,9 +117,15 @@ const EstimateFoodCalculator = ({
         (totalCaloriesPerKg, item) => {
           const nutriValues = getNutriValuesPerKg(item);
           if (nutriValues) {
-            const caloriesValue = parseFloat(nutriValues.caloriesValuePerKg);
+            const valuesPerKg = {
+              fatValue: parseFloat(nutriValues.fatValuePerKg),
+              proteinValue: parseFloat(nutriValues.proteinValuePerKg),
+              carbohydrateValue: parseFloat(nutriValues.carbohydrateValuePerKg),
+              caloriesValue: parseFloat(nutriValues.caloriesValuePerKg),
+            };
             return (
-              totalCaloriesPerKg + (isNaN(caloriesValue) ? 0 : caloriesValue)
+              totalCaloriesPerKg +
+              (isNaN(valuesPerKg.caloriesValue) ? 0 : valuesPerKg.caloriesValue)
             );
           }
           return totalCaloriesPerKg;
@@ -130,6 +136,12 @@ const EstimateFoodCalculator = ({
       const calculatedWeight = Math.round(
         (estimateCaloriesNumber / caloriesCalculated) * 1000,
       );
+
+      const calculateFat = Math.round(
+        (estimateCaloriesNumber / caloriesCalculated) * 1000,
+      );
+
+      //const valuesPerEstimateCalories = (nutriValues);
 
       const result: EstimateCalculationResult = {
         foodName: products.join(" "),
@@ -231,7 +243,7 @@ const EstimateFoodCalculator = ({
       >
         Calculate
       </Button>
-      <Typography variant="h5" component="div" sx={{marginBottom: "20px"}}>
+      <Typography variant="h5" component="div" sx={{ marginBottom: "20px" }}>
         {`Calculated nutrition values of ${products} (for ${result?.calories} kcal):`}
       </Typography>
       <CalculationResultDisplay result={result} />
