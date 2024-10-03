@@ -7,6 +7,11 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import {IUserFoodItem} from "../interfaces/FoodItem";
+
+interface EstimateFoodCalculatorProps {
+    usersFoodList: IUserFoodItem[]
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,27 +24,17 @@ const MenuProps = {
     },
 };
 
-const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-];
 
-const EstimateFoodCalculator = () => {
-    const [personName, setPersonName] = React.useState<string[]>([]);
+const EstimateFoodCalculator = ({usersFoodList}: EstimateFoodCalculatorProps) => {
+    const productNames = usersFoodList.map(item => item.foodName);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const [product, setProduct] = React.useState<string[]>([]);
+
+    const handleChange = (event: SelectChangeEvent<typeof product>) => {
         const {
             target: {value},
         } = event;
-        setPersonName(
+        setProduct(
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
@@ -54,15 +49,15 @@ const EstimateFoodCalculator = () => {
                 labelId="products-multiple-checkbox-label"
                 id="products-multiple-checkbox"
                 multiple
-                value={personName}
+                value={product}
                 onChange={handleChange}
                 input={<OutlinedInput label="Product" />}
                 renderValue={(selected) => selected.join(', ')}
                 MenuProps={MenuProps}
             >
-                {names.map((name) => (
+                {productNames.map((name) => (
                     <MenuItem key={name} value={name}>
-                        <Checkbox checked={personName.includes(name)} />
+                        <Checkbox checked={product.includes(name)} />
                         <ListItemText primary={name} />
                     </MenuItem>
                 ))}

@@ -85,7 +85,7 @@ export default function MyFoodPage() {
     >
         <h1>LET'S COUNT A DISH</h1>
         <div style={{ width: "100%", display: "flex" }}>
-            <EstimateFoodCalculator />
+            <EstimateFoodCalculator usersFoodList={usersFoodList}/>
         </div>
       <h1>MY FOOD </h1>
       <div
