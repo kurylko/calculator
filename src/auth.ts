@@ -1,23 +1,32 @@
-import {auth} from "./firebase";
+import { auth } from "./firebase";
 
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 export interface AuthProps {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 
-export const doCreateUserWithEmailAndPassword = async ({email, password} : AuthProps) => {
-    return createUserWithEmailAndPassword (auth, email, password);
-}
+export const doCreateUserWithEmailAndPassword = async ({
+  email,
+  password,
+}: AuthProps) => {
+  return createUserWithEmailAndPassword(auth, email, password);
+};
 
-export const doSignInWithEmailAndPassword = async ({email, password} : AuthProps) => {
-    return signInWithEmailAndPassword(auth, email, password);
-}
+export const doSignInWithEmailAndPassword = async ({
+  email,
+  password,
+}: AuthProps) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
 
 export const doSignOut = () => {
-    return auth.signOut();
-}
+  return auth.signOut();
+};
 
 // export const doPasswordReset = (email) => {
 //     return sendPasswordResetEmail(auth, email);
