@@ -22,9 +22,8 @@ interface IFoodEstimateValues {
   carbohydrate?: string;
   calories?: string;
 }
-
-interface EstimateCalculationResult {
-  foodName: string,
+export interface EstimateCalculationResult {
+  foodName: string;
   fat?: string;
   protein?: string;
   carbohydrate?: string;
@@ -66,7 +65,6 @@ const EstimateFoodCalculator = ({
     setProducts(typeof value === "string" ? value.split(",") : value);
   };
 
-
   // Inputs with estimate nutrition values //
 
   function handleChangeInputs(e: React.ChangeEvent<HTMLInputElement>) {
@@ -77,19 +75,27 @@ const EstimateFoodCalculator = ({
     });
   }
 
- // For calculations result //
+  // For calculations result //
+
+  const [result, setResult] = useState<EstimateCalculationResult | null>(null);
 
   const handleSubmitCalculation = () => {
-    const result = getCalculateEstimateProducts(products, usersFoodList, estimateFoodInputsValues);
-    console.log("calculated for:", products, getCalculateEstimateProducts(products, usersFoodList, estimateFoodInputsValues));
+    const calculationResult = getCalculateEstimateProducts(
+      products,
+      usersFoodList,
+      estimateFoodInputsValues,
+    );
+    console.log("calculated for:", products, result);
     setEstimateFoodInputsValues({
       fat: "",
       protein: "",
       carbohydrate: "",
-      calories: ""
-    })
-    return result;
+      calories: "",
+    });
+    setResult(calculationResult);
   };
+
+  console.log("result", result);
 
   // My calculations //
 
@@ -107,19 +113,26 @@ const EstimateFoodCalculator = ({
         estimateFoodInputsValues.calories as string,
       );
 
-      const caloriesCalculated = matchingFoods.reduce((totalCaloriesPerKg, item) => {
-        const nutriValues = getNutriValuesPerKg(item);
-        if (nutriValues) {
-          const caloriesValue = parseFloat(nutriValues.caloriesValuePerKg);
-          return totalCaloriesPerKg + (isNaN(caloriesValue) ? 0 : caloriesValue);
-        }
-        return totalCaloriesPerKg;
-      }, 0);
+      const caloriesCalculated = matchingFoods.reduce(
+        (totalCaloriesPerKg, item) => {
+          const nutriValues = getNutriValuesPerKg(item);
+          if (nutriValues) {
+            const caloriesValue = parseFloat(nutriValues.caloriesValuePerKg);
+            return (
+              totalCaloriesPerKg + (isNaN(caloriesValue) ? 0 : caloriesValue)
+            );
+          }
+          return totalCaloriesPerKg;
+        },
+        0,
+      );
 
-      const calculatedWeight = Math.round((estimateCaloriesNumber / caloriesCalculated) * 1000);
+      const calculatedWeight = Math.round(
+        (estimateCaloriesNumber / caloriesCalculated) * 1000,
+      );
 
       const result: EstimateCalculationResult = {
-        foodName: "products",
+        foodName: products.join(" "),
         fat: "",
         protein: "",
         carbohydrate: "",
@@ -141,7 +154,6 @@ const EstimateFoodCalculator = ({
 
     return null;
   }
-
 
   return (
     <div
@@ -219,11 +231,10 @@ const EstimateFoodCalculator = ({
       >
         Calculate
       </Button>
-      <Typography variant="h5" component="div">
-        Calculated nutrition values of {products}:
+      <Typography variant="h5" component="div" sx={{marginBottom: "20px"}}>
+        {`Calculated nutrition values of ${products} (for ${result?.calories} kcal):`}
       </Typography>
-      <CalculationResultDisplay
-      />
+      <CalculationResultDisplay result={result} />
     </div>
   );
 };

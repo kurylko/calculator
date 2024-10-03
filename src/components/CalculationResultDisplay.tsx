@@ -9,17 +9,19 @@ import BakeryDiningIcon from "@mui/icons-material/BakeryDining";
 import EggAltIcon from "@mui/icons-material/EggAlt";
 import ScaleIcon from "@mui/icons-material/Scale";
 import CalculateIcon from "@mui/icons-material/Calculate";
+import { EstimateCalculationResult } from "./../components/EstimateFoodCalculator";
 
 interface CalculationResultDisplayProps {
-    foodName: string,
-    fat: string,
-    protein: string,
-    carbohydrate: string,
-    calories: string,
-    weight: string
+  result: EstimateCalculationResult | null;
 }
 
-export default function CalculationResultDisplay() {
+export default function CalculationResultDisplay({
+  result,
+}: CalculationResultDisplayProps) {
+  if (result == null) {
+    return null;
+  }
+
   return (
     <List
       sx={{
@@ -30,20 +32,23 @@ export default function CalculationResultDisplay() {
         gap: "20px",
       }}
     >
-        <ListItem>
-            <ListItemAvatar>
-            </ListItemAvatar>
-            <ListItemText
-                primary="product"
-                secondary=""
-                sx={{
-                    width: "fit-content",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                }}
-            />
-        </ListItem>
+      <ListItem>
+        <ListItemAvatar></ListItemAvatar>
+        <ListItemText
+          primary={result.foodName}
+          primaryTypographyProps={{
+              sx: {
+                  width: "fit-content",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  fontWeight: "bold",
+                  fontSize: "1.1rem",
+                  lineHeight: "1.5"
+              }
+          }}
+        />
+      </ListItem>
       <ListItem>
         <ListItemAvatar>
           <Avatar>
@@ -51,7 +56,7 @@ export default function CalculationResultDisplay() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary="Fat"
+          primary={result.fat}
           secondary="fat,g"
           sx={{
             width: "fit-content",
@@ -68,7 +73,7 @@ export default function CalculationResultDisplay() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary="Protein"
+          primary={result.protein}
           secondary="protein,g"
           sx={{
             width: "fit-content",
@@ -85,7 +90,7 @@ export default function CalculationResultDisplay() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary="Carbohydrates"
+          primary={result.carbohydrate}
           secondary="carbohydrate,g"
           sx={{
             width: "fit-content",
@@ -102,7 +107,7 @@ export default function CalculationResultDisplay() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary="Calories"
+          primary={result.calories}
           secondary="calories, kcal"
           sx={{
             width: "fit-content",
@@ -119,7 +124,7 @@ export default function CalculationResultDisplay() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary="Weight"
+          primary={result.weight}
           secondary="weight, g"
           sx={{
             width: "fit-content",
