@@ -98,7 +98,7 @@ const EstimateFoodCalculator = ({
         return totalCaloriesPerKg;
       }, 0);
 
-      const calculatedWeight = (estimateCaloriesNumber / caloriesCalculated) * 1000;
+      const calculatedWeight = Math.round((estimateCaloriesNumber / caloriesCalculated) * 1000);
 
       const result: EstimateCalculationResult = {
         fat: "",
