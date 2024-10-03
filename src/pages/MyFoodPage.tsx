@@ -83,6 +83,10 @@ export default function MyFoodPage() {
         marginLeft: "50px",
       }}
     >
+        <h1>LET'S COUNT A DISH</h1>
+        <div style={{ width: "100%", display: "flex" }}>
+            <EstimateFoodCalculator />
+        </div>
       <h1>MY FOOD </h1>
       <div
         style={{
@@ -108,10 +112,6 @@ export default function MyFoodPage() {
               onClick={() => handleDeleteProduct(item)}
             />
           ))}
-      </div>
-      <h1>Let's count a dish</h1>
-      <div style={{ width: "100%", display: "flex" }}>
-        <EstimateFoodCalculator />
       </div>
     </div>
   );
