@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useFetchProducts from "../hooks/useFetchProducts";
 import { SavedFoodCard } from "../components/SavedFoodCard";
 import { useAuth } from "../contexts/authContext/authContext";
