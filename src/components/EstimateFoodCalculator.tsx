@@ -299,5 +299,3 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
     </div>
   );
 };
-
-export default EstimateFoodCalculator;
