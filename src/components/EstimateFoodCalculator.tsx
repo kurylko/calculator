@@ -55,10 +55,24 @@ const EstimateFoodCalculator = ({
       calories: "",
     });
 
-  // Dropdown with products //
+  // Dropdown with SINGLE product to pick //
+  const [selectedProduct, setSelectedProduct] = React.useState<string>("");
+
+  const handleChangeSingleProduct = (
+    event: SelectChangeEvent<typeof selectedProduct>,
+  ) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedProduct(value);
+  };
+
+  // Dropdown with MULTIPLE products //
   const [products, setProducts] = React.useState<string[]>([]);
 
-  const handleChange = (event: SelectChangeEvent<typeof products>) => {
+  const handleChangeMultipleProducts = (
+    event: SelectChangeEvent<typeof products>,
+  ) => {
     const {
       target: { value },
     } = event;
@@ -80,24 +94,49 @@ const EstimateFoodCalculator = ({
   const [result, setResult] = useState<EstimateCalculationResult | null>(null);
 
   const handleSubmitCalculation = () => {
-    const calculationResult = getCalculateEstimateProducts(
-      products,
-      usersFoodList,
-      estimateFoodInputsValues,
-    );
-    console.log("calculated for:", products, result);
-    setEstimateFoodInputsValues({
-      fat: "",
-      protein: "",
-      carbohydrate: "",
-      calories: "",
-    });
-    setResult(calculationResult);
+    if (selectedProduct) {
+      console.log("calculated SINGLE product for:", products, result);
+      const singleProductCalculationResult = getCalculateSingleEstimateProduct(selectedProduct,
+          usersFoodList,
+          estimateFoodInputsValues,);
+      setResult(singleProductCalculationResult);
+    } else {
+      const calculationResult = getCalculateEstimateProducts(
+        products,
+        usersFoodList,
+        estimateFoodInputsValues,
+      );
+      console.log("calculated MULTIPLE for:", products, result);
+      setEstimateFoodInputsValues({
+        fat: "",
+        protein: "",
+        carbohydrate: "",
+        calories: "",
+      });
+      setResult(calculationResult);
+    }
   };
 
-  console.log("result", result);
+          // My calculations //
 
-  // My calculations //
+  function getCalculateSingleEstimateProduct(
+    selectedProduct: string,
+    usersFoodList: IUserFoodItem[],
+    estimateFoodInputsValues: IFoodEstimateValues,
+  ): EstimateCalculationResult | null {
+    console.log("Single food result:", selectedProduct);
+
+    const singleProductCalculationResult = {
+      foodName: selectedProduct,
+      fat: "string",
+      protein: "string",
+      carbohydrate: "string",
+      calories: "string",
+      weight: "string",
+    }
+    return singleProductCalculationResult;
+
+  }
 
   function getCalculateEstimateProducts(
     products: string[],
@@ -124,8 +163,8 @@ const EstimateFoodCalculator = ({
               caloriesValue: parseFloat(nutriValues.caloriesValuePerKg),
             };
             return (
-              totalValuesPerKg
-              //(isNaN(valuesPerKg.caloriesValue) ? 0 : valuesPerKg.caloriesValue)
+              totalValuesPerKg +
+              (isNaN(valuesPerKg.caloriesValue) ? 0 : valuesPerKg.caloriesValue)
             );
           }
           return totalValuesPerKg;
@@ -178,13 +217,35 @@ const EstimateFoodCalculator = ({
       }}
     >
       <FormControl sx={{ m: 1, width: 300, marginLeft: "0" }}>
-        <InputLabel id="products-multiple-checkbox-label">Products</InputLabel>
+        <InputLabel id="products-single-checkbox-label">
+          Pick one Product
+        </InputLabel>
+        <Select
+          labelId="products-single-checkbox-label"
+          id="products-single-checkbox"
+          value={selectedProduct}
+          onChange={handleChangeSingleProduct}
+          input={<OutlinedInput label="Product" />}
+          MenuProps={MenuProps}
+        >
+          {productNames.map((product) => (
+            <MenuItem key={product} value={product}>
+              {product}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl sx={{ m: 1, width: 300, marginLeft: "0" }}>
+        <InputLabel id="products-multiple-checkbox-label">
+          Pick multiple Products
+        </InputLabel>
         <Select
           labelId="products-multiple-checkbox-label"
           id="products-multiple-checkbox"
           multiple
           value={products}
-          onChange={handleChange}
+          onChange={handleChangeMultipleProducts}
           input={<OutlinedInput label="Product" />}
           renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
