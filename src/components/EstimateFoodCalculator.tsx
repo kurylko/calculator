@@ -129,19 +129,17 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
     const calculateForEstimateFat = () => {
       const fatValue = parseFloat(nutriValues.fatValuePerKg);
       const calculatedWeight = Math.round(
-          (parseFloat(estimateFoodInputsValues.fat as string) /
-              fatValue) *
-          1000,
+        (parseFloat(estimateFoodInputsValues.fat as string) / fatValue) * 1000,
       );
       const calculatedProtein = Math.round(
-          (parseFloat(nutriValues.proteinValuePerKg) / 10000) * calculatedWeight,
+        (parseFloat(nutriValues.proteinValuePerKg) / 10000) * calculatedWeight,
       );
       const calculatedCarbohydrate = Math.round(
-          (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
+        (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
           calculatedWeight,
       );
       const calculatedCalories = Math.round(
-          (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
+        (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
           calculatedWeight,
       );
       return {
@@ -157,19 +155,19 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
     const calculateForEstimateProtein = () => {
       const proteinValue = parseFloat(nutriValues.proteinValuePerKg);
       const calculatedWeight = Math.round(
-          (parseFloat(estimateFoodInputsValues.protein as string) /
-              proteinValue) *
+        (parseFloat(estimateFoodInputsValues.protein as string) /
+          proteinValue) *
           1000,
       );
       const calculatedFat = Math.round(
-          (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
+        (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
       );
       const calculatedCarbohydrate = Math.round(
-          (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
+        (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
           calculatedWeight,
       );
       const calculatedCalories = Math.round(
-          (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
+        (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
           calculatedWeight,
       );
       return {
@@ -185,20 +183,18 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
     const calculateForEstimateCarbohydrate = () => {
       const carbohydrateValue = parseFloat(nutriValues.carbohydrateValuePerKg);
       const calculatedWeight = Math.round(
-          (parseFloat(estimateFoodInputsValues.carbohydrate as string) /
-              carbohydrateValue) *
+        (parseFloat(estimateFoodInputsValues.carbohydrate as string) /
+          carbohydrateValue) *
           1000,
       );
       const calculatedFat = Math.round(
-          (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
+        (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
       );
       const calculatedProtein = Math.round(
-          (parseFloat(nutriValues.proteinValuePerKg) / 10000) *
-          calculatedWeight,
+        (parseFloat(nutriValues.proteinValuePerKg) / 10000) * calculatedWeight,
       );
       const calculatedCalories = Math.round(
-          (parseFloat(nutriValues.caloriesValuePerKg) / 10000) *
-          calculatedWeight,
+        (parseFloat(nutriValues.caloriesValuePerKg) / 10000) * calculatedWeight,
       );
       return {
         foodName: selectedProduct,
@@ -210,35 +206,35 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
       };
     };
 
-     if (
-        estimateFoodInputsValues.fat !== "" &&
-        estimateFoodInputsValues.carbohydrate === "" &&
-        estimateFoodInputsValues.protein === "" &&
-        estimateFoodInputsValues.calories === ""
-    ){
+    if (
+      estimateFoodInputsValues.fat !== "" &&
+      estimateFoodInputsValues.carbohydrate === "" &&
+      estimateFoodInputsValues.protein === "" &&
+      estimateFoodInputsValues.calories === ""
+    ) {
       return calculateForEstimateFat();
     } else if (
-        estimateFoodInputsValues.fat === "" &&
-        estimateFoodInputsValues.carbohydrate !== "" &&
-        estimateFoodInputsValues.protein === "" &&
-        estimateFoodInputsValues.calories === ""
-    ){
+      estimateFoodInputsValues.fat === "" &&
+      estimateFoodInputsValues.carbohydrate !== "" &&
+      estimateFoodInputsValues.protein === "" &&
+      estimateFoodInputsValues.calories === ""
+    ) {
       return calculateForEstimateCarbohydrate();
     } else if (
-        estimateFoodInputsValues.fat === "" &&
-        estimateFoodInputsValues.carbohydrate === "" &&
-        estimateFoodInputsValues.protein !== "" &&
-        estimateFoodInputsValues.calories === ""
-    ){
+      estimateFoodInputsValues.fat === "" &&
+      estimateFoodInputsValues.carbohydrate === "" &&
+      estimateFoodInputsValues.protein !== "" &&
+      estimateFoodInputsValues.calories === ""
+    ) {
       return calculateForEstimateProtein();
     } else if (
-         estimateFoodInputsValues.fat === "" &&
-         estimateFoodInputsValues.carbohydrate === "" &&
-         estimateFoodInputsValues.protein === "" &&
-         estimateFoodInputsValues.calories !== ""
-     ) {
-       return calculateForEstimateCalories();
-     }
+      estimateFoodInputsValues.fat === "" &&
+      estimateFoodInputsValues.carbohydrate === "" &&
+      estimateFoodInputsValues.protein === "" &&
+      estimateFoodInputsValues.calories !== ""
+    ) {
+      return calculateForEstimateCalories();
+    }
 
     return {
       foodName: selectedProduct,
@@ -349,7 +345,14 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
   };
 
   return (
-    <div style={{ width: "80%", marginBottom: "50px" }}>
+    <div
+      style={{
+        width: "80%",
+        marginBottom: "50px",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="products-single-checkbox-label">
           Pick one Product
@@ -439,16 +442,17 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
       >
         Calculate
       </Button>
-
-      <Typography
-        variant="h5"
-        component="div"
-        sx={{ marginBottom: "20px", marginTop: "30px" }}
-      >
-        {selectedProduct
-          ? `Calculated nutrition values of ${selectedProduct}`
-          : `Calculated nutrition values of ${products.join(", ")}`}
-      </Typography>
+      {result && (
+        <Typography
+          variant="h5"
+          component="div"
+          sx={{ marginBottom: "20px", marginTop: "30px" }}
+        >
+          {selectedProduct
+            ? `Calculated nutrition values of ${selectedProduct}`
+            : `Calculated nutrition values of ${products.join(", ")}`}
+        </Typography>
+      )}
 
       <CalculationResultDisplay result={result} />
     </div>
