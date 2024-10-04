@@ -26,7 +26,7 @@ const FoodTable: React.FC<FoodTableProps> = ({ lastInputFoodItems }) => {
           <TableHead>
             <TableRow>
               <TableCell>Food</TableCell>
-              <TableCell align="right">Calories (/kg)</TableCell>
+              <TableCell align="right">Calories (kcal/kg)</TableCell>
               <TableCell align="right">Fat&nbsp;(g, /kg)</TableCell>
               <TableCell align="right">Carbs&nbsp;(g, /kg)</TableCell>
               <TableCell align="right">Protein&nbsp;(g, /kg)</TableCell>

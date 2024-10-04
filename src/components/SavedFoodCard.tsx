@@ -96,7 +96,7 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
           DELETE
         </Button>
               <Typography gutterBottom sx={{ color: "text.secondary", fontSize: 14 }}>
-                  {`${calories} Cal`}
+                  {`${calories} kcal`}
               </Typography>
               <Typography variant="h5" component="div">
                   {foodName}
@@ -113,7 +113,7 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
               <BackFace>
                   <CardContent>
                   <Typography gutterBottom sx={{ color: "text.secondary", fontSize: 14 }}>
-                      {`${nutriValues?.caloriesValuePerKg} Cal`}
+                      {`${nutriValues?.caloriesValuePerKg} kcal`}
                   </Typography>
                       <Typography variant="h5" component="div">
                           {foodName}
