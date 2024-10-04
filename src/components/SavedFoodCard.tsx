@@ -1,32 +1,130 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import {Button, styled} from "@mui/material";
+import { INutriScorePerKg } from "../utils/getNutriValues";
+import {useState} from "react";
 
 interface SavedFoodCardProps {
-    foodName: string,
-    fat: string;
-    protein: string;
-    carbohydrate: string;
-    calories: string;
-    weight: string;
+  foodName: string;
+  fat: string;
+  protein: string;
+  carbohydrate: string;
+  calories: string;
+  weight: string;
+  onClick?: () => void;
+  nutriValues?: INutriScorePerKg | null;
 }
 
-export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({foodName, fat, calories, carbohydrate, protein, weight})  => {
-    return (
-        <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                    {`${calories} Cal`}
-                </Typography>
-                <Typography variant="h5" component="div">
-                    {foodName}
-                </Typography>
-                <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{`${weight} g`}</Typography>
-                <Typography variant="body2">
-                    {`Fat: ${fat}  Protein: ${protein}  Carbs: ${carbohydrate}`}
-                </Typography>
-            </CardContent>
-        </Card>
-    );
+interface FlippingCardProps {
+    flip: boolean;
 }
+
+const CardContainer = styled('div')({
+    position: 'relative',
+    width: '300px',
+    height: '170px',
+    perspective: '1000px',
+});
+
+const FlippingCard = styled('div')<FlippingCardProps>(({ flip }) => ({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    padding: "0",
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+    borderRadius: '8px',
+    transition: 'transform 0.6s',
+    transformStyle: 'preserve-3d',
+    transform: flip ? 'rotateY(180deg)' : 'rotateY(0deg)',
+}));
+
+const CardFace = styled(CardContent)({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backfaceVisibility: 'hidden',
+});
+
+const FrontFace = styled(CardFace)({
+    transform: 'rotateY(0deg)',
+    padding: "0",
+});
+
+const BackFace = styled(CardFace)({
+    transform: 'rotateY(180deg)',
+    padding: "0",
+});
+
+export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
+  foodName,
+  fat,
+  calories,
+  carbohydrate,
+  protein,
+  weight,
+  onClick,
+  nutriValues,
+}) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+  return (
+      <CardContainer
+           onMouseEnter={() => setIsHovered(true)}
+           onMouseLeave={() => setIsHovered(false)}
+      >
+          <FlippingCard flip={isHovered}>
+      <FrontFace>
+          <CardContent>
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 12,
+            padding: "2px 4px",
+            minWidth: "24",
+            height: "24",
+            fontSize: "0.9rem",
+            lineHeight: "1.2",
+            borderRadius: "4px",
+          }}
+          onClick={onClick}
+        >
+          DELETE
+        </Button>
+              <Typography gutterBottom sx={{ color: "text.secondary", fontSize: 14 }}>
+                  {`${calories} kcal`}
+              </Typography>
+              <Typography variant="h5" component="div">
+                  {foodName}
+              </Typography>
+              <Typography
+                  sx={{ color: "text.secondary", mb: 1.5 }}
+              >{`${weight} g`}</Typography>
+              <Typography variant="body2">
+                  {`Fat: ${fat}g  Protein: ${protein}g  Carbs: ${carbohydrate}g`}
+              </Typography>
+          </CardContent>
+      </FrontFace>
+
+              <BackFace>
+                  <CardContent>
+                  <Typography gutterBottom sx={{ color: "text.secondary", fontSize: 14 }}>
+                      {`${nutriValues?.caloriesValuePerKg} kcal`}
+                  </Typography>
+                      <Typography variant="h5" component="div">
+                          {foodName}
+                      </Typography>
+                      <Typography sx={{ color: "text.secondary", mb: 1.5 }}>1 kg</Typography>
+                      <Typography variant="body2">
+                          {`Fat: ${nutriValues?.fatValuePerKg}g  Protein: ${nutriValues?.proteinValuePerKg}g  Carbs: ${nutriValues?.carbohydrateValuePerKg}g`
+                              }
+                      </Typography>
+                  </CardContent>
+              </BackFace>
+          </FlippingCard>
+      </CardContainer>
+  );
+};
