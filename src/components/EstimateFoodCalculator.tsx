@@ -64,10 +64,10 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
   };
 
   // Handle change for multiple products
-  const handleChangeMultipleProducts = (event: SelectChangeEvent<string[]>) => {
-    const value = event.target.value;
-    setProducts(typeof value === "string" ? value.split(",") : value);
-  };
+  // const handleChangeMultipleProducts = (event: SelectChangeEvent<string[]>) => {
+  //   const value = event.target.value;
+  //   setProducts(typeof value === "string" ? value.split(",") : value);
+  // };
 
   // Handle change for input fields
   const handleChangeInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -339,7 +339,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
         carbohydrate: "",
         calories: "",
       });
-      console.log("Multiple calculation");
+      console.log("Multiple calculation", setProducts(products));
       setResult(calculationResult);
     }
   };
