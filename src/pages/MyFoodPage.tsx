@@ -5,9 +5,8 @@ import { useAuth } from "../contexts/authContext/authContext";
 import { User as FirebaseUser } from "firebase/auth";
 import { IUserFoodItem } from "../interfaces/FoodItem";
 import useDeleteProduct from "../hooks/useDeleteProduct";
-import { TextField } from "@mui/material";
-import EstimateFoodCalculator from "../components/EstimateFoodCalculator";
-import { getNutriValuesPerKg, INutriScorePerKg } from "../utils/getNutriValues";
+import { EstimateFoodCalculator } from "../components/EstimateFoodCalculator";
+import { getNutriValuesPerKg } from "../utils/getNutriValues";
 
 export default function MyFoodPage() {
   const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
