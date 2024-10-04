@@ -5,8 +5,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Checkbox from "@mui/material/Checkbox";
-import ListItemText from "@mui/material/ListItemText";
 import { IUserFoodItem } from "../interfaces/FoodItem";
 import { getNutriValuesPerKg } from "../utils/getNutriValues";
 import CalculationResultDisplay from "./CalculationResultDisplay";
@@ -81,6 +79,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
   };
 
   // Calculate single product nutrition estimate
+
   const getCalculateSingleEstimateProduct = (
     selectedProduct: string,
     usersFoodList: IUserFoodItem[],
@@ -90,29 +89,60 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
       (item) => item.foodName === selectedProduct,
     );
 
-    if (matchedProduct) {
-      const nutriValues = getNutriValuesPerKg(matchedProduct);
-      if (nutriValues) {
-        const caloriesValue = parseFloat(nutriValues.caloriesValuePerKg);
-
-        const calculatedWeight = Math.round(
-          (parseFloat(estimateFoodInputsValues.calories as string) /
-            caloriesValue) *
-            1000,
-        );
-
-        return {
-          foodName: selectedProduct,
-          fat: nutriValues.fatValuePerKg,
-          protein: nutriValues.proteinValuePerKg,
-          carbohydrate: nutriValues.carbohydrateValuePerKg,
-          calories: estimateFoodInputsValues.calories,
-          weight: `${calculatedWeight}g`,
-        };
-      }
+    if (!matchedProduct) {
+      return null;
     }
 
-    return null;
+    const nutriValues = getNutriValuesPerKg(matchedProduct);
+    if (!nutriValues) {
+      return null;
+    }
+
+    const calculateForEstimateCalories = () => {
+      const caloriesValue = parseFloat(nutriValues.caloriesValuePerKg);
+      const calculatedWeight = Math.round(
+        (parseFloat(estimateFoodInputsValues.calories as string) /
+          caloriesValue) *
+          1000,
+      );
+      const calculatedFat = Math.round(
+        (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
+      );
+      const calculatedProtein = Math.round(
+        (parseFloat(nutriValues.proteinValuePerKg) / 10000) * calculatedWeight,
+      );
+      const calculatedCarbohydrate = Math.round(
+        (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
+          calculatedWeight,
+      );
+
+      return {
+        foodName: selectedProduct,
+        fat: `${calculatedFat}`,
+        protein: `${calculatedProtein}`,
+        carbohydrate: `${calculatedCarbohydrate}`,
+        calories: estimateFoodInputsValues.calories,
+        weight: `${calculatedWeight}`,
+      };
+    };
+
+    if (
+      estimateFoodInputsValues.fat === "" &&
+      estimateFoodInputsValues.carbohydrate === "" &&
+      estimateFoodInputsValues.protein === "" &&
+      estimateFoodInputsValues.calories !== ""
+    ) {
+      return calculateForEstimateCalories();
+    }
+
+    return {
+      foodName: selectedProduct,
+      fat: nutriValues.fatValuePerKg,
+      protein: nutriValues.proteinValuePerKg,
+      carbohydrate: nutriValues.carbohydrateValuePerKg,
+      calories: estimateFoodInputsValues.calories,
+      weight: "N/A",
+    };
   };
 
   // Calculate multiple products
@@ -174,12 +204,26 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
   };
 
   // Handle form submission for calculation
+
   const handleSubmitCalculation = () => {
+    const filledInputsCount = Object.values(estimateFoodInputsValues).filter(
+      (value) => value.trim() !== "",
+    ).length;
+    if (filledInputsCount !== 1) {
+      alert("Please fill in only one field to submit.");
+      return;
+    }
+
     if (selectedProduct) {
       const singleProductCalculationResult = getCalculateSingleEstimateProduct(
         selectedProduct,
         usersFoodList,
         estimateFoodInputsValues,
+      );
+      console.log(
+        "Single calculation",
+        selectedProduct,
+        singleProductCalculationResult,
       );
       setResult(singleProductCalculationResult);
     } else {
@@ -194,6 +238,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
         carbohydrate: "",
         calories: "",
       });
+      console.log("Multiple calculation");
       setResult(calculationResult);
     }
   };
@@ -220,28 +265,28 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
         </Select>
       </FormControl>
 
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="products-multiple-checkbox-label">
-          Pick multiple Products
-        </InputLabel>
-        <Select
-          labelId="products-multiple-checkbox-label"
-          id="products-multiple-checkbox"
-          multiple
-          value={products}
-          onChange={handleChangeMultipleProducts}
-          input={<OutlinedInput label="Product" />}
-          renderValue={(selected) => selected.join(", ")}
-          MenuProps={MenuProps}
-        >
-          {productNames.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={products.includes(name)} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      {/*<FormControl sx={{ m: 1, width: 300 }}>*/}
+      {/*  <InputLabel id="products-multiple-checkbox-label">*/}
+      {/*    Pick multiple Products*/}
+      {/*  </InputLabel>*/}
+      {/*  <Select*/}
+      {/*    labelId="products-multiple-checkbox-label"*/}
+      {/*    id="products-multiple-checkbox"*/}
+      {/*    multiple*/}
+      {/*    value={products}*/}
+      {/*    onChange={handleChangeMultipleProducts}*/}
+      {/*    input={<OutlinedInput label="Product" />}*/}
+      {/*    renderValue={(selected) => selected.join(", ")}*/}
+      {/*    MenuProps={MenuProps}*/}
+      {/*  >*/}
+      {/*    {productNames.map((name) => (*/}
+      {/*      <MenuItem key={name} value={name}>*/}
+      {/*        <Checkbox checked={products.includes(name)} />*/}
+      {/*        <ListItemText primary={name} />*/}
+      {/*      </MenuItem>*/}
+      {/*    ))}*/}
+      {/*  </Select>*/}
+      {/*</FormControl>*/}
 
       <form
         style={{
@@ -290,9 +335,14 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
         Calculate
       </Button>
 
-      <Typography variant="h5" component="div" sx={{ marginBottom: "20px" }}>
-        Calculated nutrition values of {products.join(", ")} (for{" "}
-        {result?.calories} kcal):
+      <Typography
+        variant="h5"
+        component="div"
+        sx={{ marginBottom: "20px", marginTop: "30px" }}
+      >
+        {selectedProduct
+          ? `Calculated nutrition values of ${selectedProduct}`
+          : `Calculated nutrition values of ${products.join(", ")}`}
       </Typography>
 
       <CalculationResultDisplay result={result} />

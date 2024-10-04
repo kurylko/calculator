@@ -93,9 +93,9 @@ export default function FoodInfoPage() {
     });
   };
 
-  useEffect(() => {
-    console.log("lastInputFoodItems updated:", lastInputFoodItems);
-  }, [lastInputFoodItems]);
+  // useEffect(() => {
+  //   console.log("lastInputFoodItems updated:", lastInputFoodItems);
+  // }, [lastInputFoodItems]);
 
   const parsedFoodItems = useMemo(() => {
     return lastInputFoodItems.map((item) => ({
