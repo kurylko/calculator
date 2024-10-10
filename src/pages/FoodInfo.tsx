@@ -10,7 +10,6 @@ import { PdfFoodTable } from "../components/PdfFoodTable";
 import { pdf } from "@react-pdf/renderer";
 import usePostProduct from "../hooks/usePostProducts";
 import { useAuth } from "../contexts/authContext/authContext";
-import FormControl from "@mui/material/FormControl";
 
 export default function FoodInfoPage() {
   const lastInputFoodItemString = localStorage.getItem("lastInputFood");
