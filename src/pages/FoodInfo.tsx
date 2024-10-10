@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -115,8 +115,8 @@ export default function FoodInfoPage() {
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         width: "100%",
         display: "flex",
         flexDirection: "column",
@@ -125,9 +125,9 @@ export default function FoodInfoPage() {
         paddingTop: "50px",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div
-          style={{
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -140,8 +140,9 @@ export default function FoodInfoPage() {
           >
             ADD FOOD INFO
           </h2>
-          <form
-            style={{
+          <Box
+            sx={{
+              width: "100%",
               display: "flex",
               flexWrap: "wrap",
               gap: "10px",
@@ -156,6 +157,14 @@ export default function FoodInfoPage() {
               name="foodName"
               value={foodInputsValues.foodName}
               onChange={handleChange}
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "100%",
+                  md: "70%",
+                  lg: "50%",
+                },
+              }}
             />
             <TextField
               required
@@ -202,9 +211,18 @@ export default function FoodInfoPage() {
               value={foodInputsValues.weight}
               onChange={handleChange}
             />
-          </form>
-          <div
-            style={{ display: "flex", justifyContent: "flex-end", gap: "16px" }}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "16px",
+              justifyContent: {
+                xs: "flex-start",
+                sm: "flex-start",
+                md: "flex-end",
+                lg: "flex-end",
+              },
+            }}
           >
             <Button variant="contained" onClick={handleSubmit}>
               Add food info
@@ -212,12 +230,12 @@ export default function FoodInfoPage() {
             <Link to={"/"} style={{ textDecoration: "none" }}>
               <Button variant="contained">Cancel</Button>
             </Link>
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
 
-      <div
-        style={{
+      <Box
+        sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -235,14 +253,21 @@ export default function FoodInfoPage() {
         )}
         {lastInputFoodItems.length > 0 && (
           <Button
-            style={{ alignSelf: "flex-end" }}
+            sx={{
+              alignSelf: {
+                xs: "flex-start",
+                sm: "flex-start",
+                md: "flex-end",
+                lg: "flex-end",
+              },
+            }}
             variant="outlined"
             onClick={savePDF}
           >
             Export as Pdf
           </Button>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
