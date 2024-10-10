@@ -28,8 +28,17 @@ export default function CalculationResultDisplay({
         width: "100%",
         maxWidth: 400,
         bgcolor: "background.paper",
-        display: "flex",
+        display: "grid",
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
         gap: "20px",
+        gridTemplateColumns: {
+          xs: "repeat(2, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(6, 1fr)",
+        },
       }}
     >
       <ListItem>
@@ -37,15 +46,15 @@ export default function CalculationResultDisplay({
         <ListItemText
           primary={result.foodName}
           primaryTypographyProps={{
-              sx: {
-                  width: "fit-content",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  fontWeight: "bold",
-                  fontSize: "1.1rem",
-                  lineHeight: "1.5"
-              }
+            sx: {
+              width: "fit-content",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              fontWeight: "bold",
+              fontSize: "1.1rem",
+              lineHeight: "1.5",
+            },
           }}
         />
       </ListItem>

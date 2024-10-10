@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -345,15 +345,15 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
   };
 
   return (
-    <div
-      style={{
-        width: "80%",
+    <Box
+      sx={{
+        width: "85%",
         marginBottom: "50px",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 300, margin: "0" }}>
         <InputLabel id="products-single-checkbox-label">
           Pick one Product
         </InputLabel>
@@ -396,8 +396,8 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
       {/*  </Select>*/}
       {/*</FormControl>*/}
 
-      <form
-        style={{
+      <Box
+        sx={{
           display: "flex",
           flexWrap: "wrap",
           gap: "10px",
@@ -433,15 +433,20 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
           value={estimateFoodInputsValues.calories}
           onChange={handleChangeInputs}
         />
-      </form>
+      </Box>
 
-      <Button
-        variant="contained"
-        onClick={handleSubmitCalculation}
-        style={{ width: "fit-content", alignSelf: "flex-end" }}
-      >
-        Calculate
-      </Button>
+        <Button
+          variant="contained"
+          onClick={handleSubmitCalculation}
+          sx={{ width: "fit-content", alignSelf: {
+              xs: "flex-start",
+              sm: "flex-start",
+              md: "flex-end",
+              lg: "flex-end",
+            } }}
+        >
+          Calculate
+        </Button>
       {result && (
         <Typography
           variant="h5"
@@ -455,6 +460,6 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
       )}
 
       <CalculationResultDisplay result={result} />
-    </div>
+    </Box>
   );
 };
