@@ -80,21 +80,23 @@ export default function MyFoodPage() {
         gap: "50px",
         alignItems: "center",
         paddingTop: "50px",
-        paddingLeft: "50px",
       }}
     >
       <h1>LET'S COUNT A DISH</h1>
-      <div style={{ width: "100%", display: "flex", justifyContent: "flex-start" }}>
+      <div
+        style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
         <EstimateFoodCalculator usersFoodList={usersFoodList} />
       </div>
       <h1>MY FOOD </h1>
       <div
         style={{
-          width: "100%",
+          width: "90%",
           display: "flex",
           flexWrap: "wrap",
           gap: "50px",
           alignItems: "center",
+          justifyContent: "center",
           marginTop: "10px",
           marginBottom: "50px",
         }}
