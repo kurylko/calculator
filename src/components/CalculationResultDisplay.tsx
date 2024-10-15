@@ -42,23 +42,6 @@ export default function CalculationResultDisplay({
       }}
     >
       <ListItem>
-        <ListItemAvatar></ListItemAvatar>
-        <ListItemText
-          primary={result.foodName}
-          primaryTypographyProps={{
-            sx: {
-              width: "fit-content",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              fontWeight: "bold",
-              fontSize: "1.1rem",
-              lineHeight: "1.5",
-            },
-          }}
-        />
-      </ListItem>
-      <ListItem>
         <ListItemAvatar>
           <Avatar>
             <EggAltIcon />
