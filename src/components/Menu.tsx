@@ -19,7 +19,7 @@ export default function Menu() {
   };
 
   return (
-    <div className="menu-container">
+    <Box className="menu-container">
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -60,6 +60,6 @@ export default function Menu() {
           </Toolbar>
         </AppBar>
       </Box>
-    </div>
+    </Box>
   );
 }
