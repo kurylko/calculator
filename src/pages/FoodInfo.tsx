@@ -132,7 +132,7 @@ export default function FoodInfoPage() {
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
-                        width: "85%",
+                        width: "90%",
                     }}
                 >
                     <Typography variant="h3"
@@ -143,12 +143,14 @@ export default function FoodInfoPage() {
                     </Typography>
                     <Box
                         sx={{
-                            width: "100%",
+                            width: {xs: "85%", sm: "85%", md: "100%", lg: "100%" },
                             display: "flex",
                             flexWrap: "wrap",
                             gap: "10px",
                             paddingBottom: "30px",
-                            marginBottom: "30px"
+                            marginBottom: "30px",
+                            alignItems: {xs: "center", sm: "center", md:"flex-start", lg:"flex-start"},
+                            justifyContent: {xs: "center", sm: "center", md:"flex-start", lg:"flex-start"},
                         }}
                     >
                         <TextField
