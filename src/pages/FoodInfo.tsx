@@ -152,7 +152,6 @@ export default function FoodInfoPage() {
                         }}
                     >
                         <TextField
-                            fullWidth
                             required
                             id="outlined-required"
                             label="Food name"
@@ -160,12 +159,7 @@ export default function FoodInfoPage() {
                             value={foodInputsValues.foodName}
                             onChange={handleChange}
                             sx={{
-                                width: {
-                                    xs: "100%",
-                                    sm: "100%",
-                                    md: "70%",
-                                    lg: "50%",
-                                },
+                                width: {xs: "90%", sm: "45%", md: "20%", lg: "20%"}
                             }}
                         />
                         <TextField
@@ -176,6 +170,9 @@ export default function FoodInfoPage() {
                             name="fat"
                             value={foodInputsValues.fat}
                             onChange={handleChange}
+                            sx={{
+                                width: {xs: "90%", sm: "45%", md: "20%", lg: "20%"}
+                            }}
                         />
                         <TextField
                             required
@@ -185,6 +182,9 @@ export default function FoodInfoPage() {
                             name="protein"
                             value={foodInputsValues.protein}
                             onChange={handleChange}
+                            sx={{
+                                width: {xs: "90%", sm: "45%", md: "20%", lg: "20%"}
+                            }}
                         />
                         <TextField
                             required
@@ -194,6 +194,9 @@ export default function FoodInfoPage() {
                             name="carbohydrate"
                             value={foodInputsValues.carbohydrate}
                             onChange={handleChange}
+                            sx={{
+                                width: {xs: "90%", sm: "45%", md: "20%", lg: "20%"}
+                            }}
                         />
                         <TextField
                             required
@@ -203,6 +206,9 @@ export default function FoodInfoPage() {
                             name="calories"
                             value={foodInputsValues.calories}
                             onChange={handleChange}
+                            sx={{
+                                width: {xs: "90%", sm: "45%", md: "20%", lg: "20%"}
+                            }}
                         />
                         <TextField
                             required
@@ -212,6 +218,9 @@ export default function FoodInfoPage() {
                             name="weight"
                             value={foodInputsValues.weight}
                             onChange={handleChange}
+                            sx={{
+                                width: {xs: "90%", sm: "45%", md: "20%", lg: "25%"}
+                            }}
                         />
                     </Box>
                     <Box
@@ -219,8 +228,8 @@ export default function FoodInfoPage() {
                             display: "flex",
                             gap: "16px",
                             justifyContent: {
-                                xs: "flex-start",
-                                sm: "flex-start",
+                                xs: "center",
+                                sm: "center",
                                 md: "flex-end",
                                 lg: "flex-end",
                             },
@@ -259,8 +268,8 @@ export default function FoodInfoPage() {
                     <Button
                         sx={{
                             alignSelf: {
-                                xs: "flex-start",
-                                sm: "flex-start",
+                                xs: "center",
+                                sm: "center",
                                 md: "flex-end",
                                 lg: "flex-end",
                             },
