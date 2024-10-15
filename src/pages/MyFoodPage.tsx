@@ -85,7 +85,7 @@ export default function MyFoodPage() {
             }}
         >
             <Box sx={{width: "85%", maxWidth: 700}}>
-                <Typography variant="h2">LET'S COUNT A DISH</Typography>
+                <Typography variant="h3">LET'S COUNT A DISH</Typography>
             </Box>
             <Box
                 style={{
@@ -98,7 +98,7 @@ export default function MyFoodPage() {
                 <EstimateFoodCalculator usersFoodList={usersFoodList}/>
             </Box>
             <Box sx={{width: "85%", maxWidth: 700}}>
-                <Typography variant="h2">MY FOOD</Typography>
+                <Typography variant="h3">MY FOOD</Typography>
             </Box>
             <Box
                 style={{
