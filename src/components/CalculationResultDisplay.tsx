@@ -9,6 +9,7 @@ import BakeryDiningIcon from "@mui/icons-material/BakeryDining";
 import EggAltIcon from "@mui/icons-material/EggAlt";
 import ScaleIcon from "@mui/icons-material/Scale";
 import CalculateIcon from "@mui/icons-material/Calculate";
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 import { EstimateCalculationResult } from "./../components/EstimateFoodCalculator";
 
 interface CalculationResultDisplayProps {
@@ -41,23 +42,6 @@ export default function CalculationResultDisplay({
         },
       }}
     >
-      <ListItem>
-        <ListItemAvatar></ListItemAvatar>
-        <ListItemText
-          primary={result.foodName}
-          primaryTypographyProps={{
-            sx: {
-              width: "fit-content",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              fontWeight: "bold",
-              fontSize: "1.1rem",
-              lineHeight: "1.5",
-            },
-          }}
-        />
-      </ListItem>
       <ListItem>
         <ListItemAvatar>
           <Avatar>
