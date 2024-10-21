@@ -65,7 +65,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
             return savedResults ? JSON.parse(savedResults) : [];
         });
 
-    const handleAddResult = (result: EstimateCalculationResult | null) => {
+    const handleAddResult = () => {
         if (!result) {
             return;
         }
