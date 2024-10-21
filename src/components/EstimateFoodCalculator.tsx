@@ -477,8 +477,14 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
                         : `Calculated nutrition values of ${products.join(", ")}`}
                 </Typography>
             )}
-
-            <CalculationResultDisplay result={result}/>
+            <Box sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center"
+            }}>
+                <CalculationResultDisplay result={result}/>
+                <Button variant="outlined" sx={{marginTop: "30px"}}>Save the result</Button>
+            </Box>
         </Box>
     );
 };
