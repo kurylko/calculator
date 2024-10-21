@@ -11,7 +11,7 @@ import ScaleIcon from "@mui/icons-material/Scale";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import { EstimateCalculationResult } from "./../components/EstimateFoodCalculator";
 
-interface CalculationResultDisplayProps {
+export interface CalculationResultDisplayProps {
   result: EstimateCalculationResult | null;
 }
 

@@ -9,6 +9,7 @@ import {EstimateFoodCalculator} from "../components/EstimateFoodCalculator";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 import {Box} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import {MySavedCalculations} from "../components/MySavedCalculations";
 
 export default function MyFoodPage() {
     const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
@@ -127,6 +128,9 @@ export default function MyFoodPage() {
                             nutriValues={getNutriValuesPerKg(item)}
                         />
                     ))}
+            </Box>
+            <Box>
+
             </Box>
         </Box>
     );

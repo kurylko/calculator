@@ -5,7 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, {SelectChangeEvent} from "@mui/material/Select";
-import {IUserFoodItem} from "../interfaces/FoodItem";
+import { IUserFoodItem} from "../interfaces/FoodItem";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 import CalculationResultDisplay from "./CalculationResultDisplay";
 
@@ -56,6 +56,30 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
     const [selectedProduct, setSelectedProduct] = useState<string>("");
     const [products, setProducts] = useState<string[]>([]);
     const [result, setResult] = useState<EstimateCalculationResult | null>(null);
+
+    // Array of calculation results in LocalStorage
+
+    const [savedResults, setSavedResults] = useState<EstimateCalculationResult[]>(
+        () => {
+            const savedResults = localStorage.getItem("savedCalculationResults");
+            return savedResults ? JSON.parse(savedResults) : [];
+        });
+
+    const handleAddResult = (result: EstimateCalculationResult | null) => {
+        if (!result) {
+            return;
+        }
+
+        setSavedResults((prevResults) => {
+            const updatedResults = [...prevResults, result];
+            localStorage.setItem("savedCalculationResults", JSON.stringify(updatedResults));
+            console.log('Item saved:', updatedResults);
+            console.log("saved:", savedResults);
+            return updatedResults;
+        });
+        setResult(null);
+    };
+
 
     // Handle change for single product
     const handleChangeSingleProduct = (event: SelectChangeEvent<string>) => {
@@ -344,6 +368,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
         }
     };
 
+
     return (
         <Box
             sx={{
@@ -483,7 +508,10 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
                 alignSelf: "center"
             }}>
                 <CalculationResultDisplay result={result}/>
-                <Button variant="outlined" sx={{marginTop: "30px"}}>Save the result</Button>
+                <Button
+                    sx={{marginTop: "30px"}}
+                    variant="outlined"
+                    onClick={handleAddResult}>Save the result</Button>
             </Box>
         </Box>
     );
