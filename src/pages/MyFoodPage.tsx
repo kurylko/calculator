@@ -74,8 +74,13 @@ export default function MyFoodPage() {
         }
     };
 
+    const [userCalculationResults, setUserCalculationResults] = useState([]);
     const calculationResults = localStorage.getItem("savedCalculationResults");
-    const userCalculationResults = calculationResults ? JSON.parse(calculationResults) : [];
+    useEffect(() => {
+        const parsedResults = calculationResults ? JSON.parse(calculationResults) : [];
+       setUserCalculationResults(parsedResults);
+    }, [calculationResults]);
+
 
 
     return (
@@ -133,7 +138,6 @@ export default function MyFoodPage() {
                         />
                     ))}
             </Box>
-
             <MySavedCalculations results={userCalculationResults}/>
         </Box>
     );
