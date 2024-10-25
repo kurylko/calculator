@@ -1,7 +1,7 @@
 // Function to calculate multiple products
-import {IUserFoodItem} from "../interfaces/FoodItem";
+import {IFoodEstimateValues, IUserFoodItem} from "../interfaces/FoodItem";
 import {getNutriValuesPerKg} from "./getNutriValues";
-import {EstimateCalculationResult, IFoodEstimateValues} from "../components/EstimateFoodCalculator";
+import {EstimateCalculationResult} from "../interfaces/EstimateCalculationResult";
 
 interface GetCalculateEstimateProductsProps {
     products: string[],

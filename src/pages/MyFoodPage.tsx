@@ -5,9 +5,6 @@ import {useAuth} from "../contexts/authContext/authContext";
 import {User as FirebaseUser} from "firebase/auth";
 import {IFoodEstimateValues, IFoodItem, IUserFoodItem} from "../interfaces/FoodItem";
 import useDeleteProduct from "../hooks/useDeleteProduct";
-import {
-    EstimateFoodCalculator,
-} from "../components/EstimateFoodCalculator";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 import {Box, Button} from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -97,7 +94,7 @@ export default function MyFoodPage() {
     const [products, setProducts] = useState<string[]>([]);
     const [result, setResult] = useState<EstimateCalculationResult | null>(null);
 
-    const handleAddResult = () => {
+    const handleSaveResult = () => {
         if (!result) {
             return;
         }
@@ -204,7 +201,6 @@ export default function MyFoodPage() {
 
     useEffect(() => {
         const parsedResults = calculationResults ? JSON.parse(calculationResults) : [];
-        console.log("ggg",parsedResults);
        setUserCalculationResults(parsedResults);
     }, [calculationResults]);
 
@@ -285,7 +281,7 @@ export default function MyFoodPage() {
                         <Button
                             sx={{ marginTop: "30px" }}
                             variant="outlined"
-                            onClick={handleAddResult}
+                            onClick={handleSaveResult}
                         >
                             Save the result
                         </Button>
