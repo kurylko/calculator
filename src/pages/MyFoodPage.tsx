@@ -83,7 +83,7 @@ export default function MyFoodPage() {
             ? JSON.parse(localStorageCalculations)
             : [];
         const updatedCalculationResults = calculationResults.filter(
-            (item) => item.foodName !== calculationResult.foodName,
+            (item) => item.calculationId !== calculationResult.calculationId,
         );
         localStorage.setItem(
             "savedCalculationResults",
@@ -92,20 +92,17 @@ export default function MyFoodPage() {
         setUserCalculationResults(updatedCalculationResults);
     };
 
-    // const handleDeleteCalculation = async (
-    //     calculationResult: EstimateCalculationResult,
-    // ): Promise<void> => {
-    //     if (calculationResult.id) {
-    //         await deleteProduct("products", foodItem);
-    //         const updatedFoodItemsFromDB = getUsersAddedFood(currentUser);
-    //         setUsersFoodList(updatedFoodItemsFromDB);
-    //     }
-    //     if (foodItem.foodName) {
-    //         deleteProductFromLocalStorage(foodItem);
-    //     } else {
-    //         console.error("No ID found for this food item");
-    //     }
-    // };
+    const handleDeleteCalculation = async (
+        calculationResult: EstimateCalculationResult,
+    ): Promise<void> => {
+        if (calculationResult.calculationId) {
+            await deleteCalculationFromLocalStorage(calculationResult);
+            const updatedCalculationResults = localStorage.getItem("savedCalculationResults");
+            setUserCalculationResults(updatedCalculationResults ? JSON.parse(updatedCalculationResults) : []);
+        } else {
+            console.error("No ID found for this calculation result");
+        }
+    };
 
     useEffect(() => {
         const parsedResults = calculationResults ? JSON.parse(calculationResults) : [];
@@ -169,7 +166,7 @@ export default function MyFoodPage() {
                         />
                     ))}
             </Box>
-            <MySavedCalculations results={userCalculationResults}/>
+            <MySavedCalculations results={userCalculationResults} handleDelete={handleDeleteCalculation}/>
         </Box>
     );
 }

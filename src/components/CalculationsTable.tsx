@@ -9,16 +9,23 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {EstimateCalculationResult} from "./EstimateFoodCalculator";
 import {Button} from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 interface CalculationsTableProps {
     results: EstimateCalculationResult[] | null;
+    handleDelete: (calculationResult: EstimateCalculationResult) => Promise<void>;
 }
 
-const FoodTable: React.FC<CalculationsTableProps> = ({ results}) => {
+const FoodTable: React.FC<CalculationsTableProps> = ({results, handleDelete}) => {
+    if (!results || results.length === 0) {
+        return <Box sx={{width: "100%", marginBottom: "50px"}}>
+            <Typography>No calculations available.</Typography>
+        </Box>;
+    }
     return (
-        <Box display="flex" justifyContent="center" p={2} sx={{ width: "100%" }}>
-            <TableContainer component={Paper} sx={{ width: "100%", maxWidth: 1200 }}>
-                <Table sx={{ width: "100%" }} aria-label="simple table">
+        <Box display="flex" justifyContent="center" p={2} sx={{width: "100%"}}>
+            <TableContainer component={Paper} sx={{width: "100%", maxWidth: 1200}}>
+                <Table sx={{width: "100%"}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Food</TableCell>
@@ -33,22 +40,23 @@ const FoodTable: React.FC<CalculationsTableProps> = ({ results}) => {
                     <TableBody>
                         {results?.map((result) => (
                             <TableRow
-                                key={result.foodName}
-                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                key={result.calculationId}
+                                sx={{"&:last-child td, &:last-child th": {border: 0}}}
                             >
                                 <TableCell component="th" scope="row">
                                     {result.foodName}
                                 </TableCell>
                                 <TableCell align="right">{`${result.calories} (${result?.calories ?? "-"})`}</TableCell>
                                 <TableCell align="right">{`${result.fat} (${result?.fat ?? "-"})`}</TableCell>
-                                <TableCell align="right">{`${result.carbohydrate} (${result?.carbohydrate ?? "-"})`}</TableCell>
+                                <TableCell
+                                    align="right">{`${result.carbohydrate} (${result?.carbohydrate ?? "-"})`}</TableCell>
                                 <TableCell align="right">{`${result.protein} (${result?.protein ?? "-"})`}</TableCell>
                                 <TableCell align="right">{result.weight}</TableCell>
                                 <TableCell align="center">
                                     <Button
                                         variant="outlined"
                                         color="primary"
-                                        onClick={() => console.log(result.foodName)}
+                                        onClick={() => handleDelete(result)}
                                     >
                                         Delete
                                     </Button>
