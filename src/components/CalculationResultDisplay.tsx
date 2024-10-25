@@ -9,9 +9,9 @@ import BakeryDiningIcon from "@mui/icons-material/BakeryDining";
 import EggAltIcon from "@mui/icons-material/EggAlt";
 import ScaleIcon from "@mui/icons-material/Scale";
 import CalculateIcon from "@mui/icons-material/Calculate";
-import { EstimateCalculationResult } from "./../components/EstimateFoodCalculator";
+import { EstimateCalculationResult } from "./../interfaces/EstimateCalculationResult";
 
-interface CalculationResultDisplayProps {
+export interface CalculationResultDisplayProps {
   result: EstimateCalculationResult | null;
 }
 
