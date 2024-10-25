@@ -319,7 +319,7 @@ export default function MyFoodPage() {
                         />
                     ))}
             </Box>
-            <Box sx={{width: "100%"}}>
+            <Box sx={{width: "100%", marginBottom: "50px"}}>
                 <Typography variant="h2" sx={{marginBottom: "30px"}}>MY CALCULATIONS</Typography>
                 <Box sx={{display: "flex", width: "100%"}}>
                     <CalculationsTable results={userCalculationResults} handleDelete={handleDeleteCalculation}/>
