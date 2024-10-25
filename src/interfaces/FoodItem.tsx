@@ -29,9 +29,11 @@ export interface IUserFoodItem extends IFoodItem {
   userID?: string;
 }
 
-export interface IUser {
-  uid?: string;
-  userName?: string;
-  email?: string;
-  password?: string;
+export interface IFoodEstimateValues {
+  fat?: string;
+  protein?: string;
+  carbohydrate?: string;
+  calories?: string;
 }
+
+
