@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {EstimateCalculationResult} from "./EstimateFoodCalculator";
+import {Button} from "@mui/material";
 
 interface CalculationsTableProps {
     results: EstimateCalculationResult[] | null;
@@ -26,6 +27,7 @@ const FoodTable: React.FC<CalculationsTableProps> = ({ results}) => {
                             <TableCell align="right">Carbs&nbsp;(g, /kg)</TableCell>
                             <TableCell align="right">Protein&nbsp;(g, /kg)</TableCell>
                             <TableCell align="right">Weight&nbsp;(g)</TableCell>
+                            <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -42,6 +44,15 @@ const FoodTable: React.FC<CalculationsTableProps> = ({ results}) => {
                                 <TableCell align="right">{`${result.carbohydrate} (${result?.carbohydrate ?? "-"})`}</TableCell>
                                 <TableCell align="right">{`${result.protein} (${result?.protein ?? "-"})`}</TableCell>
                                 <TableCell align="right">{result.weight}</TableCell>
+                                <TableCell align="center">
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        onClick={() => console.log(result.foodName)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

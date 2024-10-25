@@ -5,7 +5,7 @@ import {useAuth} from "../contexts/authContext/authContext";
 import {User as FirebaseUser} from "firebase/auth";
 import {IUserFoodItem} from "../interfaces/FoodItem";
 import useDeleteProduct from "../hooks/useDeleteProduct";
-import {EstimateFoodCalculator} from "../components/EstimateFoodCalculator";
+import {EstimateCalculationResult, EstimateFoodCalculator} from "../components/EstimateFoodCalculator";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 import {Box} from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -74,8 +74,39 @@ export default function MyFoodPage() {
         }
     };
 
-    const [userCalculationResults, setUserCalculationResults] = useState([]);
+    const [userCalculationResults, setUserCalculationResults] = useState<EstimateCalculationResult[]>([]);
     const calculationResults = localStorage.getItem("savedCalculationResults");
+
+    const deleteCalculationFromLocalStorage = (calculationResult: EstimateCalculationResult) => {
+        const localStorageCalculations = localStorage.getItem("savedCalculationResults");
+        const calculationResults: EstimateCalculationResult[] = localStorageCalculations
+            ? JSON.parse(localStorageCalculations)
+            : [];
+        const updatedCalculationResults = calculationResults.filter(
+            (item) => item.foodName !== calculationResult.foodName,
+        );
+        localStorage.setItem(
+            "savedCalculationResults",
+            JSON.stringify(updatedCalculationResults),
+        );
+        setUserCalculationResults(updatedCalculationResults);
+    };
+
+    // const handleDeleteCalculation = async (
+    //     calculationResult: EstimateCalculationResult,
+    // ): Promise<void> => {
+    //     if (calculationResult.id) {
+    //         await deleteProduct("products", foodItem);
+    //         const updatedFoodItemsFromDB = getUsersAddedFood(currentUser);
+    //         setUsersFoodList(updatedFoodItemsFromDB);
+    //     }
+    //     if (foodItem.foodName) {
+    //         deleteProductFromLocalStorage(foodItem);
+    //     } else {
+    //         console.error("No ID found for this food item");
+    //     }
+    // };
+
     useEffect(() => {
         const parsedResults = calculationResults ? JSON.parse(calculationResults) : [];
        setUserCalculationResults(parsedResults);
