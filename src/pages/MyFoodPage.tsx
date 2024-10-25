@@ -8,7 +8,6 @@ import useDeleteProduct from "../hooks/useDeleteProduct";
 import {getNutriValuesPerKg} from "../utils/getNutriValues";
 import {Box, Button} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {MySavedCalculations} from "../components/MySavedCalculations";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {EstimateCalculationResult} from "../interfaces/EstimateCalculationResult";
 import {SingleProductCheckBox} from "../components/SingleProductCheckBox";
@@ -16,6 +15,7 @@ import {EstimateUserFoodInputsForm} from "../components/EstimateUserFoodInputsFo
 import {getCalculateEstimateProducts} from "../utils/getCalculateEstimateProducts";
 import {getCalculateSingleEstimateProduct} from "../utils/getCalculateSingleEstimateProduct";
 import CalculationResultDisplay from "../components/CalculationResultDisplay";
+import CalculationsTable from "../components/CalculationsTable";
 
 export default function MyFoodPage() {
     const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
@@ -319,7 +319,12 @@ export default function MyFoodPage() {
                         />
                     ))}
             </Box>
-            <MySavedCalculations results={userCalculationResults} handleDelete={handleDeleteCalculation}/>
+            <Box sx={{width: "100%"}}>
+                <Typography variant="h2" sx={{marginBottom: "30px"}}>MY CALCULATIONS</Typography>
+                <Box sx={{display: "flex", width: "100%"}}>
+                    <CalculationsTable results={userCalculationResults} handleDelete={handleDeleteCalculation}/>
+                </Box>
+            </Box>
         </Box>
     );
 }
