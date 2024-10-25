@@ -26,18 +26,23 @@ const MenuProps = {
 export const SingleProductCheckBox = ({productNames, selectedProduct, handleChangeSingleProduct}: SingleProductCheckBoxProps) => {
     return (
         <Box sx={{
-            width: "100%",
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            flexDirection: "column",
+            width: { xs: "90%", sm: "90%", md: "85%", lg: "85%" },
+            alignItems: {
+                xs: "center",
+                sm: "center",
+                md: "flex-start",
+                lg: "flex-start",
+            },
         }}>
             <FormControl
                 sx={{
                     m: 1,
                     margin: "0",
                     width: {
-                        xs: "90%",
-                        sm: "90%",
+                        xs: "100%",
+                        sm: "100%",
                         md: "35%",
                         lg: "300px",
                     },

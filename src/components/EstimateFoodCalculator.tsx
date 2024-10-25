@@ -5,10 +5,11 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { IFoodItem, IUserFoodItem } from "../interfaces/FoodItem";
+import {IFoodEstimateValues, IFoodItem, IUserFoodItem} from "../interfaces/FoodItem";
 import { getNutriValuesPerKg } from "../utils/getNutriValues";
 import CalculationResultDisplay from "./CalculationResultDisplay";
 import {SingleProductCheckBox} from "./SingleProductCheckBox";
+import {EstimateCalculationResult} from "../interfaces/EstimateCalculationResult";
 
 interface EstimateFoodCalculatorProps {
   usersFoodList: IUserFoodItem[];
@@ -18,22 +19,12 @@ interface EstimateFoodCalculatorProps {
   >;
 }
 
-export interface IFoodEstimateValues {
-  fat?: string;
-  protein?: string;
-  carbohydrate?: string;
-  calories?: string;
-}
-
-export interface EstimateCalculationResult {
-  calculationId: string;
-  foodName: string;
-  fat?: string;
-  protein?: string;
-  carbohydrate?: string;
-  calories?: string;
-  weight: string;
-}
+// export interface IFoodEstimateValues {
+//   fat?: string;
+//   protein?: string;
+//   carbohydrate?: string;
+//   calories?: string;
+// }
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
@@ -79,13 +70,13 @@ export const EstimateFoodCalculator = ({
       return;
     }
 
-    // setUserCalculationResults((prevResults) => {
-    //     const updatedResults = [...prevResults, result];
-    //     localStorage.setItem("savedCalculationResults", JSON.stringify(updatedResults));
-    //     console.log('Item saved:', updatedResults);
-    //     console.log("saved:", userCalculationResults);
-    //     return updatedResults;
-    // });
+    setUserCalculationResults((prevResults) => {
+        const updatedResults = [...prevResults, result];
+        localStorage.setItem("savedCalculationResults", JSON.stringify(updatedResults));
+        console.log('Item saved:', updatedResults);
+        console.log("saved:", userCalculationResults);
+        return updatedResults;
+    });
 
   //   setSavedResults((prevResults) => {
   //     const updatedResults = [...prevResults, result];
@@ -98,7 +89,7 @@ export const EstimateFoodCalculator = ({
   //     return updatedResults;
   //   });
   //   setResult(null);
-  // };
+   };
 
   // Handle change for single product
   const handleChangeSingleProduct = (event: SelectChangeEvent<string>) => {
@@ -377,7 +368,7 @@ export const EstimateFoodCalculator = ({
       );
       setResult(singleProductCalculationResult);
     } else {
-      const calculationResult = getCalculateEstimateProducts(
+      const calculationResult = getCalculateSingleEstimateProduct(
         products,
         usersFoodList,
         estimateFoodInputsValues,

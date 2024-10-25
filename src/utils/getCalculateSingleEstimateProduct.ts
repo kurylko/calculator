@@ -2,7 +2,7 @@
 
 import {IUserFoodItem} from "../interfaces/FoodItem";
 import {getNutriValuesPerKg} from "./getNutriValues";
-import {IFoodEstimateValues} from "../components/EstimateFoodCalculator";
+import {IFoodEstimateValues} from "./../interfaces/FoodItem";
 
 interface GetCalculateSingleEstimateProductProps {
     selectedProduct: string,

@@ -1,11 +1,11 @@
 import React from "react";
 import {Box} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {EstimateCalculationResult} from "./EstimateFoodCalculator";
+import {EstimateCalculationResult} from "./../interfaces/EstimateCalculationResult";
 import CalculationsTable from "./CalculationsTable";
 
 interface MySavedCalculationsProps {
-    results: EstimateCalculationResult[] | null;
+    results: EstimateCalculationResult[];
     handleDelete: (calculationResult: EstimateCalculationResult) => Promise<void>;
 }
 
