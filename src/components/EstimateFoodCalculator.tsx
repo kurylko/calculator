@@ -21,6 +21,7 @@ interface IFoodEstimateValues {
 }
 
 export interface EstimateCalculationResult {
+    calculationId: string,
     foodName: string;
     fat?: string;
     protein?: string;
@@ -141,6 +142,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
             );
 
             return {
+                calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
                 foodName: selectedProduct,
                 fat: `${calculatedFat}`,
                 protein: `${calculatedProtein}`,
@@ -167,6 +169,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
                 calculatedWeight,
             );
             return {
+                calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
                 foodName: selectedProduct,
                 fat: estimateFoodInputsValues.fat,
                 protein: `${calculatedProtein}`,
@@ -195,6 +198,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
                 calculatedWeight,
             );
             return {
+                calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
                 foodName: selectedProduct,
                 fat: `${calculatedFat}`,
                 protein: estimateFoodInputsValues.protein,
@@ -221,6 +225,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
                 (parseFloat(nutriValues.caloriesValuePerKg) / 10000) * calculatedWeight,
             );
             return {
+                calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
                 foodName: selectedProduct,
                 fat: `${calculatedFat}`,
                 protein: `${calculatedProtein}`,
@@ -261,6 +266,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
         }
 
         return {
+            calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
             foodName: selectedProduct,
             fat: "N/A",
             protein: "N/A",
@@ -307,6 +313,7 @@ export const EstimateFoodCalculator: React.FC<EstimateFoodCalculatorProps> = ({
             );
 
             return {
+                calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
                 foodName: products.join(", "),
                 fat: "",
                 protein: "",
