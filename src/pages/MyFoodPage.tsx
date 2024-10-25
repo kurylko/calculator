@@ -278,13 +278,13 @@ export default function MyFoodPage() {
                         }}
                     >
                         <CalculationResultDisplay result={result} />
-                        <Button
-                            sx={{ marginTop: "30px" }}
+                        { result && <Button
+                            sx={{marginTop: "30px"}}
                             variant="outlined"
                             onClick={handleSaveResult}
                         >
                             Save the result
-                        </Button>
+                        </Button>}
                     </Box>
                 </Box>
             </Box>
