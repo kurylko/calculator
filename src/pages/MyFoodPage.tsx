@@ -74,6 +74,8 @@ export default function MyFoodPage() {
         }
     };
 
+    // Calculations of user (stored in LS)
+
     const [userCalculationResults, setUserCalculationResults] = useState<EstimateCalculationResult[]>([]);
     const calculationResults = localStorage.getItem("savedCalculationResults");
 
@@ -106,6 +108,7 @@ export default function MyFoodPage() {
 
     useEffect(() => {
         const parsedResults = calculationResults ? JSON.parse(calculationResults) : [];
+        console.log("ggg",parsedResults);
        setUserCalculationResults(parsedResults);
     }, [calculationResults]);
 
@@ -133,7 +136,7 @@ export default function MyFoodPage() {
                     alignItems: "center",
                 }}
             >
-                <EstimateFoodCalculator usersFoodList={usersFoodList}/>
+                <EstimateFoodCalculator usersFoodList={usersFoodList} userCalculationResults={userCalculationResults} setUserCalculationResults={setUserCalculationResults}/>
             </Box>
             <Box sx={{width: "85%", maxWidth: 700}}>
                 <Typography variant="h3">MY FOOD</Typography>
