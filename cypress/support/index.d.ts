@@ -1,5 +1,5 @@
-import { IFoodItem } from "../../src/interfaces/FoodItem";
-import { INutriScorePerKg } from "../../src/utils/getNutriValues";
+import { IFoodItem } from '../../src/interfaces/FoodItem';
+import { INutriScorePerKg } from '../../src/utils/getNutriValues';
 
 declare global {
   interface Window {

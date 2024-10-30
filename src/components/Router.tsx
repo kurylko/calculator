@@ -1,12 +1,12 @@
-import React from "react";
-import App from ".././App";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import FoodInfoPage from "../pages/FoodInfo";
-import Home from "../pages/Home";
-import Blog from "../pages/Blog";
-import MyFoodPage from "../pages/MyFoodPage";
-import Login from "./auth/LogIn";
-import SignUp from "./auth/SignUp";
+import React from 'react';
+import App from '.././App';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import FoodInfoPage from '../pages/FoodInfo';
+import Home from '../pages/Home';
+import Blog from '../pages/Blog';
+import MyFoodPage from '../pages/MyFoodPage';
+import Login from './auth/LogIn';
+import SignUp from './auth/SignUp';
 
 interface AppRoutesProps {
   children?: React.ReactNode;

@@ -35,5 +35,3 @@ export interface IFoodEstimateValues {
   carbohydrate: string;
   calories: string;
 }
-
-
