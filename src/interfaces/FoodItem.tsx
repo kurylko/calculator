@@ -30,10 +30,10 @@ export interface IUserFoodItem extends IFoodItem {
 }
 
 export interface IFoodEstimateValues {
-  fat?: string;
-  protein?: string;
-  carbohydrate?: string;
-  calories?: string;
+  fat: string;
+  protein: string;
+  carbohydrate: string;
+  calories: string;
 }
 
 
