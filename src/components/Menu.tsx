@@ -1,11 +1,11 @@
-import React from "react";
-import { Box, AppBar, Toolbar, Button, Avatar } from "@mui/material";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { Link } from "react-router-dom";
-import { useAuth } from "../contexts/authContext/authContext";
-import { doSignOut } from "../auth";
-import { useNavigate } from "react-router-dom";
-import avatar from "./../assets/images/avocado-face.png";
+import React from 'react';
+import { Box, AppBar, Toolbar, Button, Avatar } from '@mui/material';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/authContext/authContext';
+import { doSignOut } from '../auth';
+import { useNavigate } from 'react-router-dom';
+import avatar from './../assets/images/avocado-face.png';
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Menu() {
   const onLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (userLoggedIn) {
       await doSignOut();
-      navigate("/");
+      navigate('/');
     }
   };
 
@@ -23,7 +23,7 @@ export default function Menu() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <Box sx={{ display: "flex", flexGrow: 1 }}>
+            <Box sx={{ display: 'flex', flexGrow: 1 }}>
               <Button color="inherit" component={Link} to="/">
                 HOME
               </Button>
@@ -37,9 +37,9 @@ export default function Menu() {
                 BLOG
               </Button>
             </Box>
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: 'flex' }}>
               {!userLoggedIn && (
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: 'flex' }}>
                   <Avatar>
                     <PersonOutlineIcon />
                   </Avatar>
@@ -49,7 +49,7 @@ export default function Menu() {
                 </Box>
               )}
               {userLoggedIn && (
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: 'flex' }}>
                   <Avatar src={avatar} />
                   <Button color="inherit" onClick={onLogOut}>
                     LOG OUT

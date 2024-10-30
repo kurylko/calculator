@@ -1,4 +1,4 @@
-import { IFoodItem } from "../interfaces/FoodItem";
+import { IFoodItem } from '../interfaces/FoodItem';
 
 export interface INutriScorePerKg {
   fatValuePerKg: string;
