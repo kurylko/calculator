@@ -33,7 +33,7 @@ export const getCalculateSingleEstimateProduct = (
     const calculateForEstimateCalories = () => {
         const caloriesValue = parseFloat(nutriValues.caloriesValuePerKg);
         const calculatedWeight = Math.round(
-            (parseFloat(estimateFoodInputsValues.calories as string) /
+            (parseFloat(estimateFoodInputsValues.calories) /
                 caloriesValue) *
             1000,
         );
@@ -62,7 +62,7 @@ export const getCalculateSingleEstimateProduct = (
     const calculateForEstimateFat = () => {
         const fatValue = parseFloat(nutriValues.fatValuePerKg);
         const calculatedWeight = Math.round(
-            (parseFloat(estimateFoodInputsValues.fat as string) / fatValue) * 1000,
+            (parseFloat(estimateFoodInputsValues.fat) / fatValue) * 1000,
         );
         const calculatedProtein = Math.round(
             (parseFloat(nutriValues.proteinValuePerKg) / 10000) * calculatedWeight,
@@ -89,7 +89,7 @@ export const getCalculateSingleEstimateProduct = (
     const calculateForEstimateProtein = () => {
         const proteinValue = parseFloat(nutriValues.proteinValuePerKg);
         const calculatedWeight = Math.round(
-            (parseFloat(estimateFoodInputsValues.protein as string) /
+            (parseFloat(estimateFoodInputsValues.protein) /
                 proteinValue) *
             1000,
         );
@@ -118,7 +118,7 @@ export const getCalculateSingleEstimateProduct = (
     const calculateForEstimateCarbohydrate = () => {
         const carbohydrateValue = parseFloat(nutriValues.carbohydrateValuePerKg);
         const calculatedWeight = Math.round(
-            (parseFloat(estimateFoodInputsValues.carbohydrate as string) /
+            (parseFloat(estimateFoodInputsValues.carbohydrate) /
                 carbohydrateValue) *
             1000,
         );

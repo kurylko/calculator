@@ -22,7 +22,7 @@ export const getCalculateEstimateProducts = (
 
     const calculateCaloriesOnly = (): EstimateCalculationResult => {
         const estimateCaloriesNumber = parseFloat(
-            estimateFoodInputsValues.calories as string,
+            estimateFoodInputsValues.calories,
         );
 
         const forOnlyCaloriesCalculated = matchingFoods.reduce(
