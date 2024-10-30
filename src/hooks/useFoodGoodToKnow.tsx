@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { IApiFoodItem } from "../interfaces/FoodItem";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { IApiFoodItem } from '../interfaces/FoodItem';
 
 export default function useFoodGoodToKnow() {
   const [food, setFood] = useState<IApiFoodItem[]>([]);
@@ -11,14 +11,14 @@ export default function useFoodGoodToKnow() {
     const fetchData = async () => {
       try {
         const result = await axios.get(
-          "https://api.edamam.com/api/food-database/v2/parser?app_id=1ce77b14&app_key=05d47bc5520fd314000bf43e83e2ca78&nutrition-type=cooking&category=generic-foods",
+          'https://api.edamam.com/api/food-database/v2/parser?app_id=1ce77b14&app_key=05d47bc5520fd314000bf43e83e2ca78&nutrition-type=cooking&category=generic-foods',
         );
         setFood(result.data.hints);
       } catch (error) {
         setError(
           error instanceof Error
             ? error
-            : new Error("Can not find a food data"),
+            : new Error('Can not find a food data'),
         );
       } finally {
         setLoading(false);

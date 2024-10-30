@@ -2,7 +2,7 @@
 export {};
 
 Cypress.Commands.add(
-  "getDataTest",
+  'getDataTest',
   (dataTestSelector: string): Cypress.Chainable<Element> => {
     return cy.get(
       `[data-test="${dataTestSelector}"]`,

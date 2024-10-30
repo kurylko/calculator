@@ -1,9 +1,9 @@
-import { auth } from "./firebase";
+import { auth } from './firebase';
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "firebase/auth";
+} from 'firebase/auth';
 
 export interface AuthProps {
   email: string;

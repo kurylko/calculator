@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import { IUserFoodItem } from "../interfaces/FoodItem";
+import { useState } from 'react';
+import { doc, deleteDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { IUserFoodItem } from '../interfaces/FoodItem';
 
 const useDeleteProduct = () => {
   const [loading, setLoading] = useState(false);
@@ -12,7 +12,7 @@ const useDeleteProduct = () => {
     setError(null);
 
     if (!data.id) {
-      setError(new Error("Product ID is missing"));
+      setError(new Error('Product ID is missing'));
       setLoading(false);
       return;
     }
@@ -20,9 +20,9 @@ const useDeleteProduct = () => {
     try {
       const docRef = doc(db, collectionName, data.id);
       await deleteDoc(docRef);
-      console.log("Product deleted with ID: ", docRef.id);
+      console.log('Product deleted with ID: ', docRef.id);
     } catch (err) {
-      console.error("Error deleting document: ", err);
+      console.error('Error deleting document: ', err);
       setError(err as Error);
     } finally {
       setLoading(false);

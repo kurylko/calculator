@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import { IUserFoodItem } from "../interfaces/FoodItem";
+import { useState } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { IUserFoodItem } from '../interfaces/FoodItem';
 
 const usePostProduct = () => {
   const [loading, setLoading] = useState(false);
@@ -11,14 +11,14 @@ const usePostProduct = () => {
     setLoading(true);
     setError(null);
 
-    const colRef = collection(db, "products");
+    const colRef = collection(db, 'products');
 
     addDoc(colRef, data)
       .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
+        console.log('Document written with ID: ', docRef.id);
       })
       .catch((err) => {
-        console.error("Error adding document: ", err);
+        console.error('Error adding document: ', err);
         setError(err);
       })
       .finally(() => {
