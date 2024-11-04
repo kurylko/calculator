@@ -115,20 +115,20 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
         <BackFace>
           <CardContent>
             <Button
-                variant="outlined"
-                size="small"
-                sx={{
-                  position: 'absolute',
-                  top: 8,
-                  right: 12,
-                  padding: '2px 4px',
-                  minWidth: '24',
-                  height: '24',
-                  fontSize: '0.9rem',
-                  lineHeight: '1.2',
-                  borderRadius: '4px',
-                }}
-                onClick={onClick}
+              variant="outlined"
+              size="small"
+              sx={{
+                position: 'absolute',
+                top: 8,
+                right: 12,
+                padding: '2px 4px',
+                minWidth: '24',
+                height: '24',
+                fontSize: '0.9rem',
+                lineHeight: '1.2',
+                borderRadius: '4px',
+              }}
+              onClick={onClick}
             >
               DELETE
             </Button>

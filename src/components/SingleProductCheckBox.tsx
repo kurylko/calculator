@@ -73,9 +73,9 @@ export const SingleProductCheckBox = ({
               </MenuItem>
             ))
           ) : (
-              <MenuItem>
-            <Link href="/food-info">Add your products first</Link>
-              </MenuItem>
+            <MenuItem>
+              <Link href="/food-info">Add your products first</Link>
+            </MenuItem>
           )}
         </Select>
       </FormControl>
