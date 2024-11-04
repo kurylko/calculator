@@ -3,7 +3,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { Box } from '@mui/material';
+import { Box, Link } from '@mui/material';
 import React from 'react';
 
 interface SingleProductCheckBoxProps {
@@ -66,11 +66,17 @@ export const SingleProductCheckBox = ({
           input={<OutlinedInput label="Pick one Product" />}
           MenuProps={MenuProps}
         >
-          {productNames.map((product: string) => (
-            <MenuItem key={product} value={product}>
-              {product}
-            </MenuItem>
-          ))}
+          {productNames.length >= 1 ? (
+            productNames.map((product: string) => (
+              <MenuItem key={product} value={product}>
+                {product}
+              </MenuItem>
+            ))
+          ) : (
+              <MenuItem>
+            <Link href="/food-info">Add your products first</Link>
+              </MenuItem>
+          )}
         </Select>
       </FormControl>
     </Box>
