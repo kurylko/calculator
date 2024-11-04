@@ -229,7 +229,7 @@ export default function MyFoodPage() {
       }}
     >
       <Box sx={{ width: '85%', maxWidth: 700 }}>
-        <Typography variant="h3">LET'S COUNT A DISH</Typography>
+        <Typography variant="h3">LET'S COUNT NUTRIENTS</Typography>
       </Box>
       <Box
         style={{

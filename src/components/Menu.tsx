@@ -33,6 +33,9 @@ export default function Menu() {
               <Button color="inherit" component={Link} to="/my-food">
                 MY FOOD
               </Button>
+              <Button color="inherit" component={Link} to="/my-plate">
+                MY PLATE
+              </Button>
               <Button color="inherit" component={Link} to="/blog">
                 BLOG
               </Button>
