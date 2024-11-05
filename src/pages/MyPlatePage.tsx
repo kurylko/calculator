@@ -29,7 +29,7 @@ export default  function MyPlatePage() {
     const [progress, setProgress] = useState<number>(10);
 
     const { data } = useFetchProducts();
-    const { currentUser, loading } = useAuth();
+    const { currentUser } = useAuth();
     const uid = currentUser?.uid;
 
     const getUsersAddedFood = useCallback(
@@ -88,7 +88,7 @@ export default  function MyPlatePage() {
             (value) => (value as string).trim() !== '',
         ).length;
         if (filledInputsCount !== 1) {
-            alert('Please fill in only one field to submit.');
+            alert('Please fill in only one estimate field to submit.');
             return;
         }
 
@@ -104,20 +104,6 @@ export default  function MyPlatePage() {
                 singleProductCalculationResult,
             );
             setResult(singleProductCalculationResult);
-        } else {
-            const calculationResult = getCalculateEstimateProducts({
-                products,
-                usersFoodList,
-                estimateFoodInputsValues,
-            });
-            setEstimateFoodInputsValues({
-                fat: '',
-                protein: '',
-                carbohydrate: '',
-                calories: '',
-            });
-            console.log('Multiple calculation', setProducts(products));
-            setResult(calculationResult);
         }
     };
 
