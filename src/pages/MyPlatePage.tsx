@@ -13,7 +13,7 @@ import {getCalculateSingleEstimateProduct} from "../utils/getCalculateSingleEsti
 import {getCalculateEstimateProducts} from "../utils/getCalculateEstimateProducts";
 import {EstimateCalculationResult} from "../interfaces/EstimateCalculationResult";
 import CalculationResultDisplay from "../components/CalculationResultDisplay";
-import Plate from "../components/Plate";
+import PlateNutrients from "../components/PlateNutrients";
 
 export type TotalPlate = {
     calories: string;
@@ -179,7 +179,7 @@ export default  function MyPlatePage() {
             </Box>
             <Container sx={{width: "70%", display: "flex",  justifyContent: "space-between"}}>
                 <SegmentedProgressBar progress={progress} />
-                <Plate plateTotalToDisplay={plateTotalToDisplay} />
+                <PlateNutrients plateTotalToDisplay={plateTotalToDisplay} />
             </Container>
             <SingleProductCheckBox
                 productNames={productNames}
