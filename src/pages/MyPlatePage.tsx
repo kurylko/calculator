@@ -14,6 +14,7 @@ import {EstimateCalculationResult} from "../interfaces/EstimateCalculationResult
 import CalculationResultDisplay from "../components/CalculationResultDisplay";
 import PlateNutrients from "../components/PlateNutrients";
 import CalculationsTable from "../components/CalculationsTable";
+import MacronutrientChart from "../components/MacronutrientChart";
 
 export type TotalPlate = {
     calories: string;
@@ -191,9 +192,9 @@ export default  function MyPlatePage() {
         const proteinCalories = proteinInGrams * 4;
 
         // Calculate the percentage of each macronutrient
-        const carbPercentage = (carbCalories / totalCalories) * 100;
-        const fatPercentage = (fatCalories / totalCalories) * 100;
-        const proteinPercentage = (proteinCalories / totalCalories) * 100;
+        const carbPercentage = Math.round((carbCalories / totalCalories) * 100);
+        const fatPercentage = Math.round((fatCalories / totalCalories) * 100);
+        const proteinPercentage = Math.round((proteinCalories / totalCalories) * 100);
 
         // Determine if each macronutrient is within the healthy range
         const isCarbHealthy = carbPercentage >= 45 && carbPercentage <= 65;
@@ -242,6 +243,9 @@ export default  function MyPlatePage() {
             fatHealthyRate: fatHealthyRate(),
             proteinHealthyRate: proteinHealthyRate(),
             carbHealthyRate: carbHealthyRate(),
+            fatPercentage: fatPercentage,
+            carbPercentage: carbPercentage,
+            proteinPercentage: proteinPercentage,
             isPlateHealthy: isCarbHealthy && isFatHealthy && isProteinHealthy
         };
     }
@@ -271,7 +275,7 @@ export default  function MyPlatePage() {
                 <Typography variant="h3">LET'S COUNT A DISH</Typography>
             </Box>
             <Container sx={{width: "70%", display: "flex",  justifyContent: "space-between", marginTop: "50px", marginBottom: "50px"}}>
-                <SegmentedProgressBar progress={progress} />
+                <MacronutrientChart userShares={plateCalculationRate} />
                 <PlateNutrients plateTotalToDisplay={plateTotalToDisplay} />
             </Container>
             <Box
