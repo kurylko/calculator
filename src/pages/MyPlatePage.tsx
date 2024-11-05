@@ -14,6 +14,7 @@ import {getCalculateEstimateProducts} from "../utils/getCalculateEstimateProduct
 import {EstimateCalculationResult} from "../interfaces/EstimateCalculationResult";
 import CalculationResultDisplay from "../components/CalculationResultDisplay";
 import PlateNutrients from "../components/PlateNutrients";
+import CalculationsTable from "../components/CalculationsTable";
 
 export type TotalPlate = {
     calories: string;
@@ -155,6 +156,40 @@ export default  function MyPlatePage() {
         setResult(null);
     };
 
+    const deleteCalculationFromLocalStorage = (
+        calculationResult: EstimateCalculationResult,
+    ) => {
+        const localStorageCalculations = localStorage.getItem(
+            'plate',
+        );
+        const calculationResults: EstimateCalculationResult[] =
+            localStorageCalculations ? JSON.parse(localStorageCalculations) : [];
+        const updatedCalculationResults = calculationResults.filter(
+            (item) => item.calculationId !== calculationResult.calculationId,
+        );
+        localStorage.setItem(
+            'plate',
+            JSON.stringify(updatedCalculationResults),
+        );
+        setUserCalculationResults(updatedCalculationResults);
+    };
+
+    const handleDeleteCalculation = async (
+        calculationResult: EstimateCalculationResult,
+    ): Promise<void> => {
+        if (calculationResult.calculationId) {
+            await deleteCalculationFromLocalStorage(calculationResult);
+            const updatedCalculationResults = localStorage.getItem(
+                'savedCalculationResults',
+            );
+            setUserCalculationResults(
+                updatedCalculationResults ? JSON.parse(updatedCalculationResults) : [],
+            );
+        } else {
+            console.error('No ID found for this calculation result');
+        }
+    };
+
     // useEffect(() => {
     //     const interval = setInterval(() => {
     //         setProgress(prev => (prev < 100 ? prev + 1 : 0));
@@ -215,6 +250,13 @@ export default  function MyPlatePage() {
                    Add to the plate
                 </Button>
             )}
+            <Typography variant="h3">Ingredients in your plate</Typography>
+            <Box sx={{ display: 'flex', width: '100%' }}>
+                <CalculationsTable
+                    results={userCalculationResults}
+                    handleDelete={handleDeleteCalculation}
+                />
+            </Box>
         </Box>
     )
 }
