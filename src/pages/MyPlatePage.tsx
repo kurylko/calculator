@@ -10,7 +10,6 @@ import {useAuth} from "../contexts/authContext/authContext";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {EstimateUserFoodInputsForm} from "../components/EstimateUserFoodInputsForm";
 import {getCalculateSingleEstimateProduct} from "../utils/getCalculateSingleEstimateProduct";
-import {getCalculateEstimateProducts} from "../utils/getCalculateEstimateProducts";
 import {EstimateCalculationResult} from "../interfaces/EstimateCalculationResult";
 import CalculationResultDisplay from "../components/CalculationResultDisplay";
 import PlateNutrients from "../components/PlateNutrients";
@@ -109,11 +108,14 @@ export default  function MyPlatePage() {
 
     const [userCalculationResults, setUserCalculationResults] = useState<
         EstimateCalculationResult[]
-    >([]);
+    >([])
+
+    // Added to LocalStorage plate calculations
     const plateCalculationResults = localStorage.getItem('plate') ?? "[]";
     const parsedPlate = JSON.parse(plateCalculationResults);
-    console.log("plateCalculationResults", plateCalculationResults);
+    console.log("plateCalculationResults", parsedPlate);
 
+        // To display in a Plate card
     const plateTotalToDisplay : TotalPlate = parsedPlate.reduce((accumulator: TotalPlate, item : EstimateCalculationResult) => {
         return {
             calories: (parseFloat(accumulator.calories) + parseFloat(item.calories ?? "0")).toString(),
@@ -135,8 +137,6 @@ export default  function MyPlatePage() {
                 'plate',
                 JSON.stringify(updatedResults),
             );
-            console.log('Item saved:', updatedResults);
-            console.log('saved:', userCalculationResults);
             return updatedResults;
         });
         setResult(null);
@@ -166,7 +166,7 @@ export default  function MyPlatePage() {
         if (calculationResult.calculationId) {
             await deleteCalculationFromLocalStorage(calculationResult);
             const updatedCalculationResults = localStorage.getItem(
-                'savedCalculationResults',
+                'plate',
             );
             setUserCalculationResults(
                 updatedCalculationResults ? JSON.parse(updatedCalculationResults) : [],
@@ -252,7 +252,7 @@ export default  function MyPlatePage() {
             <Typography variant="h3">Ingredients in your plate</Typography>
             <Box sx={{ display: 'flex', width: '100%' }}>
                 <CalculationsTable
-                    results={userCalculationResults}
+                    results={parsedPlate}
                     handleDelete={handleDeleteCalculation}
                 />
             </Box>
