@@ -22,6 +22,7 @@ import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import CalculationsTable from '../components/CalculationsTable';
 
 export default function MyFoodPage() {
+  // Users food list from db or localstorage (for not logged users)
   const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
 
   const { data } = useFetchProducts();
@@ -152,20 +153,6 @@ export default function MyFoodPage() {
         singleProductCalculationResult,
       );
       setResult(singleProductCalculationResult);
-    } else {
-      const calculationResult = getCalculateEstimateProducts({
-        products,
-        usersFoodList,
-        estimateFoodInputsValues,
-      });
-      setEstimateFoodInputsValues({
-        fat: '',
-        protein: '',
-        carbohydrate: '',
-        calories: '',
-      });
-      console.log('Multiple calculation', setProducts(products));
-      setResult(calculationResult);
     }
   };
 
@@ -287,9 +274,7 @@ export default function MyFoodPage() {
                 alignSelf: 'center',
               }}
             >
-              {selectedProduct
-                ? `Calculated nutrition values of ${selectedProduct}`
-                : `Calculated nutrition values of ${products.join(', ')}`}
+              {selectedProduct && `Calculated nutrition values of ${selectedProduct}`}
             </Typography>
           )}
           <Box
