@@ -176,6 +176,79 @@ export default  function MyPlatePage() {
         }
     };
 
+    // Counting standard macronutrient distribution for a balanced diet
+
+    function countHealthyPlate(plate: TotalPlate){
+// Convert nutrient values from strings to numbers
+        const totalCalories = parseFloat(plate.calories);
+        const carbsInGrams = parseFloat(plate.carbohydrate);
+        const fatInGrams = parseFloat(plate.fat);
+        const proteinInGrams = parseFloat(plate.protein);
+
+        // Calculate calories from each macronutrient
+        const carbCalories = carbsInGrams * 4;
+        const fatCalories = fatInGrams * 9;
+        const proteinCalories = proteinInGrams * 4;
+
+        // Calculate the percentage of each macronutrient
+        const carbPercentage = (carbCalories / totalCalories) * 100;
+        const fatPercentage = (fatCalories / totalCalories) * 100;
+        const proteinPercentage = (proteinCalories / totalCalories) * 100;
+
+        // Determine if each macronutrient is within the healthy range
+        const isCarbHealthy = carbPercentage >= 45 && carbPercentage <= 65;
+        const isFatHealthy = fatPercentage >= 20 && fatPercentage <= 35;
+        const isProteinHealthy = proteinPercentage >= 10 && proteinPercentage <= 35;
+
+        function fatHealthyRate() {
+            let fatRate = '';
+            if (fatPercentage <20){
+                fatRate = "too low"
+            } else if(fatPercentage >35){
+                fatRate = "too high"
+            } else {
+                fatRate = "good"
+            }
+            return fatRate
+        }
+
+        function proteinHealthyRate() {
+            let proteinRate = '';
+            if (proteinPercentage <10){
+                proteinRate = "too low"
+            } else if(proteinPercentage >35){
+                proteinRate = "too high"
+            } else {
+                proteinRate = "good"
+            }
+            return proteinRate
+        }
+
+        function carbHealthyRate() {
+            let carbRate = '';
+            if (carbPercentage <45){
+                carbRate = "too low"
+            } else if(carbPercentage >65){
+                carbRate = "too high"
+            } else {
+                carbRate = "good"
+            }
+            return carbRate
+        }
+
+
+        // Return the results
+        return {
+            fatHealthyRate: fatHealthyRate(),
+            proteinHealthyRate: proteinHealthyRate(),
+            carbHealthyRate: carbHealthyRate(),
+            isPlateHealthy: isCarbHealthy && isFatHealthy && isProteinHealthy
+        };
+    }
+
+    const plateCalculationRate = countHealthyPlate(plateTotalToDisplay);
+    console.log("results:", plateCalculationRate);
+
     // useEffect(() => {
     //     const interval = setInterval(() => {
     //         setProgress(prev => (prev < 100 ? prev + 1 : 0));
