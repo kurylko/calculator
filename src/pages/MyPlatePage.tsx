@@ -112,7 +112,7 @@ export default  function MyPlatePage() {
     >([]);
     const plateCalculationResults = localStorage.getItem('plate') ?? "[]";
     const parsedPlate = JSON.parse(plateCalculationResults);
-    console.log("plateCalculationResults", typeof plateCalculationResults);
+    console.log("plateCalculationResults", plateCalculationResults);
 
     const plateTotalToDisplay : TotalPlate = parsedPlate.reduce((accumulator: TotalPlate, item : EstimateCalculationResult) => {
         return {
@@ -187,10 +187,9 @@ export default  function MyPlatePage() {
     return (
         <Box
             style={{
-                width: '100%',
+                width: '90%',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '50px',
                 alignItems: 'center',
                 paddingTop: '50px',
             }}
@@ -198,10 +197,23 @@ export default  function MyPlatePage() {
             <Box sx={{ width: '85%', maxWidth: 700 }}>
                 <Typography variant="h3">LET'S COUNT A DISH</Typography>
             </Box>
-            <Container sx={{width: "70%", display: "flex",  justifyContent: "space-between"}}>
+            <Container sx={{width: "70%", display: "flex",  justifyContent: "space-between", marginTop: "50px", marginBottom: "50px"}}>
                 <SegmentedProgressBar progress={progress} />
                 <PlateNutrients plateTotalToDisplay={plateTotalToDisplay} />
             </Container>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: { xs: '90%', sm: '90%', md: '85%', lg: '85%' },
+                    alignItems: {
+                        xs: 'center',
+                        sm: 'center',
+                        md: 'flex-start',
+                        lg: 'flex-start',
+                    },
+                }}
+            >
             <SingleProductCheckBox
                 productNames={productNames}
                 handleChangeSingleProduct={handleChangeSingleProduct}
@@ -211,6 +223,7 @@ export default  function MyPlatePage() {
                 estimateFoodInputsValues={estimateFoodInputsValues}
                 handleChangeInputs={handleChangeInputs}
             />
+            </Box>
             <Button
                 variant="contained"
                 onClick={handleSubmitCalculation}
