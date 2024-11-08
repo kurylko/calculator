@@ -9,7 +9,8 @@ const usePostProduct = () => {
 
   const postProduct = async (collectionName: string, data: IUserFoodItem) => {
     setLoading(true);
-    setError(null);
+    setError(null)
+    console.log(data)
 
     const colRef = collection(db, 'products');
 
