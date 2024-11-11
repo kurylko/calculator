@@ -1,36 +1,22 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
-import { IUserFoodItem } from '../interfaces/FoodItem';
 import {useAuth} from "../contexts/authContext/authContext";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchUserFoodItems} from "../state/foodCollectionSlice";
+import {AppDispatch, AppStore, RootState} from "../state/store";
 
 const useFetchUserProducts = () => {
-    const [data, setData] = useState<IUserFoodItem[]>([]);
-    const [loading, setLoading] = useState(false);
+    const dispatch: AppDispatch = useDispatch()
+    const {data, isLoading} = useSelector((state: RootState)=> state.foodCollectionSlice)
     const { currentUser } = useAuth();
-    const uid = currentUser?.uid;
+    const uid = currentUser?.uid ;
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const querySnapshot = await getDocs(collection(db, 'products'));
-                const items: IUserFoodItem[] = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                })) as IUserFoodItem[];
-                const usersProducts = items.filter((food) => food.userID === uid);
-                setData(usersProducts);
-            } catch (error) {
-                console.error('Error fetching users`s food items:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
+        if (uid) {
+            dispatch(fetchUserFoodItems(uid))
+        }
+    }, [uid]);
 
-    return { data, loading };
+    return { data, loading: isLoading };
 };
 
 export default useFetchUserProducts;

@@ -68,16 +68,13 @@ export default function FoodInfoPage() {
   const handleSubmit = async () => {
     const updatedItems = [...lastInputFoodItems, foodInputsValues];
     setLastInputFoodItems(updatedItems);
+      console.log("lastInputFoodItems:", lastInputFoodItem,);
     localStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
+
     if (currentUser) {
       try {
         await postProduct('products', {
-          foodName: lastInputFoodItem.foodName,
-          fat: lastInputFoodItem.fat,
-          protein: lastInputFoodItem.protein,
-          carbohydrate: lastInputFoodItem.carbohydrate,
-          calories: lastInputFoodItem.calories,
-          weight: lastInputFoodItem.weight,
+          ...foodInputsValues,
           userID: userID,
         });
       } catch (error) {

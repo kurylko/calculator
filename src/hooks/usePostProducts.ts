@@ -5,27 +5,29 @@ import { IUserFoodItem } from '../interfaces/FoodItem';
 
 const usePostProduct = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const postProduct = async (collectionName: string, data: IUserFoodItem) => {
+  const postProduct = async (
+    collectionName: string,
+    data: IUserFoodItem,
+  ) => {
     setLoading(true);
-    setError(null)
-    console.log(data)
+    setError(null);
 
-    const colRef = collection(db, 'products');
+    try {
+      const colRef = collection(db, 'products');
+      const docRef = await addDoc(colRef, data);
 
-    addDoc(colRef, data)
-      .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
-      })
-      .catch((err) => {
-        console.error('Error adding document: ', err);
-        setError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-    setLoading(false);
+      console.log('Document written with ID: ', docRef.id);
+      return { ...data, id: docRef.id };
+    } catch (err) {
+      const errorMessage = (err as Error).message || 'An error occurred';
+      console.error('Error adding document: ', err);
+      setError(errorMessage);
+      return Promise.reject(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return { loading, postProduct, error };
