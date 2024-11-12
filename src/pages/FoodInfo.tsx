@@ -17,11 +17,10 @@ import { AppDispatch, RootState } from '../state/store';
 export default function FoodInfoPage() {
   const dispatch: AppDispatch = useDispatch();
 
-  const { data, isLoading, error } = useSelector(
+  const { data } = useSelector(
     (state: RootState) => state.foodCollection,
   );
   const { currentUser } = useSelector((state: RootState) => state.user);
-  //const userID = currentUser?.uid;
   console.log('3333', currentUser);
 
   const lastInputFoodItemString = localStorage.getItem('lastInputFood');

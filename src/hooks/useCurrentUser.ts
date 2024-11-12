@@ -8,16 +8,11 @@ const useCurrentUser = () => {
   const { currentUser, isLoading, error } = useSelector(
     (state: RootState) => state.user,
   );
-  const uid = currentUser?.uid;
 
-  useEffect(() => {
-    if (uid) {
-      console.log('currentUser:', currentUser);
-      dispatch(getCurrentUser);
-    }
-  }, [uid]);
 
-  return { currentUser, loading: isLoading, error };
+ const handleGetUserData = () =>  dispatch(getCurrentUser());
+
+  return { currentUser, handleGetUserData, loading: isLoading, error };
 };
 
 export default useCurrentUser;
