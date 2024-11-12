@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import useFetchProducts from '../hooks/useFetchProducts';
 import { SavedFoodCard } from '../components/SavedFoodCard';
 import { useAuth } from '../contexts/authContext/authContext';
 import { User as FirebaseUser } from 'firebase/auth';
@@ -16,7 +15,6 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { EstimateCalculationResult } from '../interfaces/EstimateCalculationResult';
 import { SingleProductCheckBox } from '../components/SingleProductCheckBox';
 import { EstimateUserFoodInputsForm } from '../components/EstimateUserFoodInputsForm';
-import { getCalculateEstimateProducts } from '../utils/getCalculateEstimateProducts';
 import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEstimateProduct';
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import CalculationsTable from '../components/CalculationsTable';
