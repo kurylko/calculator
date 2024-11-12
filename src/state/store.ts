@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import selectUserSlice from "./selectUserSlice";
+import userSlice from "./userSlice";
 import foodCollectionSlice from "./foodCollectionSlice";
 
 
@@ -7,7 +7,7 @@ import foodCollectionSlice from "./foodCollectionSlice";
 export const makeStore = () => {
     return configureStore({
         reducer: {
-            selectUserSlice,
+            userSlice,
             foodCollectionSlice,
         },
     })

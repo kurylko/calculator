@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from "./store";
 
-const selectUserState = (state: RootState) => state.selectUserSlice
+const selectUserState = (state: RootState) => state.userSlice
 
 export const selectCurrentUser = createSelector(
     [selectUserState],
