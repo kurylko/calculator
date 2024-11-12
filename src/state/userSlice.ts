@@ -1,53 +1,70 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import {useAuth} from "../contexts/authContext/authContext";
-import {IUser} from "../interfaces/User";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { IUser } from '../interfaces/User';
+import { auth } from '../firebase';
 
-
-const initialState = {
-    currentUser: {},
-    isLoading: false,
-    error: {},
+interface UserState {
+  currentUser: IUser | null;
+  isLoading: boolean;
+  error: string | null;
 }
 
-export const getCurrentUser = createAsyncThunk(
-    'getCurrentUser',
-    async ({ user }: {user: IUser}, { rejectWithValue }) => {
-        try {
-            const { currentUser } = useAuth();
+const initialState: UserState = {
+  currentUser: null,
+  isLoading: false,
+  error: null,
+};
 
-            if (!currentUser) {
-                return rejectWithValue('No current user found')
-            }
-
-            return currentUser;
-
-        } catch (error) {
-            console.error('Current user error:', error)
-            return rejectWithValue('Failed to fetch user')
+export const getCurrentUser = createAsyncThunk<
+  IUser,
+  void,
+  { rejectValue: string }
+>('currentUser/getCurrentUser', async (_, { rejectWithValue }) => {
+  try {
+    const user = await new Promise<IUser | null>((resolve) => {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          resolve({
+            uid: user.uid,
+            userName: user.displayName || '',
+            email: user.email || '',
+          });
+        } else {
+          resolve(null);
         }
+        unsubscribe();
+      });
+    });
+    if (!user) {
+      return rejectWithValue('No logged in user found');
     }
-)
+    return user;
+  } catch (error) {
+    console.error('Current user error:', error);
+    return rejectWithValue('Failed to fetch user');
+  }
+});
 
 const userSlice = createSlice({
-    name: 'getCurrentUser',
-    initialState,
-    reducers: {
-        testRed: () => initialState,
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(getCurrentUser.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(getCurrentUser.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.currentUser = action.payload
-            })
-            .addCase(getCurrentUser.rejected, (state, action) => {
-                state.isLoading = false
-                state.error = action.payload || 'Failed to fetch current user'
-            })
-    },
-})
+  name: 'currentUser',
+  initialState,
+  reducers: {
+    resetCurrentUser: () => initialState,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCurrentUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentUser = action.payload;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to fetch current user';
+      });
+  },
+});
 
-export default userSlice.reducer
+export const { resetCurrentUser } = userSlice.actions;
+export default userSlice.reducer;

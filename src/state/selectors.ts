@@ -1,17 +1,16 @@
-import { createSelector } from '@reduxjs/toolkit'
-import { RootState } from "./store";
+import { createSelector } from '@reduxjs/toolkit';
+import { RootState } from './store';
 
-const selectUserState = (state: RootState) => state.userSlice
+const userState = (state: RootState) => state.user;
 
 export const selectCurrentUser = createSelector(
-    [selectUserState],
-    (userState) => userState.currentUser
-)
+  [userState],
+  (userState) => userState.currentUser,
+);
 
-
-const foodCollectionState = (state : RootState) => state.foodCollectionSlice
+const foodCollectionState = (state: RootState) => state.foodCollection;
 
 export const selectFoodCollection = createSelector(
-    [foodCollectionState],
-    (foodCollectionState) => foodCollectionState.data
-)
+  [foodCollectionState],
+  (foodCollectionState) => foodCollectionState.data,
+);

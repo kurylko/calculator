@@ -7,10 +7,7 @@ const usePostProduct = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const postProduct = async (
-    collectionName: string,
-    data: IUserFoodItem,
-  ) => {
+  const postProduct = async (collectionName: string, data: IUserFoodItem) => {
     setLoading(true);
     setError(null);
 

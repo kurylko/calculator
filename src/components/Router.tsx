@@ -7,7 +7,7 @@ import Blog from '../pages/Blog';
 import MyFoodPage from '../pages/MyFoodPage';
 import Login from './auth/LogIn';
 import SignUp from './auth/SignUp';
-import MyPlatePage from "../pages/MyPlatePage";
+import MyPlatePage from '../pages/MyPlatePage';
 
 interface AppRoutesProps {
   children?: React.ReactNode;

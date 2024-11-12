@@ -18,12 +18,12 @@ import { EstimateUserFoodInputsForm } from '../components/EstimateUserFoodInputs
 import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEstimateProduct';
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import CalculationsTable from '../components/CalculationsTable';
-import useFetchUserProducts from "../hooks/useFetchUserProducts";
+import useFetchUserProducts from '../hooks/useFetchUserProducts';
 
 export default function MyFoodPage() {
   // Users food list from db or localstorage (for not logged users)
   const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
-  console.log("usersFoodList:", usersFoodList)
+  console.log('usersFoodList:', usersFoodList);
 
   const { data } = useFetchUserProducts();
 
@@ -43,7 +43,7 @@ export default function MyFoodPage() {
           usersAddedFood = JSON.parse(localStorageFoodItems);
         }
       }
-      console.log("usersAddedFood:", usersAddedFood)
+      console.log('usersAddedFood:', usersAddedFood);
       return usersAddedFood;
     },
     [uid, data],
@@ -275,7 +275,9 @@ export default function MyFoodPage() {
                 marginTop: '30px',
                 alignSelf: 'center',
               }}
-            >{selectedProduct && `Calculated nutrition values of ${selectedProduct}`}
+            >
+              {selectedProduct &&
+                `Calculated nutrition values of ${selectedProduct}`}
             </Typography>
           )}
           <Box

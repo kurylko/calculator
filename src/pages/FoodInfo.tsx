@@ -9,10 +9,21 @@ import { getNutriValuesPerKg } from '../utils/getNutriValues';
 import { PdfFoodTable } from '../components/PdfFoodTable';
 import { pdf } from '@react-pdf/renderer';
 import usePostProduct from '../hooks/usePostProducts';
-import { useAuth } from '../contexts/authContext/authContext';
 import Typography from '@mui/material/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+import { createFoodItem } from '../state/foodCollectionSlice';
+import { AppDispatch, RootState } from '../state/store';
 
 export default function FoodInfoPage() {
+  const dispatch: AppDispatch = useDispatch();
+
+  const { data, isLoading, error } = useSelector(
+    (state: RootState) => state.foodCollection,
+  );
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  //const userID = currentUser?.uid;
+  console.log('3333', currentUser);
+
   const lastInputFoodItemString = localStorage.getItem('lastInputFood');
 
   if (lastInputFoodItemString == null) {
@@ -47,11 +58,6 @@ export default function FoodInfoPage() {
         },
   );
 
-  const { currentUser } = useAuth();
-  const userID = currentUser?.uid;
-
-  const { postProduct } = usePostProduct();
-
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { target: { value } = {} } = e;
     setFoodInputsValues({
@@ -68,15 +74,12 @@ export default function FoodInfoPage() {
   const handleSubmit = async () => {
     const updatedItems = [...lastInputFoodItems, foodInputsValues];
     setLastInputFoodItems(updatedItems);
-      console.log("lastInputFoodItems:", lastInputFoodItem,);
+    console.log('lastInputFoodItems:', lastInputFoodItem);
     localStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
 
     if (currentUser) {
       try {
-        await postProduct('products', {
-          ...foodInputsValues,
-          userID: userID,
-        });
+        await dispatch(createFoodItem({ foodInputsValues }));
       } catch (error) {
         console.error('Error posting food item:', error);
       }

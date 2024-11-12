@@ -87,7 +87,7 @@ export const getCalculateSingleEstimateProduct = ({
     const calculatedWeight = Math.round(
       (parseFloat(estimateFoodInputsValues.protein) / proteinValue) * 1000,
     );
-    console.warn(calculatedWeight)
+    console.warn(calculatedWeight);
     const calculatedFat = Math.round(
       (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
     );

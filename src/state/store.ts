@@ -1,17 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit'
-import userSlice from "./userSlice";
-import foodCollectionSlice from "./foodCollectionSlice";
-
-
+import { configureStore } from '@reduxjs/toolkit';
+import userSlice from './userSlice';
+import foodCollectionSlice from './foodCollectionSlice';
 
 export const makeStore = () => {
-    return configureStore({
-        reducer: {
-            userSlice,
-            foodCollectionSlice,
-        },
-    })
-}
+  return configureStore({
+    reducer: {
+      user: userSlice,
+      foodCollection: foodCollectionSlice,
+    },
+  });
+};
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore['getState']>;
