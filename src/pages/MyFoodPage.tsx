@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SavedFoodCard } from '../components/SavedFoodCard';
 import {
   IFoodEstimateValues,
@@ -16,8 +16,8 @@ import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEs
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import CalculationsTable from '../components/CalculationsTable';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../state/store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../state/store';
 import { deleteFoodItem } from '../state/foodCollectionSlice';
 
 export default function MyFoodPage() {
