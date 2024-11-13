@@ -9,11 +9,13 @@ const useCurrentUser = () => {
     (state: RootState) => state.user,
   );
 
+  const { uid } = currentUser || {};
+
   const handleGetUserData = () => dispatch(getCurrentUser());
 
   useEffect(() => {
       handleGetUserData();
-  }, [currentUser]);
+  }, [uid]);
 
   return { currentUser, handleGetUserData, loading: isLoading, error };
 };

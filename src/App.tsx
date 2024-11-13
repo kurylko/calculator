@@ -7,10 +7,6 @@ import useCurrentUser from './hooks/useCurrentUser';
 function App() {
   const { handleGetUserData } = useCurrentUser();
 
-  useEffect(() => {
-    handleGetUserData();
-  }, []);
-
   return (
     <div className="App">
       <Menu />
