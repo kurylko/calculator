@@ -2,19 +2,20 @@ import React from 'react';
 import { Box, AppBar, Toolbar, Button, Avatar } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Link } from 'react-router-dom';
-import { doSignOut } from '../auth';
 import { useNavigate } from 'react-router-dom';
 import avatar from './../assets/images/avocado-face.png';
-import { useSelector } from 'react-redux';
-import { RootState } from '../state/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../state/store';
+import {logOutUser} from "../state/userSlice";
 
 export default function Menu() {
+  const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: RootState) => state.user);
 
   const onLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (currentUser) {
-      await doSignOut();
+      await dispatch(logOutUser());
       navigate('/');
     }
   };
