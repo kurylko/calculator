@@ -16,6 +16,7 @@ import FoodCollectionSlice from './foodCollectionSlice';
 const persistConfig = {
   key: 'root',
   storage: storage,
+  //whitelist: ['foodCollection'],
 };
 const rootReducer = combineReducers({
   user: UserSlice,

@@ -11,6 +11,10 @@ const useCurrentUser = () => {
 
   const handleGetUserData = () => dispatch(getCurrentUser());
 
+  useEffect(() => {
+      handleGetUserData();
+  }, [currentUser]);
+
   return { currentUser, handleGetUserData, loading: isLoading, error };
 };
 
