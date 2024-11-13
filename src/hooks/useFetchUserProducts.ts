@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
-import { useAuth } from '../contexts/authContext/authContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserFoodItems } from '../state/foodCollectionSlice';
-import { AppDispatch, AppStore, RootState } from '../state/store';
+import { AppDispatch, RootState } from '../state/store';
 
 const useFetchUserProducts = () => {
   const dispatch: AppDispatch = useDispatch();
   const { data, isLoading } = useSelector(
     (state: RootState) => state.foodCollection,
   );
-  const { currentUser } = useAuth();
+  const { currentUser } = useSelector((state: RootState) => state.user);
   const uid = currentUser?.uid;
 
   useEffect(() => {

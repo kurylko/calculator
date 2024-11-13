@@ -8,7 +8,6 @@ import FoodTable from '../components/FoodTable';
 import { getNutriValuesPerKg } from '../utils/getNutriValues';
 import { PdfFoodTable } from '../components/PdfFoodTable';
 import { pdf } from '@react-pdf/renderer';
-import usePostProduct from '../hooks/usePostProducts';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { createFoodItem } from '../state/foodCollectionSlice';
@@ -17,9 +16,7 @@ import { AppDispatch, RootState } from '../state/store';
 export default function FoodInfoPage() {
   const dispatch: AppDispatch = useDispatch();
 
-  const { data } = useSelector(
-    (state: RootState) => state.foodCollection,
-  );
+  const { data } = useSelector((state: RootState) => state.foodCollection);
   const { currentUser } = useSelector((state: RootState) => state.user);
   console.log('3333', currentUser);
 

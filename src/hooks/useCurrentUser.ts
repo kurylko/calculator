@@ -9,8 +9,7 @@ const useCurrentUser = () => {
     (state: RootState) => state.user,
   );
 
-
- const handleGetUserData = () =>  dispatch(getCurrentUser());
+  const handleGetUserData = () => dispatch(getCurrentUser());
 
   return { currentUser, handleGetUserData, loading: isLoading, error };
 };
