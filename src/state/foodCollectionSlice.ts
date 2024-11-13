@@ -3,7 +3,7 @@ import { IUserFoodItem, IFoodItem } from '../interfaces/FoodItem';
 import { useAuth } from '../contexts/authContext/authContext';
 import usePostProduct from '../hooks/usePostProducts';
 import useDeleteProduct from '../hooks/useDeleteProduct';
-import { collection, getDocs } from 'firebase/firestore';
+import {collection, deleteDoc, doc, getDocs} from 'firebase/firestore';
 import { db } from '../firebase';
 
 interface FoodCollectionState {
@@ -42,14 +42,13 @@ export const fetchUserFoodItems = createAsyncThunk<
 export const deleteFoodItem = createAsyncThunk<string, IUserFoodItem>(
   'foodItem/deleteFoodItem',
   async (foodItem, { rejectWithValue }) => {
+    if(!foodItem.id) {
+      return rejectWithValue('No ID for user`s food item');
+    }
     try {
-      const { deleteProduct } = useDeleteProduct();
-      if (foodItem.id) {
-        await deleteProduct('products', foodItem);
-        return foodItem.id;
-      } else {
-        return rejectWithValue('No deleting item `ID provided');
-      }
+      const docRef = doc(db, 'products', foodItem.id);
+      await deleteDoc(docRef);
+      return foodItem.id;
     } catch (error) {
       return rejectWithValue(error);
     }

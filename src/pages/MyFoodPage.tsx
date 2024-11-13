@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { SavedFoodCard } from '../components/SavedFoodCard';
-import { useAuth } from '../contexts/authContext/authContext';
 import { User as FirebaseUser } from 'firebase/auth';
 import {
   IFoodEstimateValues,
@@ -19,16 +18,18 @@ import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEs
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import CalculationsTable from '../components/CalculationsTable';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../state/store";
+import {deleteFoodItem, fetchUserFoodItems} from "../state/foodCollectionSlice";
 
 export default function MyFoodPage() {
   // Users food list from db or localstorage (for not logged users)
+  const dispatch: AppDispatch = useDispatch();
   const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
-  console.log('usersFoodList:', usersFoodList);
 
-  const { data } = useFetchUserProducts();
+  const { data, loading } = useFetchUserProducts();
 
-  const { deleteProduct } = useDeleteProduct();
-  const { currentUser, loading } = useAuth();
+  const { currentUser } = useSelector((state: RootState) => state.user);
   const uid = currentUser?.uid;
 
   const getUsersAddedFood = useCallback(
@@ -43,7 +44,6 @@ export default function MyFoodPage() {
           usersAddedFood = JSON.parse(localStorageFoodItems);
         }
       }
-      console.log('usersAddedFood:', usersAddedFood);
       return usersAddedFood;
     },
     [uid, data],
@@ -76,7 +76,7 @@ export default function MyFoodPage() {
     foodItem: IUserFoodItem,
   ): Promise<void> => {
     if (foodItem.id) {
-      await deleteProduct('products', foodItem);
+      dispatch(deleteFoodItem(foodItem));
       const updatedFoodItemsFromDB = getUsersAddedFood(currentUser);
       setUsersFoodList(updatedFoodItemsFromDB);
     }
