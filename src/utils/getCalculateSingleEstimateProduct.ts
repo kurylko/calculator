@@ -6,16 +6,16 @@ import { IFoodEstimateValues } from './../interfaces/FoodItem';
 
 interface GetCalculateSingleEstimateProductProps {
   selectedProduct: string;
-  usersFoodList: IUserFoodItem[];
+  data: IUserFoodItem[];
   estimateFoodInputsValues: IFoodEstimateValues;
 }
 
 export const getCalculateSingleEstimateProduct = ({
   selectedProduct,
-  usersFoodList,
+  data,
   estimateFoodInputsValues,
 }: GetCalculateSingleEstimateProductProps) => {
-  const matchedProduct = usersFoodList.find(
+  const matchedProduct = data.find(
     (item) => item.foodName === selectedProduct,
   );
 

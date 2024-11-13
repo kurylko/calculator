@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { SavedFoodCard } from '../components/SavedFoodCard';
-import { User as FirebaseUser } from 'firebase/auth';
 import {
   IFoodEstimateValues,
   IFoodItem,
@@ -22,55 +21,10 @@ import { AppDispatch, RootState } from '../state/store';
 import { deleteFoodItem } from '../state/foodCollectionSlice';
 
 export default function MyFoodPage() {
-  // Users food list from db or localstorage (for not logged users)
+  // Users food list from db or localstorage (redux-persist)
   const dispatch: AppDispatch = useDispatch();
-  const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
 
   const { data, loading } = useFetchUserProducts();
-  console.log("foods:", data);
-
-  const { currentUser } = useSelector((state: RootState) => state.user);
-  const uid = currentUser?.uid;
-
-  const getUsersAddedFood = useCallback(
-    (currentUser: FirebaseUser | null) => {
-      let usersAddedFood: IUserFoodItem[] = [];
-      if (currentUser !== null) {
-        usersAddedFood = data.filter((food) => food.userID === uid);
-      } else {
-        const localStorageFoodItems =
-          localStorage.getItem('lastInputFoodItems');
-        if (localStorageFoodItems) {
-          usersAddedFood = JSON.parse(localStorageFoodItems);
-        }
-      }
-      return usersAddedFood;
-    },
-    [uid, data],
-  );
-
-  // useEffect(() => {
-  //   const foodList = getUsersAddedFood(currentUser);
-  //   const filteredFoodList = uid
-  //     ? foodList.filter((food) => food.userID === uid)
-  //     : foodList;
-  //   setUsersFoodList(filteredFoodList);
-  // }, [currentUser, uid, getUsersAddedFood]);
-
-  // const deleteProductFromLocalStorage = (foodItem: IUserFoodItem) => {
-  //   const localStorageFoodItems = localStorage.getItem('lastInputFoodItems');
-  //   const foodItems: IUserFoodItem[] = localStorageFoodItems
-  //     ? JSON.parse(localStorageFoodItems)
-  //     : [];
-  //   const updatedFoodItems = foodItems.filter(
-  //     (item) => item.foodName !== foodItem.foodName,
-  //   );
-  //   localStorage.setItem(
-  //     'lastInputFoodItems',
-  //     JSON.stringify(updatedFoodItems),
-  //   );
-  //   setUsersFoodList(updatedFoodItems);
-  // };
 
   const handleDeleteProduct = async (
     foodItem: IUserFoodItem,
@@ -93,7 +47,6 @@ export default function MyFoodPage() {
       calories: '',
     });
   const [selectedProduct, setSelectedProduct] = useState<string>('');
-  const [products, setProducts] = useState<string[]>([]);
   const [result, setResult] = useState<EstimateCalculationResult | null>(null);
 
   const handleSaveResult = () => {
@@ -108,7 +61,6 @@ export default function MyFoodPage() {
         JSON.stringify(updatedResults),
       );
       console.log('Item saved:', updatedResults);
-      console.log('saved:', userCalculationResults);
       return updatedResults;
     });
     setResult(null);
@@ -141,7 +93,7 @@ export default function MyFoodPage() {
     if (selectedProduct) {
       const singleProductCalculationResult = getCalculateSingleEstimateProduct({
         selectedProduct,
-        usersFoodList,
+        data,
         estimateFoodInputsValues,
       });
       console.log(
