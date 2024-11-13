@@ -11,7 +11,7 @@ import { pdf } from '@react-pdf/renderer';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { createFoodItem } from '../state/foodCollectionSlice';
-import { AppDispatch, RootState } from '../state/store';
+import { AppDispatch } from '../state/store';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
 
 export default function FoodInfoPage() {
