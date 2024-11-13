@@ -6,7 +6,6 @@ import {
   IFoodItem,
   IUserFoodItem,
 } from '../interfaces/FoodItem';
-import useDeleteProduct from '../hooks/useDeleteProduct';
 import { getNutriValuesPerKg } from '../utils/getNutriValues';
 import { Box, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -18,9 +17,9 @@ import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEs
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import CalculationsTable from '../components/CalculationsTable';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../state/store";
-import {deleteFoodItem, fetchUserFoodItems} from "../state/foodCollectionSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../state/store';
+import { deleteFoodItem } from '../state/foodCollectionSlice';
 
 export default function MyFoodPage() {
   // Users food list from db or localstorage (for not logged users)
@@ -28,6 +27,7 @@ export default function MyFoodPage() {
   const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
 
   const { data, loading } = useFetchUserProducts();
+  console.log("foods:", data);
 
   const { currentUser } = useSelector((state: RootState) => state.user);
   const uid = currentUser?.uid;
@@ -49,46 +49,41 @@ export default function MyFoodPage() {
     [uid, data],
   );
 
-  useEffect(() => {
-    const foodList = getUsersAddedFood(currentUser);
-    const filteredFoodList = uid
-      ? foodList.filter((food) => food.userID === uid)
-      : foodList;
-    setUsersFoodList(filteredFoodList);
-  }, [currentUser, uid, getUsersAddedFood]);
+  // useEffect(() => {
+  //   const foodList = getUsersAddedFood(currentUser);
+  //   const filteredFoodList = uid
+  //     ? foodList.filter((food) => food.userID === uid)
+  //     : foodList;
+  //   setUsersFoodList(filteredFoodList);
+  // }, [currentUser, uid, getUsersAddedFood]);
 
-  const deleteProductFromLocalStorage = (foodItem: IUserFoodItem) => {
-    const localStorageFoodItems = localStorage.getItem('lastInputFoodItems');
-    const foodItems: IUserFoodItem[] = localStorageFoodItems
-      ? JSON.parse(localStorageFoodItems)
-      : [];
-    const updatedFoodItems = foodItems.filter(
-      (item) => item.foodName !== foodItem.foodName,
-    );
-    localStorage.setItem(
-      'lastInputFoodItems',
-      JSON.stringify(updatedFoodItems),
-    );
-    setUsersFoodList(updatedFoodItems);
-  };
+  // const deleteProductFromLocalStorage = (foodItem: IUserFoodItem) => {
+  //   const localStorageFoodItems = localStorage.getItem('lastInputFoodItems');
+  //   const foodItems: IUserFoodItem[] = localStorageFoodItems
+  //     ? JSON.parse(localStorageFoodItems)
+  //     : [];
+  //   const updatedFoodItems = foodItems.filter(
+  //     (item) => item.foodName !== foodItem.foodName,
+  //   );
+  //   localStorage.setItem(
+  //     'lastInputFoodItems',
+  //     JSON.stringify(updatedFoodItems),
+  //   );
+  //   setUsersFoodList(updatedFoodItems);
+  // };
 
   const handleDeleteProduct = async (
     foodItem: IUserFoodItem,
   ): Promise<void> => {
     if (foodItem.id) {
       dispatch(deleteFoodItem(foodItem));
-      const updatedFoodItemsFromDB = getUsersAddedFood(currentUser);
-      setUsersFoodList(updatedFoodItemsFromDB);
-    }
-    if (foodItem.foodName) {
-      deleteProductFromLocalStorage(foodItem);
     } else {
       console.error('No ID found for this food item');
     }
   };
 
   // Calculations logic
-  const productNames = usersFoodList.map((item: IFoodItem) => item.foodName);
+  const productNames = data.map((item: IFoodItem) => item.foodName);
 
   const [estimateFoodInputsValues, setEstimateFoodInputsValues] =
     useState<IFoodEstimateValues>({
@@ -316,8 +311,8 @@ export default function MyFoodPage() {
         }}
       >
         {!loading &&
-          !!usersFoodList.length &&
-          usersFoodList.map((item) => (
+          !!data.length &&
+          data.map((item) => (
             <SavedFoodCard
               key={item.foodName}
               foodName={item.foodName}

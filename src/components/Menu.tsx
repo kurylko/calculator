@@ -5,13 +5,12 @@ import { Link } from 'react-router-dom';
 import { doSignOut } from '../auth';
 import { useNavigate } from 'react-router-dom';
 import avatar from './../assets/images/avocado-face.png';
-import {useSelector} from "react-redux";
-import {RootState} from "../state/store";
+import { useSelector } from 'react-redux';
+import { RootState } from '../state/store';
 
 export default function Menu() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: RootState) => state.user);
-
 
   const onLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (currentUser) {

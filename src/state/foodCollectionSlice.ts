@@ -3,8 +3,16 @@ import { IUserFoodItem, IFoodItem } from '../interfaces/FoodItem';
 import { useAuth } from '../contexts/authContext/authContext';
 import usePostProduct from '../hooks/usePostProducts';
 import useDeleteProduct from '../hooks/useDeleteProduct';
-import {collection, deleteDoc, doc, getDocs} from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+} from 'firebase/firestore';
 import { db } from '../firebase';
+import { useSelector } from 'react-redux';
+import { RootState } from './store';
 
 interface FoodCollectionState {
   data: IUserFoodItem[];
@@ -42,7 +50,7 @@ export const fetchUserFoodItems = createAsyncThunk<
 export const deleteFoodItem = createAsyncThunk<string, IUserFoodItem>(
   'foodItem/deleteFoodItem',
   async (foodItem, { rejectWithValue }) => {
-    if(!foodItem.id) {
+    if (!foodItem.id) {
       return rejectWithValue('No ID for user`s food item');
     }
     try {
@@ -57,20 +65,29 @@ export const deleteFoodItem = createAsyncThunk<string, IUserFoodItem>(
 
 export const createFoodItem = createAsyncThunk<
   IUserFoodItem,
-  { foodInputsValues: IFoodItem }
+  { foodInputsValues: IFoodItem },
+  { state: RootState }
 >(
   'foodItem/createFoodItem',
-  async ({ foodInputsValues }, { rejectWithValue }) => {
+  async ({ foodInputsValues }, { getState, rejectWithValue }) => {
     try {
-      const { currentUser } = useAuth();
-      const uid = currentUser?.uid;
-      const { postProduct } = usePostProduct();
-      const newFoodItem = await postProduct('products', {
-        ...foodInputsValues,
-        userID: uid,
-      });
-      return newFoodItem;
-    } catch (error) {
+      const state = getState();
+      const currentUser = state.user.currentUser;
+      if (currentUser) {
+        const uid = currentUser?.uid;
+        const colRef = collection(db, 'products');
+        await addDoc(colRef, {
+          ...foodInputsValues,
+          userID: uid,
+        });
+        return {
+          ...foodInputsValues,
+          userID: uid,
+        };
+      } else {
+        return { ...foodInputsValues };
+      }
+    } catch (error: any) {
       return rejectWithValue(error);
     }
   },

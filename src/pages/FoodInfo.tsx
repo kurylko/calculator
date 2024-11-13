@@ -18,7 +18,6 @@ export default function FoodInfoPage() {
 
   const { data } = useSelector((state: RootState) => state.foodCollection);
   const { currentUser } = useSelector((state: RootState) => state.user);
-  console.log('3333', currentUser);
 
   const lastInputFoodItemString = localStorage.getItem('lastInputFood');
 

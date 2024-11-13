@@ -1,15 +1,41 @@
-import { configureStore } from '@reduxjs/toolkit';
-import userSlice from './userSlice';
-import foodCollectionSlice from './foodCollectionSlice';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import UserSlice from './userSlice';
+import FoodCollectionSlice from './foodCollectionSlice';
+
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+};
+const rootReducer = combineReducers({
+  user: UserSlice,
+  foodCollection: FoodCollectionSlice,
+});
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {
-      user: userSlice,
-      foodCollection: foodCollectionSlice,
-    },
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
   });
 };
+
+export const persistor = persistStore(makeStore());
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore['getState']>;
