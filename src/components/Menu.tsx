@@ -2,17 +2,19 @@ import React from 'react';
 import { Box, AppBar, Toolbar, Button, Avatar } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/authContext/authContext';
 import { doSignOut } from '../auth';
 import { useNavigate } from 'react-router-dom';
 import avatar from './../assets/images/avocado-face.png';
+import {useSelector} from "react-redux";
+import {RootState} from "../state/store";
 
 export default function Menu() {
   const navigate = useNavigate();
-  const { userLoggedIn } = useAuth();
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
 
   const onLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (userLoggedIn) {
+    if (currentUser) {
       await doSignOut();
       navigate('/');
     }
@@ -41,7 +43,7 @@ export default function Menu() {
               </Button>
             </Box>
             <Box sx={{ display: 'flex' }}>
-              {!userLoggedIn && (
+              {!currentUser && (
                 <Box sx={{ display: 'flex' }}>
                   <Avatar>
                     <PersonOutlineIcon />
@@ -51,7 +53,7 @@ export default function Menu() {
                   </Button>
                 </Box>
               )}
-              {userLoggedIn && (
+              {currentUser && (
                 <Box sx={{ display: 'flex' }}>
                   <Avatar src={avatar} />
                   <Button color="inherit" onClick={onLogOut}>
