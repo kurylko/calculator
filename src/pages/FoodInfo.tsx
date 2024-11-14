@@ -9,7 +9,7 @@ import { getNutriValuesPerKg } from '../utils/getNutriValues';
 import { PdfFoodTable } from '../components/PdfFoodTable';
 import { pdf } from '@react-pdf/renderer';
 import Typography from '@mui/material/Typography';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createFoodItem } from '../state/foodCollectionSlice';
 import { AppDispatch } from '../state/store';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
