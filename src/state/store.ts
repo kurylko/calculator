@@ -13,31 +13,44 @@ import storage from 'redux-persist/lib/storage';
 import UserSlice from './userSlice';
 import FoodCollectionSlice from './foodCollectionSlice';
 
+// Persist configuration
 const persistConfig = {
   key: 'root',
   storage: storage,
-  //whitelist: ['foodCollection'],
+  // whitelist: ['foodCollection'],
 };
+
+// Root reducer combining all slices
 const rootReducer = combineReducers({
   user: UserSlice,
   foodCollection: FoodCollectionSlice,
 });
+
+// Persisted reducer using the persistConfig
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Store creation function
 export const makeStore = () => {
-  return configureStore({
+  const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
-      }),
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          },
+        }),
   });
+
+  // Persistor created after store
+  const persistor = persistStore(store);
+  return { store, persistor };
 };
 
-export const persistor = persistStore(makeStore());
+// Export store and persistor
+const { store, persistor } = makeStore();
+export { store, persistor };
 
-export type AppStore = ReturnType<typeof makeStore>;
+// Types for TypeScript usage
+export type AppStore = typeof store;
 export type RootState = ReturnType<AppStore['getState']>;
 export type AppDispatch = AppStore['dispatch'];
