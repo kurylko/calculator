@@ -1,16 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { SegmentedProgressBar } from '../components/SegmentedProgressBar';
 import { SingleProductCheckBox } from '../components/SingleProductCheckBox';
 import {
   IFoodEstimateValues,
   IFoodItem,
-  IUserFoodItem,
 } from '../interfaces/FoodItem';
-import { User as FirebaseUser } from '@firebase/auth';
-import useFetchProducts from '../hooks/useFetchProducts';
-import { useAuth } from '../contexts/authContext/authContext';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { EstimateUserFoodInputsForm } from '../components/EstimateUserFoodInputsForm';
 import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEstimateProduct';
@@ -19,6 +14,7 @@ import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import PlateNutrients from '../components/PlateNutrients';
 import CalculationsTable from '../components/CalculationsTable';
 import MacronutrientChart from '../components/MacronutrientChart';
+import useFetchUserProducts from '../hooks/useFetchUserProducts';
 
 export type TotalPlate = {
   calories: string;
@@ -29,39 +25,13 @@ export type TotalPlate = {
 };
 
 export default function MyPlatePage() {
-  const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
-  const [progress, setProgress] = useState<number>(10);
+  // data is a users food list
+  const { data } = useFetchUserProducts();
 
-  const { data } = useFetchProducts();
-  const { currentUser } = useAuth();
-  const uid = currentUser?.uid;
+  // ToDo set users calculations in redux
+  // const { currentUser } = useSelector((state: RootState) => state.user);
 
-  const getUsersAddedFood = useCallback(
-    (currentUser: FirebaseUser | null) => {
-      let usersAddedFood: IUserFoodItem[] = [];
-      if (currentUser !== null) {
-        usersAddedFood = data.filter((food) => food.userID === uid);
-      } else {
-        const localStorageFoodItems =
-          localStorage.getItem('lastInputFoodItems');
-        if (localStorageFoodItems) {
-          usersAddedFood = JSON.parse(localStorageFoodItems);
-        }
-      }
-      return usersAddedFood;
-    },
-    [uid, data],
-  );
-
-  useEffect(() => {
-    const foodList = getUsersAddedFood(currentUser);
-    const filteredFoodList = uid
-      ? foodList.filter((food) => food.userID === uid)
-      : foodList;
-    setUsersFoodList(filteredFoodList);
-  }, [currentUser, uid, getUsersAddedFood]);
-
-  const productNames = usersFoodList.map((item: IFoodItem) => item.foodName);
+  const productNames = data.map((item: IFoodItem) => item.foodName);
   const [selectedProduct, setSelectedProduct] = useState<string>('');
 
   const handleChangeSingleProduct = (event: SelectChangeEvent<string>) => {
@@ -76,7 +46,7 @@ export default function MyPlatePage() {
       carbohydrate: '',
       calories: '',
     });
-  const [products, setProducts] = useState<string[]>([]);
+
   const [result, setResult] = useState<EstimateCalculationResult | null>(null);
 
   const handleChangeInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +69,7 @@ export default function MyPlatePage() {
     if (selectedProduct) {
       const singleProductCalculationResult = getCalculateSingleEstimateProduct({
         selectedProduct,
-        usersFoodList,
+        data,
         estimateFoodInputsValues,
       });
       console.log(
@@ -118,7 +88,6 @@ export default function MyPlatePage() {
   // Added to LocalStorage plate calculations
   const plateCalculationResults = localStorage.getItem('plate') ?? '[]';
   const parsedPlate = JSON.parse(plateCalculationResults);
-  console.log('plateCalculationResults', parsedPlate);
 
   // To display in a Plate card
   const plateTotalToDisplay: TotalPlate = parsedPlate.reduce(
@@ -168,7 +137,6 @@ export default function MyPlatePage() {
       (item) => item.calculationId !== calculationResult.calculationId,
     );
     localStorage.setItem('plate', JSON.stringify(updatedCalculationResults));
-    setUserCalculationResults(updatedCalculationResults);
   };
 
   const handleDeleteCalculation = async (
@@ -176,10 +144,6 @@ export default function MyPlatePage() {
   ): Promise<void> => {
     if (calculationResult.calculationId) {
       await deleteCalculationFromLocalStorage(calculationResult);
-      const updatedCalculationResults = localStorage.getItem('plate');
-      setUserCalculationResults(
-        updatedCalculationResults ? JSON.parse(updatedCalculationResults) : [],
-      );
     } else {
       console.error('No ID found for this calculation result');
     }
@@ -260,15 +224,6 @@ export default function MyPlatePage() {
   }
 
   const plateCalculationRate = countHealthyPlate(plateTotalToDisplay);
-  console.log('results:', plateCalculationRate);
-
-  // useEffect(() => {
-  //     const interval = setInterval(() => {
-  //         setProgress(prev => (prev < 100 ? prev + 1 : 0));
-  //     }, 100); // Increase progress by 1% every 0.1 seconds
-  //
-  //     return () => clearInterval(interval);
-  // }, []);
 
   return (
     <Box

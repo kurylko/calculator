@@ -2,10 +2,15 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Menu from './components/Menu';
 import './App.css';
-import useCurrentUser from './hooks/useCurrentUser';
+import useFetchUserProducts from "./hooks/useFetchUserProducts";
+import {useSelector} from "react-redux";
+import {RootState} from "./state/store";
 
 function App() {
-  const { handleGetUserData } = useCurrentUser();
+  const { data } = useFetchUserProducts();
+  const {currentUser} = useSelector((state: RootState) => state.user);
+    console.log("user:", currentUser);
+    console.log("foods:", data);
 
   return (
     <div className="App">

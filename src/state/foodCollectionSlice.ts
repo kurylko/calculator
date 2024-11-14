@@ -1,8 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { IUserFoodItem, IFoodItem } from '../interfaces/FoodItem';
-import { useAuth } from '../contexts/authContext/authContext';
-import usePostProduct from '../hooks/usePostProducts';
-import useDeleteProduct from '../hooks/useDeleteProduct';
 import {
   addDoc,
   collection,
@@ -11,7 +8,6 @@ import {
   getDocs,
 } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useSelector } from 'react-redux';
 import { RootState } from './store';
 
 interface FoodCollectionState {
