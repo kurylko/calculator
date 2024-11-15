@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage';
 import UserSlice from './userSlice';
 import FoodCollectionSlice from './foodCollectionSlice';
 import CalculationsCollectionSlice from "./calculationsCollectionSlice";
+import plateSlice from "./plateSlice";
 
 // Persist configuration
 const persistConfig = {
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   user: UserSlice,
   foodCollection: FoodCollectionSlice,
   calculationsCollection: CalculationsCollectionSlice,
+  plate: plateSlice,
 });
 
 // Persisted reducer using the persistConfig

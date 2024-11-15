@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { SingleProductCheckBox } from '../components/SingleProductCheckBox';
-import {
-  IFoodEstimateValues,
-  IFoodItem,
-} from '../interfaces/FoodItem';
+import { IFoodEstimateValues, IFoodItem } from '../interfaces/FoodItem';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { EstimateUserFoodInputsForm } from '../components/EstimateUserFoodInputsForm';
 import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEstimateProduct';
@@ -15,8 +12,11 @@ import PlateNutrients from '../components/PlateNutrients';
 import CalculationsTable from '../components/CalculationsTable';
 import MacronutrientChart from '../components/MacronutrientChart';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
+import { AppDispatch, RootState } from '../state/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToPlate, deleteFromPlate } from '../state/plateSlice';
 
-export type TotalPlate = {
+export type TotalPlateNutrients = {
   calories: string;
   carbohydrate: string;
   fat: string;
@@ -27,6 +27,10 @@ export type TotalPlate = {
 export default function MyPlatePage() {
   // data is a users food list
   const { data } = useFetchUserProducts();
+
+  const { calculations } = useSelector(
+    (state: RootState) => state.calculationsCollection,
+  );
 
   // ToDo set users calculations in redux
   // const { currentUser } = useSelector((state: RootState) => state.user);
@@ -65,7 +69,6 @@ export default function MyPlatePage() {
       alert('Please fill in only one estimate field to submit.');
       return;
     }
-
     if (selectedProduct) {
       const singleProductCalculationResult = getCalculateSingleEstimateProduct({
         selectedProduct,
@@ -81,17 +84,13 @@ export default function MyPlatePage() {
     }
   };
 
-  const [userCalculationResults, setUserCalculationResults] = useState<
-    EstimateCalculationResult[]
-  >([]);
-
-  // Added to LocalStorage plate calculations
-  const plateCalculationResults = localStorage.getItem('plate') ?? '[]';
-  const parsedPlate = JSON.parse(plateCalculationResults);
+  // Added result to a plate (redux persist)
+  const { plate } = useSelector((state: RootState) => state.plate);
+  const dispatch: AppDispatch = useDispatch();
 
   // To display in a Plate card
-  const plateTotalToDisplay: TotalPlate = parsedPlate.reduce(
-    (accumulator: TotalPlate, item: EstimateCalculationResult) => {
+  const plateTotalToDisplay: TotalPlateNutrients = plate.reduce(
+    (accumulator: TotalPlateNutrients, item: EstimateCalculationResult) => {
       return {
         calories: (
           parseFloat(accumulator.calories) + parseFloat(item.calories ?? '0')
@@ -118,32 +117,15 @@ export default function MyPlatePage() {
     if (!result) {
       return;
     }
-
-    setUserCalculationResults((prevResults) => {
-      const updatedResults = [...prevResults, result];
-      localStorage.setItem('plate', JSON.stringify(updatedResults));
-      return updatedResults;
-    });
+    dispatch(addToPlate({ result }));
     setResult(null);
   };
 
-  const deleteCalculationFromLocalStorage = (
-    calculationResult: EstimateCalculationResult,
-  ) => {
-    const localStorageCalculations = localStorage.getItem('plate');
-    const calculationResults: EstimateCalculationResult[] =
-      localStorageCalculations ? JSON.parse(localStorageCalculations) : [];
-    const updatedCalculationResults = calculationResults.filter(
-      (item) => item.calculationId !== calculationResult.calculationId,
-    );
-    localStorage.setItem('plate', JSON.stringify(updatedCalculationResults));
-  };
-
   const handleDeleteCalculation = async (
-    calculationResult: EstimateCalculationResult,
+    result: EstimateCalculationResult,
   ): Promise<void> => {
-    if (calculationResult.calculationId) {
-      await deleteCalculationFromLocalStorage(calculationResult);
+    if (result.calculationId) {
+      await dispatch(deleteFromPlate({ result }));
     } else {
       console.error('No ID found for this calculation result');
     }
@@ -151,7 +133,7 @@ export default function MyPlatePage() {
 
   // Counting standard macronutrient distribution for a balanced diet
 
-  function countHealthyPlate(plate: TotalPlate) {
+  function countHealthyPlate(plate: TotalPlateNutrients) {
     // Convert nutrient values from strings to numbers
     const totalCalories = parseFloat(plate.calories);
     const carbsInGrams = parseFloat(plate.carbohydrate);
@@ -240,11 +222,23 @@ export default function MyPlatePage() {
       </Box>
       <Container
         sx={{
-          width: '70%',
+          width: {
+            xs: '90%',
+            sm: '90%',
+            md: '90%',
+            lg: '70%',
+          },
           display: 'flex',
+          flexDirection: {
+            xs: 'column',
+            sm: 'column',
+            md: 'row',
+            lg: 'flex-row',
+          },
           justifyContent: 'space-between',
           marginTop: '50px',
           marginBottom: '50px',
+          alignItems: 'center',
         }}
       >
         <MacronutrientChart userShares={plateCalculationRate} />
@@ -298,10 +292,12 @@ export default function MyPlatePage() {
           Add to the plate
         </Button>
       )}
-      <Typography variant="h3">Ingredients in your plate</Typography>
-      <Box sx={{ display: 'flex', width: '100%' }}>
+      <Typography variant="h3" sx={{ marginTop: '30px' }}>
+        Ingredients in your plate
+      </Typography>
+      <Box sx={{ display: 'flex', width: '100%', marginBottom: '30px' }}>
         <CalculationsTable
-          results={parsedPlate}
+          results={plate}
           handleDelete={handleDeleteCalculation}
         />
       </Box>
