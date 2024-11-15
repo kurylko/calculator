@@ -53,7 +53,6 @@ export default function MyFoodPage() {
     if (!result) {
       return;
     }
-
     setUserCalculationResults((prevResults) => {
       const updatedResults = [...prevResults, result];
       localStorage.setItem(
