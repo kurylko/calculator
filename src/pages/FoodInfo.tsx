@@ -16,7 +16,7 @@ import useFetchUserProducts from '../hooks/useFetchUserProducts';
 
 export default function FoodInfoPage() {
   const dispatch: AppDispatch = useDispatch();
-  const { data, loading } = useFetchUserProducts();
+  const { data } = useFetchUserProducts();
 
   const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>({
     foodName: '',

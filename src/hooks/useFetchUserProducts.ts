@@ -15,7 +15,7 @@ const useFetchUserProducts = () => {
     if (uid) {
       dispatch(fetchUserFoodItems(uid));
     }
-  }, [uid]);
+  }, [dispatch, uid]);
 
   return { data, loading: isLoading };
 };

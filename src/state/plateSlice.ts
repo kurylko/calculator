@@ -19,7 +19,7 @@ export const addToPlate = createAsyncThunk<
 >('plate/addToPlate', async ({ result }, { rejectWithValue }) => {
     try {
         return result;
-    } catch (error: any) {
+    } catch (error: unknown) {
         return rejectWithValue(error);
     }
 });

@@ -1,14 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { IUserFoodItem, IFoodItem } from '../interfaces/FoodItem';
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-} from 'firebase/firestore';
-import { db } from '../firebase';
-import { RootState } from './store';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { EstimateCalculationResult } from '../interfaces/EstimateCalculationResult';
 
 interface CalculationsCollectionState {
@@ -52,7 +42,7 @@ export const saveCalculationResult = createAsyncThunk<
 >('calculation/createCalculation', async ({ result }, { rejectWithValue }) => {
   try {
     return result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return rejectWithValue(error);
   }
 });

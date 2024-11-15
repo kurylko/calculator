@@ -38,10 +38,6 @@ export default function MyPlatePage() {
   // data is a users food list
   const { data } = useFetchUserProducts();
 
-  const { calculations } = useSelector(
-    (state: RootState) => state.calculationsCollection,
-  );
-
   // ToDo set users calculations in redux
   // const { currentUser } = useSelector((state: RootState) => state.user);
 

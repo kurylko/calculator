@@ -83,7 +83,7 @@ export const createFoodItem = createAsyncThunk<
       } else {
         return { ...foodInputsValues };
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       return rejectWithValue(error);
     }
   },
