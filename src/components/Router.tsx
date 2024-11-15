@@ -7,6 +7,7 @@ import Blog from '../pages/Blog';
 import MyFoodPage from '../pages/MyFoodPage';
 import Login from './auth/LogIn';
 import SignUp from './auth/SignUp';
+import MyPlatePage from '../pages/MyPlatePage';
 
 interface AppRoutesProps {
   children?: React.ReactNode;
@@ -23,6 +24,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({ children }) => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/log-in" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/my-plate" element={<MyPlatePage />} />
         </Route>
       </Routes>
     </Router>

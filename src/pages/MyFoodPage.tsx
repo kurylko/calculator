@@ -1,14 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import useFetchProducts from '../hooks/useFetchProducts';
+import React, { useState } from 'react';
 import { SavedFoodCard } from '../components/SavedFoodCard';
-import { useAuth } from '../contexts/authContext/authContext';
-import { User as FirebaseUser } from 'firebase/auth';
 import {
   IFoodEstimateValues,
   IFoodItem,
   IUserFoodItem,
 } from '../interfaces/FoodItem';
-import useDeleteProduct from '../hooks/useDeleteProduct';
 import { getNutriValuesPerKg } from '../utils/getNutriValues';
 import { Box, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -16,76 +12,39 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { EstimateCalculationResult } from '../interfaces/EstimateCalculationResult';
 import { SingleProductCheckBox } from '../components/SingleProductCheckBox';
 import { EstimateUserFoodInputsForm } from '../components/EstimateUserFoodInputsForm';
-import { getCalculateEstimateProducts } from '../utils/getCalculateEstimateProducts';
 import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEstimateProduct';
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import CalculationsTable from '../components/CalculationsTable';
+import useFetchUserProducts from '../hooks/useFetchUserProducts';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../state/store';
+import { deleteFoodItem } from '../state/foodCollectionSlice';
+import {
+  deleteCalculationResult,
+  saveCalculationResult,
+} from '../state/calculationsCollectionSlice';
 
 export default function MyFoodPage() {
-  const [usersFoodList, setUsersFoodList] = useState<IUserFoodItem[]>([]);
-
-  const { data } = useFetchProducts();
-  const { deleteProduct } = useDeleteProduct();
-  const { currentUser, loading } = useAuth();
-  const uid = currentUser?.uid;
-
-  const getUsersAddedFood = useCallback(
-    (currentUser: FirebaseUser | null) => {
-      let usersAddedFood: IUserFoodItem[] = [];
-      if (currentUser !== null) {
-        usersAddedFood = data.filter((food) => food.userID === uid);
-      } else {
-        const localStorageFoodItems =
-          localStorage.getItem('lastInputFoodItems');
-        if (localStorageFoodItems) {
-          usersAddedFood = JSON.parse(localStorageFoodItems);
-        }
-      }
-      return usersAddedFood;
-    },
-    [uid, data],
+  // Users food list from db or localstorage (redux-persist)
+  const dispatch: AppDispatch = useDispatch();
+  const { calculations } = useSelector(
+    (state: RootState) => state.calculationsCollection,
   );
 
-  useEffect(() => {
-    const foodList = getUsersAddedFood(currentUser);
-    const filteredFoodList = uid
-      ? foodList.filter((food) => food.userID === uid)
-      : foodList;
-    setUsersFoodList(filteredFoodList);
-  }, [currentUser, uid, getUsersAddedFood]);
-
-  const deleteProductFromLocalStorage = (foodItem: IUserFoodItem) => {
-    const localStorageFoodItems = localStorage.getItem('lastInputFoodItems');
-    const foodItems: IUserFoodItem[] = localStorageFoodItems
-      ? JSON.parse(localStorageFoodItems)
-      : [];
-    const updatedFoodItems = foodItems.filter(
-      (item) => item.foodName !== foodItem.foodName,
-    );
-    localStorage.setItem(
-      'lastInputFoodItems',
-      JSON.stringify(updatedFoodItems),
-    );
-    setUsersFoodList(updatedFoodItems);
-  };
+  const { data, loading } = useFetchUserProducts();
 
   const handleDeleteProduct = async (
     foodItem: IUserFoodItem,
   ): Promise<void> => {
     if (foodItem.id) {
-      await deleteProduct('products', foodItem);
-      const updatedFoodItemsFromDB = getUsersAddedFood(currentUser);
-      setUsersFoodList(updatedFoodItemsFromDB);
-    }
-    if (foodItem.foodName) {
-      deleteProductFromLocalStorage(foodItem);
+      dispatch(deleteFoodItem(foodItem));
     } else {
       console.error('No ID found for this food item');
     }
   };
 
   // Calculations logic
-  const productNames = usersFoodList.map((item: IFoodItem) => item.foodName);
+  const productNames = data.map((item: IFoodItem) => item.foodName);
 
   const [estimateFoodInputsValues, setEstimateFoodInputsValues] =
     useState<IFoodEstimateValues>({
@@ -95,26 +54,7 @@ export default function MyFoodPage() {
       calories: '',
     });
   const [selectedProduct, setSelectedProduct] = useState<string>('');
-  const [products, setProducts] = useState<string[]>([]);
   const [result, setResult] = useState<EstimateCalculationResult | null>(null);
-
-  const handleSaveResult = () => {
-    if (!result) {
-      return;
-    }
-
-    setUserCalculationResults((prevResults) => {
-      const updatedResults = [...prevResults, result];
-      localStorage.setItem(
-        'savedCalculationResults',
-        JSON.stringify(updatedResults),
-      );
-      console.log('Item saved:', updatedResults);
-      console.log('saved:', userCalculationResults);
-      return updatedResults;
-    });
-    setResult(null);
-  };
 
   // Handle change for single product
   const handleChangeSingleProduct = (event: SelectChangeEvent<string>) => {
@@ -136,86 +76,44 @@ export default function MyFoodPage() {
       (value) => (value as string).trim() !== '',
     ).length;
     if (filledInputsCount !== 1) {
-      alert('Please fill in only one field to submit.');
+      alert('Please fill in only one estimate field to submit.');
       return;
     }
-
     if (selectedProduct) {
       const singleProductCalculationResult = getCalculateSingleEstimateProduct({
         selectedProduct,
-        usersFoodList,
+        data,
         estimateFoodInputsValues,
       });
       console.log(
-        'Single calculation',
+        'Single calculation:',
         selectedProduct,
         singleProductCalculationResult,
       );
       setResult(singleProductCalculationResult);
-    } else {
-      const calculationResult = getCalculateEstimateProducts({
-        products,
-        usersFoodList,
-        estimateFoodInputsValues,
-      });
-      setEstimateFoodInputsValues({
-        fat: '',
-        protein: '',
-        carbohydrate: '',
-        calories: '',
-      });
-      console.log('Multiple calculation', setProducts(products));
-      setResult(calculationResult);
     }
   };
 
-  // Calculations of user (stored in LS)
-
-  const [userCalculationResults, setUserCalculationResults] = useState<
-    EstimateCalculationResult[]
-  >([]);
-  const calculationResults = localStorage.getItem('savedCalculationResults');
-
-  const deleteCalculationFromLocalStorage = (
-    calculationResult: EstimateCalculationResult,
-  ) => {
-    const localStorageCalculations = localStorage.getItem(
-      'savedCalculationResults',
-    );
-    const calculationResults: EstimateCalculationResult[] =
-      localStorageCalculations ? JSON.parse(localStorageCalculations) : [];
-    const updatedCalculationResults = calculationResults.filter(
-      (item) => item.calculationId !== calculationResult.calculationId,
-    );
-    localStorage.setItem(
-      'savedCalculationResults',
-      JSON.stringify(updatedCalculationResults),
-    );
-    setUserCalculationResults(updatedCalculationResults);
+  // User can save the result of calculation to the collection (redux persist)
+  const handleSaveResult = () => {
+    if (!result) {
+      return;
+    }
+    dispatch(saveCalculationResult({ result }));
+    console.log('result saved:', result);
   };
 
-  const handleDeleteCalculation = async (
-    calculationResult: EstimateCalculationResult,
+  // Calculations of user (redux persist)
+
+  const handleDeleteSavedCalculationResult = async (
+    result: EstimateCalculationResult,
   ): Promise<void> => {
-    if (calculationResult.calculationId) {
-      await deleteCalculationFromLocalStorage(calculationResult);
-      const updatedCalculationResults = localStorage.getItem(
-        'savedCalculationResults',
-      );
-      setUserCalculationResults(
-        updatedCalculationResults ? JSON.parse(updatedCalculationResults) : [],
-      );
+    if (result.calculationId) {
+      await dispatch(deleteCalculationResult({ result }));
     } else {
       console.error('No ID found for this calculation result');
     }
   };
-
-  useEffect(() => {
-    const parsedResults = calculationResults
-      ? JSON.parse(calculationResults)
-      : [];
-    setUserCalculationResults(parsedResults);
-  }, [calculationResults]);
 
   return (
     <Box
@@ -229,7 +127,7 @@ export default function MyFoodPage() {
       }}
     >
       <Box sx={{ width: '85%', maxWidth: 700 }}>
-        <Typography variant="h3">LET'S COUNT A DISH</Typography>
+        <Typography variant="h3">LET'S COUNT NUTRIENTS</Typography>
       </Box>
       <Box
         style={{
@@ -287,9 +185,8 @@ export default function MyFoodPage() {
                 alignSelf: 'center',
               }}
             >
-              {selectedProduct
-                ? `Calculated nutrition values of ${selectedProduct}`
-                : `Calculated nutrition values of ${products.join(', ')}`}
+              {selectedProduct &&
+                `Calculated nutrition values of ${selectedProduct}`}
             </Typography>
           )}
           <Box
@@ -328,8 +225,8 @@ export default function MyFoodPage() {
         }}
       >
         {!loading &&
-          !!usersFoodList.length &&
-          usersFoodList.map((item) => (
+          !!data.length &&
+          data.map((item) => (
             <SavedFoodCard
               key={item.foodName}
               foodName={item.foodName}
@@ -349,8 +246,8 @@ export default function MyFoodPage() {
         </Typography>
         <Box sx={{ display: 'flex', width: '100%' }}>
           <CalculationsTable
-            results={userCalculationResults}
-            handleDelete={handleDeleteCalculation}
+            results={calculations}
+            handleDelete={handleDeleteSavedCalculationResult}
           />
         </Box>
       </Box>

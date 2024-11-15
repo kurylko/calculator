@@ -2,18 +2,20 @@ import React from 'react';
 import { Box, AppBar, Toolbar, Button, Avatar } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/authContext/authContext';
-import { doSignOut } from '../auth';
 import { useNavigate } from 'react-router-dom';
 import avatar from './../assets/images/avocado-face.png';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../state/store';
+import {logOutUser} from "../state/userSlice";
 
 export default function Menu() {
+  const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate();
-  const { userLoggedIn } = useAuth();
+  const { currentUser } = useSelector((state: RootState) => state.user);
 
   const onLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (userLoggedIn) {
-      await doSignOut();
+    if (currentUser) {
+      await dispatch(logOutUser());
       navigate('/');
     }
   };
@@ -33,12 +35,15 @@ export default function Menu() {
               <Button color="inherit" component={Link} to="/my-food">
                 MY FOOD
               </Button>
+              <Button color="inherit" component={Link} to="/my-plate">
+                MY PLATE
+              </Button>
               <Button color="inherit" component={Link} to="/blog">
                 BLOG
               </Button>
             </Box>
             <Box sx={{ display: 'flex' }}>
-              {!userLoggedIn && (
+              {!currentUser && (
                 <Box sx={{ display: 'flex' }}>
                   <Avatar>
                     <PersonOutlineIcon />
@@ -48,7 +53,7 @@ export default function Menu() {
                   </Button>
                 </Box>
               )}
-              {userLoggedIn && (
+              {currentUser && (
                 <Box sx={{ display: 'flex' }}>
                   <Avatar src={avatar} />
                   <Button color="inherit" onClick={onLogOut}>

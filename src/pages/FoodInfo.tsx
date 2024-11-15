@@ -1,56 +1,31 @@
 import React, { useMemo } from 'react';
 import { Box, Button } from '@mui/material';
 import { TextField } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IFoodItem } from '../interfaces/FoodItem';
 import FoodTable from '../components/FoodTable';
 import { getNutriValuesPerKg } from '../utils/getNutriValues';
 import { PdfFoodTable } from '../components/PdfFoodTable';
 import { pdf } from '@react-pdf/renderer';
-import usePostProduct from '../hooks/usePostProducts';
-import { useAuth } from '../contexts/authContext/authContext';
 import Typography from '@mui/material/Typography';
+import { useDispatch } from 'react-redux';
+import { createFoodItem } from '../state/foodCollectionSlice';
+import { AppDispatch } from '../state/store';
+import useFetchUserProducts from '../hooks/useFetchUserProducts';
 
 export default function FoodInfoPage() {
-  const lastInputFoodItemString = localStorage.getItem('lastInputFood');
+  const dispatch: AppDispatch = useDispatch();
+  const { data } = useFetchUserProducts();
 
-  if (lastInputFoodItemString == null) {
-    console.error('No data found in localStorage');
-  }
-
-  const lastInputFoodItem: IFoodItem = lastInputFoodItemString
-    ? JSON.parse(lastInputFoodItemString)
-    : null;
-
-  // Storing last added items in localStorage
-  const [lastInputFoodItems, setLastInputFoodItems] = useState<IFoodItem[]>(
-    () => {
-      const savedItems = localStorage.getItem('lastInputFoodItems');
-      if (savedItems) {
-        return JSON.parse(savedItems);
-      }
-      return [];
-    },
-  );
-
-  const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>(
-    !!lastInputFoodItem
-      ? lastInputFoodItem
-      : {
-          foodName: '',
-          fat: '',
-          protein: '',
-          carbohydrate: '',
-          calories: '',
-          weight: '',
-        },
-  );
-
-  const { currentUser } = useAuth();
-  const userID = currentUser?.uid;
-
-  const { postProduct } = usePostProduct();
+  const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>({
+    foodName: '',
+    fat: '',
+    protein: '',
+    carbohydrate: '',
+    calories: '',
+    weight: '',
+  });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { target: { value } = {} } = e;
@@ -58,31 +33,13 @@ export default function FoodInfoPage() {
       ...foodInputsValues,
       [e.target.name]: value,
     });
-    localStorage.setItem('lastInputFood', JSON.stringify(foodInputsValues));
   }
 
-  useEffect(() => {
-    localStorage.setItem('lastInputFood', JSON.stringify(foodInputsValues));
-  }, [foodInputsValues]);
-
   const handleSubmit = async () => {
-    const updatedItems = [...lastInputFoodItems, foodInputsValues];
-    setLastInputFoodItems(updatedItems);
-    localStorage.setItem('lastInputFoodItems', JSON.stringify(updatedItems));
-    if (currentUser) {
-      try {
-        await postProduct('products', {
-          foodName: lastInputFoodItem.foodName,
-          fat: lastInputFoodItem.fat,
-          protein: lastInputFoodItem.protein,
-          carbohydrate: lastInputFoodItem.carbohydrate,
-          calories: lastInputFoodItem.calories,
-          weight: lastInputFoodItem.weight,
-          userID: userID,
-        });
-      } catch (error) {
-        console.error('Error posting food item:', error);
-      }
+    try {
+      await dispatch(createFoodItem({ foodInputsValues }));
+    } catch (error) {
+      console.error('Error posting food item:', error);
     }
     setFoodInputsValues({
       foodName: '',
@@ -94,16 +51,12 @@ export default function FoodInfoPage() {
     });
   };
 
-  // useEffect(() => {
-  //   console.log("lastInputFoodItems updated:", lastInputFoodItems);
-  // }, [lastInputFoodItems]);
-
   const parsedFoodItems = useMemo(() => {
-    return lastInputFoodItems.map((item) => ({
+    return data.map((item) => ({
       ...item,
       nutriScorePerKg: getNutriValuesPerKg(item),
     }));
-  }, [lastInputFoodItems]);
+  }, [data]);
 
   // User can export Food table as a PDF Document
 
@@ -276,12 +229,12 @@ export default function FoodInfoPage() {
         >
           LAST FOOD YOU ADDED
         </Typography>
-        {lastInputFoodItems.length > 0 ? (
+        {data.length > 0 ? (
           <FoodTable lastInputFoodItems={parsedFoodItems} />
         ) : (
           <h3>Add your first food!</h3>
         )}
-        {lastInputFoodItems.length > 0 && (
+        {data.length > 0 && (
           <Button
             sx={{
               alignSelf: {

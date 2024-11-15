@@ -1,37 +1,16 @@
-import { useState } from 'react';
-import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { useEffect } from 'react';
 import { IUserFoodItem } from '../interfaces/FoodItem';
+import { AppDispatch, RootState } from '../state/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteFoodItem } from '../state/foodCollectionSlice';
 
 const useDeleteProduct = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<null | Error>(null);
+  const dispatch: AppDispatch = useDispatch();
+  const { data, isLoading } = useSelector(
+    (state: RootState) => state.foodCollection,
+  );
 
-  const deleteProduct = async (collectionName: string, data: IUserFoodItem) => {
-    setLoading(true);
-    setError(null);
-
-    if (!data.id) {
-      setError(new Error('Product ID is missing'));
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const docRef = doc(db, collectionName, data.id);
-      await deleteDoc(docRef);
-      console.log('Product deleted with ID: ', docRef.id);
-    } catch (err) {
-      console.error('Error deleting document: ', err);
-      setError(err as Error);
-    } finally {
-      setLoading(false);
-    }
-
-    setLoading(false);
-  };
-
-  return { loading, deleteProduct, error };
+  return { data, loading: isLoading };
 };
 
 export default useDeleteProduct;

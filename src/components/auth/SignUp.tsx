@@ -1,11 +1,13 @@
 import { Navigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { doCreateUserWithEmailAndPassword } from '../../auth';
-import { useAuth } from '../../contexts/authContext/authContext';
+import { AppDispatch, RootState } from '../../state/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { createUser } from '../../state/userSlice';
 
 const SignUp = () => {
-  const { userLoggedIn } = useAuth();
+  const dispatch: AppDispatch = useDispatch();
+  const { currentUser } = useSelector((state: RootState) => state.user);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,7 +26,7 @@ const SignUp = () => {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
-      await doCreateUserWithEmailAndPassword({ email, password });
+      await dispatch(createUser({ email, password }));
     }
   };
 
@@ -37,7 +39,7 @@ const SignUp = () => {
         alignItems: 'center',
       }}
     >
-      {userLoggedIn && <Navigate to={'/'} replace={true} />}
+      {currentUser && <Navigate to={'/'} replace={true} />}
       <div
         style={{
           marginTop: '20px',
