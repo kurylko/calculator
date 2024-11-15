@@ -16,13 +16,15 @@ import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEs
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import CalculationsTable from '../components/CalculationsTable';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../state/store';
+import {useDispatch, useSelector} from 'react-redux';
+import { AppDispatch, RootState } from '../state/store';
 import { deleteFoodItem } from '../state/foodCollectionSlice';
+import {saveCalculationResult} from "../state/calculationsCollectionSlice";
 
 export default function MyFoodPage() {
   // Users food list from db or localstorage (redux-persist)
   const dispatch: AppDispatch = useDispatch();
+  const {calculations} = useSelector((state: RootState) => state.calculationsCollection);
 
   const { data, loading } = useFetchUserProducts();
 
@@ -53,16 +55,8 @@ export default function MyFoodPage() {
     if (!result) {
       return;
     }
-    setUserCalculationResults((prevResults) => {
-      const updatedResults = [...prevResults, result];
-      localStorage.setItem(
-        'savedCalculationResults',
-        JSON.stringify(updatedResults),
-      );
-      console.log('Item saved:', updatedResults);
-      return updatedResults;
-    });
-    setResult(null);
+    dispatch(saveCalculationResult({result}));
+    console.log('result saved:', result)
   };
 
   // Handle change for single product
@@ -283,7 +277,7 @@ export default function MyFoodPage() {
         </Typography>
         <Box sx={{ display: 'flex', width: '100%' }}>
           <CalculationsTable
-            results={userCalculationResults}
+            results={calculations}
             handleDelete={handleDeleteCalculation}
           />
         </Box>
