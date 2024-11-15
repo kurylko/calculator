@@ -9,10 +9,15 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { PlateMacroNutrientsRate } from '../pages/MyPlatePage';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const MacronutrientChart = ({ userShares }: any) => {
+interface MacronutrientChartProps {
+  userShares: PlateMacroNutrientsRate;
+}
+
+const MacronutrientChart = ({ userShares }: MacronutrientChartProps) => {
   const userFat = userShares.fatPercentage;
   const userProtein = userShares.proteinPercentage;
   const userCarbs = userShares.carbPercentage;

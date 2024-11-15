@@ -3,8 +3,17 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import {TotalPlateNutrients} from "../pages/MyPlatePage";
 
-export default function PlateNutrients({ plateTotalToDisplay }: any) {
+
+
+export default function PlateNutrients({
+                                         calories,
+                                         carbohydrate,
+                                         fat,
+                                         protein,
+                                         weight,
+                                       }: TotalPlateNutrients) {
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent
@@ -21,7 +30,7 @@ export default function PlateNutrients({ plateTotalToDisplay }: any) {
             {' '}
             Fat:{' '}
           </Typography>
-          <Typography variant="body2"> {plateTotalToDisplay.fat} g</Typography>
+          <Typography variant="body2"> {fat} g</Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
           <Typography
@@ -32,7 +41,7 @@ export default function PlateNutrients({ plateTotalToDisplay }: any) {
             Protein:{' '}
           </Typography>
           <Typography variant="body2">
-            {plateTotalToDisplay.protein} g
+            {protein} g
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
@@ -44,7 +53,7 @@ export default function PlateNutrients({ plateTotalToDisplay }: any) {
             Carbohydrate:
           </Typography>
           <Typography variant="body2">
-            {plateTotalToDisplay.carbohydrate} g
+            {carbohydrate} g
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
@@ -56,7 +65,7 @@ export default function PlateNutrients({ plateTotalToDisplay }: any) {
             Calories:
           </Typography>
           <Typography variant="body2">
-            {plateTotalToDisplay.calories} kCal
+            {calories} kCal
           </Typography>
         </Box>
         <Box
@@ -82,7 +91,7 @@ export default function PlateNutrients({ plateTotalToDisplay }: any) {
             variant="body2"
             sx={{ color: 'text.secondary', fontSize: 14 }}
           >
-            {plateTotalToDisplay.weight} g
+            {weight} g
           </Typography>
         </Box>
       </CardContent>

@@ -24,6 +24,16 @@ export type TotalPlateNutrients = {
   weight: string;
 };
 
+export interface PlateMacroNutrientsRate {
+  fatHealthyRate: string;
+  proteinHealthyRate: string;
+  carbHealthyRate: string;
+  fatPercentage: number;
+  carbPercentage: number;
+  proteinPercentage: number;
+  isPlateHealthy: boolean;
+}
+
 export default function MyPlatePage() {
   // data is a users food list
   const { data } = useFetchUserProducts();
@@ -205,7 +215,7 @@ export default function MyPlatePage() {
     };
   }
 
-  const plateCalculationRate = countHealthyPlate(plateTotalToDisplay);
+  const plateCalculationRate: PlateMacroNutrientsRate = countHealthyPlate(plateTotalToDisplay);
 
   return (
     <Box
@@ -242,7 +252,7 @@ export default function MyPlatePage() {
         }}
       >
         <MacronutrientChart userShares={plateCalculationRate} />
-        <PlateNutrients plateTotalToDisplay={plateTotalToDisplay} />
+        <PlateNutrients {...plateTotalToDisplay} />
       </Container>
       <Box
         sx={{
