@@ -56,14 +56,6 @@ export default function MyFoodPage() {
   const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [result, setResult] = useState<EstimateCalculationResult | null>(null);
 
-  const handleSaveResult = () => {
-    if (!result) {
-      return;
-    }
-    dispatch(saveCalculationResult({ result }));
-    console.log('result saved:', result);
-  };
-
   // Handle change for single product
   const handleChangeSingleProduct = (event: SelectChangeEvent<string>) => {
     const value = event.target.value;
@@ -100,6 +92,15 @@ export default function MyFoodPage() {
       );
       setResult(singleProductCalculationResult);
     }
+  };
+
+  // User can save the result of calculation to the collection (redux persist)
+  const handleSaveResult = () => {
+    if (!result) {
+      return;
+    }
+    dispatch(saveCalculationResult({ result }));
+    console.log('result saved:', result);
   };
 
   // Calculations of user (redux persist)
