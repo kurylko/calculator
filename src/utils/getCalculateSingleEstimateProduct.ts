@@ -6,16 +6,16 @@ import { IFoodEstimateValues } from './../interfaces/FoodItem';
 
 interface GetCalculateSingleEstimateProductProps {
   selectedProduct: string;
-  usersFoodList: IUserFoodItem[];
+  data: IUserFoodItem[];
   estimateFoodInputsValues: IFoodEstimateValues;
 }
 
 export const getCalculateSingleEstimateProduct = ({
   selectedProduct,
-  usersFoodList,
+  data,
   estimateFoodInputsValues,
 }: GetCalculateSingleEstimateProductProps) => {
-  const matchedProduct = usersFoodList.find(
+  const matchedProduct = data.find(
     (item) => item.foodName === selectedProduct,
   );
 
@@ -87,6 +87,7 @@ export const getCalculateSingleEstimateProduct = ({
     const calculatedWeight = Math.round(
       (parseFloat(estimateFoodInputsValues.protein) / proteinValue) * 1000,
     );
+    console.warn(calculatedWeight);
     const calculatedFat = Math.round(
       (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
     );
