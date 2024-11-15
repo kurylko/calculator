@@ -19,7 +19,7 @@ import useFetchUserProducts from '../hooks/useFetchUserProducts';
 import {useDispatch, useSelector} from 'react-redux';
 import { AppDispatch, RootState } from '../state/store';
 import { deleteFoodItem } from '../state/foodCollectionSlice';
-import {saveCalculationResult} from "../state/calculationsCollectionSlice";
+import {deleteCalculationResult, saveCalculationResult} from "../state/calculationsCollectionSlice";
 
 export default function MyFoodPage() {
   // Users food list from db or localstorage (redux-persist)
@@ -82,7 +82,6 @@ export default function MyFoodPage() {
       alert('Please fill in only one field to submit.');
       return;
     }
-
     if (selectedProduct) {
       const singleProductCalculationResult = getCalculateSingleEstimateProduct({
         selectedProduct,
@@ -90,7 +89,7 @@ export default function MyFoodPage() {
         estimateFoodInputsValues,
       });
       console.log(
-        'Single calculation',
+        'Single calculation:',
         selectedProduct,
         singleProductCalculationResult,
       );
@@ -105,35 +104,30 @@ export default function MyFoodPage() {
   >([]);
   const calculationResults = localStorage.getItem('savedCalculationResults');
 
-  const deleteCalculationFromLocalStorage = (
-    calculationResult: EstimateCalculationResult,
-  ) => {
-    const localStorageCalculations = localStorage.getItem(
-      'savedCalculationResults',
-    );
-    const calculationResults: EstimateCalculationResult[] =
-      localStorageCalculations ? JSON.parse(localStorageCalculations) : [];
-    const updatedCalculationResults = calculationResults.filter(
-      (item) => item.calculationId !== calculationResult.calculationId,
-    );
-    localStorage.setItem(
-      'savedCalculationResults',
-      JSON.stringify(updatedCalculationResults),
-    );
-    setUserCalculationResults(updatedCalculationResults);
-  };
+  // const deleteSavedCalculationResult = (
+  //   result: EstimateCalculationResult,
+  // ) => {
+  //     dispatch(deleteCalculationResult({result}));
+  //   // const localStorageCalculations = localStorage.getItem(
+  //   //   'savedCalculationResults',
+  //   // );
+  //   // const calculationResults: EstimateCalculationResult[] =
+  //   //   localStorageCalculations ? JSON.parse(localStorageCalculations) : [];
+  //   // const updatedCalculationResults = calculationResults.filter(
+  //   //   (item) => item.calculationId !== calculationResult.calculationId,
+  //   // );
+  //   // localStorage.setItem(
+  //   //   'savedCalculationResults',
+  //   //   JSON.stringify(updatedCalculationResults),
+  //   // );
+  //   // setUserCalculationResults(updatedCalculationResults);
+  // };
 
-  const handleDeleteCalculation = async (
-    calculationResult: EstimateCalculationResult,
+  const handleDeleteSavedCalculationResult = async (
+    result: EstimateCalculationResult,
   ): Promise<void> => {
-    if (calculationResult.calculationId) {
-      await deleteCalculationFromLocalStorage(calculationResult);
-      const updatedCalculationResults = localStorage.getItem(
-        'savedCalculationResults',
-      );
-      setUserCalculationResults(
-        updatedCalculationResults ? JSON.parse(updatedCalculationResults) : [],
-      );
+    if (result.calculationId) {
+      await dispatch(deleteCalculationResult({result}));
     } else {
       console.error('No ID found for this calculation result');
     }
@@ -278,7 +272,7 @@ export default function MyFoodPage() {
         <Box sx={{ display: 'flex', width: '100%' }}>
           <CalculationsTable
             results={calculations}
-            handleDelete={handleDeleteCalculation}
+            handleDelete={handleDeleteSavedCalculationResult}
           />
         </Box>
       </Box>
