@@ -6,9 +6,14 @@
 
 - React.js
 - TypeScript
+- Redux toolkit
+- redux-persist
 - React-router
 - React-pdf
+- Chart.js
+- MaterialUI
 - ESLint
+- Prettier
 
 In the project directory, you can run:
 
