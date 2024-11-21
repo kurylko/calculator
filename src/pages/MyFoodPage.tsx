@@ -248,6 +248,7 @@ export default function MyFoodPage() {
           <CalculationsTable
             results={calculations}
             handleDelete={handleDeleteSavedCalculationResult}
+            plateCalculation={false}
           />
         </Box>
       </Box>

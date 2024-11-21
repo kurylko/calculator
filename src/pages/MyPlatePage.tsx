@@ -305,6 +305,7 @@ export default function MyPlatePage() {
         <CalculationsTable
           results={plate}
           handleDelete={handleDeleteCalculation}
+          plateCalculation={true}
         />
       </Box>
     </Box>
