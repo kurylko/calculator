@@ -61,10 +61,26 @@ const FoodTable: React.FC<CalculationsTableProps> = ({
                 <TableCell component="th" scope="row">
                   {result.foodName}
                 </TableCell>
-                <TableCell align="right">{`${result.calories} (${result?.calories ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${result.fat} (${result?.fat ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${result.carbohydrate} (${result?.carbohydrate ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${result.protein} (${result?.protein ?? '-'})`}</TableCell>
+                <TableCell align="right">
+                  {!plateCalculation
+                    ? `${result.calories} (${result?.calories ?? '-'})`
+                    : `${result.calories}`}
+                </TableCell>
+                <TableCell align="right">
+                  {!plateCalculation
+                    ? `${result.fat} (${result?.fat ?? '-'})`
+                    : `${result.fat}`}
+                </TableCell>
+                <TableCell align="right">
+                  {!plateCalculation
+                    ? `${result.carbohydrate} (${result?.carbohydrate ?? '-'})`
+                    : `${result.carbohydrate}`}
+                </TableCell>
+                <TableCell align="right">
+                  {!plateCalculation
+                    ? `${result.protein} (${result?.protein ?? '-'})`
+                    : `${result.protein}`}
+                </TableCell>
                 <TableCell align="right">{result.weight}</TableCell>
                 <TableCell align="center">
                   <Button
