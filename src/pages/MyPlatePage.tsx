@@ -211,7 +211,8 @@ export default function MyPlatePage() {
     };
   }
 
-  const plateCalculationRate: PlateMacroNutrientsRate = countHealthyPlate(plateTotalToDisplay);
+  const plateCalculationRate: PlateMacroNutrientsRate =
+    countHealthyPlate(plateTotalToDisplay);
 
   return (
     <Box
@@ -298,13 +299,14 @@ export default function MyPlatePage() {
           Add to the plate
         </Button>
       )}
-      <Typography variant="h3" sx={{ marginTop: '30px' }}>
+      <Typography variant="h3" sx={{ marginTop: '30px', marginBottom: '30px' }}>
         Ingredients in your plate
       </Typography>
       <Box sx={{ display: 'flex', width: '100%', marginBottom: '30px' }}>
         <CalculationsTable
           results={plate}
           handleDelete={handleDeleteCalculation}
+          plateCalculation={true}
         />
       </Box>
     </Box>

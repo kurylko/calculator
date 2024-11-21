@@ -7,18 +7,20 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
-import { EstimateCalculationResult } from './../interfaces/EstimateCalculationResult';
+import { EstimateCalculationResult } from '../interfaces/EstimateCalculationResult';
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 interface CalculationsTableProps {
   results: EstimateCalculationResult[] | null;
   handleDelete: (calculationResult: EstimateCalculationResult) => Promise<void>;
+  plateCalculation: boolean;
 }
 
 const FoodTable: React.FC<CalculationsTableProps> = ({
   results,
   handleDelete,
+  plateCalculation,
 }) => {
   if (!results || results.length === 0) {
     return (
@@ -34,10 +36,18 @@ const FoodTable: React.FC<CalculationsTableProps> = ({
           <TableHead>
             <TableRow>
               <TableCell>Food</TableCell>
-              <TableCell align="right">Calories (kcal/kg)</TableCell>
-              <TableCell align="right">Fat&nbsp;(g, /kg)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g, /kg)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g, /kg)</TableCell>
+              <TableCell align="right">
+                {!plateCalculation ? `Calories (kcal / kg)` : `Calories`}
+              </TableCell>
+              <TableCell align="right">
+                {!plateCalculation ? `Fat (g, /kg)` : `Fat`}
+              </TableCell>
+              <TableCell align="right">
+                {!plateCalculation ? `Carbs (g, /kg)` : `Carbs`}
+              </TableCell>
+              <TableCell align="right">
+                {!plateCalculation ? `Protein (g, /kg)` : `Protein`}
+              </TableCell>
               <TableCell align="right">Weight&nbsp;(g)</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
@@ -51,10 +61,26 @@ const FoodTable: React.FC<CalculationsTableProps> = ({
                 <TableCell component="th" scope="row">
                   {result.foodName}
                 </TableCell>
-                <TableCell align="right">{`${result.calories} (${result?.calories ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${result.fat} (${result?.fat ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${result.carbohydrate} (${result?.carbohydrate ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${result.protein} (${result?.protein ?? '-'})`}</TableCell>
+                <TableCell align="right">
+                  {!plateCalculation
+                    ? `${result.calories} (${result?.calories ?? '-'})`
+                    : `${result.calories}`}
+                </TableCell>
+                <TableCell align="right">
+                  {!plateCalculation
+                    ? `${result.fat} (${result?.fat ?? '-'})`
+                    : `${result.fat}`}
+                </TableCell>
+                <TableCell align="right">
+                  {!plateCalculation
+                    ? `${result.carbohydrate} (${result?.carbohydrate ?? '-'})`
+                    : `${result.carbohydrate}`}
+                </TableCell>
+                <TableCell align="right">
+                  {!plateCalculation
+                    ? `${result.protein} (${result?.protein ?? '-'})`
+                    : `${result.protein}`}
+                </TableCell>
                 <TableCell align="right">{result.weight}</TableCell>
                 <TableCell align="center">
                   <Button
