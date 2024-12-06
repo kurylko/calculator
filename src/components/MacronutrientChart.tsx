@@ -14,13 +14,14 @@ import { PlateMacroNutrientsRate } from '../pages/MyPlatePage';
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 interface MacronutrientChartProps {
-  userShares: PlateMacroNutrientsRate;
+  userShares: PlateMacroNutrientsRate | null;
 }
 
 const MacronutrientChart = ({ userShares }: MacronutrientChartProps) => {
-  const userFat = userShares.fatPercentage;
-  const userProtein = userShares.proteinPercentage;
-  const userCarbs = userShares.carbPercentage;
+
+  const userFat = userShares?.fatPercentage;
+  const userProtein = userShares?.proteinPercentage;
+  const userCarbs = userShares?.carbPercentage;
 
   // Standard rates for macronutrients
   const standardRates = {

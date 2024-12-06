@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { Box, Button, Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { SingleProductCheckBox } from '../components/SingleProductCheckBox';
@@ -15,6 +15,7 @@ import useFetchUserProducts from '../hooks/useFetchUserProducts';
 import { AppDispatch, RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToPlate, deleteFromPlate } from '../state/plateSlice';
+import { NutrientsDistributionPreForm } from '../components/NutriensDistributionPreForm';
 
 export type TotalPlateNutrients = {
   calories: string;
@@ -138,11 +139,12 @@ export default function MyPlatePage() {
   };
 
   // Counting standard macronutrient distribution for a balanced diet
-
   function countHealthyPlate(plate: TotalPlateNutrients) {
     // Convert nutrient values from strings to numbers
     const totalCalories = parseFloat(plate.calories);
+    console.log('totalCalories', totalCalories);
     const carbsInGrams = parseFloat(plate.carbohydrate);
+    console.log('carbsInGrams', carbsInGrams);
     const fatInGrams = parseFloat(plate.fat);
     const proteinInGrams = parseFloat(plate.protein);
 
@@ -153,6 +155,7 @@ export default function MyPlatePage() {
 
     // Calculate the percentage of each macronutrient
     const carbPercentage = Math.round((carbCalories / totalCalories) * 100);
+    console.log('carbPercentage', carbPercentage);
     const fatPercentage = Math.round((fatCalories / totalCalories) * 100);
     const proteinPercentage = Math.round(
       (proteinCalories / totalCalories) * 100,
@@ -200,7 +203,7 @@ export default function MyPlatePage() {
     }
 
     // Return the results
-    return {
+    const plateCalculationRate: PlateMacroNutrientsRate = ({
       fatHealthyRate: fatHealthyRate(),
       proteinHealthyRate: proteinHealthyRate(),
       carbHealthyRate: carbHealthyRate(),
@@ -208,11 +211,18 @@ export default function MyPlatePage() {
       carbPercentage: carbPercentage,
       proteinPercentage: proteinPercentage,
       isPlateHealthy: isCarbHealthy && isFatHealthy && isProteinHealthy,
-    };
+    });
+
+    return plateCalculationRate;
   }
 
-  const plateCalculationRate: PlateMacroNutrientsRate =
-    countHealthyPlate(plateTotalToDisplay);
+  const plateCalculationRate: PlateMacroNutrientsRate | null = useMemo(() => {
+    if (!plateTotalToDisplay) return null;
+    return countHealthyPlate(plateTotalToDisplay);
+  }, [plateTotalToDisplay]);
+
+
+  console.log('plateCalculationRate', plateCalculationRate ? plateCalculationRate : 'no data');
 
   return (
     <Box
@@ -248,7 +258,11 @@ export default function MyPlatePage() {
           alignItems: 'center',
         }}
       >
-        <MacronutrientChart userShares={plateCalculationRate} />
+        {!plateCalculationRate?.carbPercentage ? (
+          <NutrientsDistributionPreForm />
+        ) : (
+          <MacronutrientChart userShares={plateCalculationRate} />
+        )}
         <PlateNutrients {...plateTotalToDisplay} />
       </Container>
       <Box
