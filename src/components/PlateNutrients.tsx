@@ -15,11 +15,11 @@ export default function PlateNutrients({
                                          weight,
                                        }: TotalPlateNutrients) {
   return (
-    <Card sx={{ minWidth: 275, height: '100%', width: '60%' }}>
+    <Card sx={{ minWidth: 275, height: '100%', width: {xs: '90%', sm: '80%', md: '60%', lg: '60%'} }}>
       <CardContent
-        sx={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+        sx={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'center' }}
       >
-        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14, paddingBottom: 2 }}>
           Nutrients in your plate
         </Typography>
         <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
@@ -56,10 +56,10 @@ export default function PlateNutrients({
             {carbohydrate} g
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
+        <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start', marginTop: 3 }}>
           <Typography
             variant="body2"
-            sx={{ minWidth: '100px', textAlign: 'left' }}
+            sx={{ minWidth: '100px', textAlign: 'center' }}
           >
             {' '}
             Calories:

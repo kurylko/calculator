@@ -34,7 +34,7 @@ export const NutrientsDistributionPreForm = ({
   );
 
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275, width: {xs: '90%', sm: '80%', md: '60%', lg: '60%'}}}>
       <CardContent
         sx={{
           display: 'flex',
