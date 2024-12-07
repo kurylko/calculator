@@ -2,35 +2,34 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-} from '@mui/material';
+import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { IUserBodyData } from '../interfaces/User';
 import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
 interface NutrientsDistributionPreFormProps {
-  userData: IUserBodyData;
-  handleChangeInputs: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  userBodyDataInputs: IUserBodyData;
+  handleSaveUserData: () => void;
+  handleCheckBoxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSelectChange: (e: SelectChangeEvent<number>) => void;
 }
 
 export const NutrientsDistributionPreForm = ({
-  userData,
-  handleChangeInputs,
+  userBodyDataInputs,
+  handleSaveUserData,
+  handleCheckBoxChange,
+  handleSelectChange,
 }: NutrientsDistributionPreFormProps) => {
   const height = Array.from(
-    { length: 220 - 140 + 1 },
-    (_, index) => 140 + index,
+    { length: 220 - 130 + 1 },
+    (_, index) => 130 + index,
   );
   const weight = Array.from(
-    { length: 220 - 140 + 1 },
-    (_, index) => 140 + index,
+    { length: 140 - 40 + 1 },
+    (_, index) => 40 + index,
   );
   const mealsPerDay = Array.from(
     { length: 5 - 1 + 1 },
@@ -40,27 +39,54 @@ export const NutrientsDistributionPreForm = ({
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent
-        sx={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          alignItems: 'center',
+        }}
       >
         <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
           Calculation would be based on your data
         </Typography>
 
-        <FormGroup sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '4px' }}>
+        <FormGroup
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: '4px',
+          }}
+        >
           <FormControlLabel
-              control={<Checkbox />}
-              label="Male"
-              name="male"
+            control={
+              <Checkbox
+                checked={userBodyDataInputs.gender === 'male'}
+                onChange={handleCheckBoxChange}
+                name="male"
+              />
+            }
+            label="Male"
           />
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={userBodyDataInputs.gender === 'female'}
+                onChange={handleCheckBoxChange}
+                name="female"
+              />
+            }
             label="Female"
-            name="female"
           />
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={userBodyDataInputs.gender === 'neuter'}
+                onChange={handleCheckBoxChange}
+                name="neuter"
+              />
+            }
             label="Neuter"
-            name="neuter "
           />
         </FormGroup>
 
@@ -76,15 +102,17 @@ export const NutrientsDistributionPreForm = ({
             },
           }}
         >
-          <InputLabel id="user-weight" required>Weight</InputLabel>
+          <InputLabel id="user-weight" required>
+            Weight
+          </InputLabel>
           <Select
-            labelId="products-single-checkbox-label"
+            labelId="user-weight"
             label="Weight"
-            id="products-single-checkbox"
-            value={'selectedProduct'}
-            //onChange={"handleChange"}
+            id="user-weight"
+            name="weight"
+            value={userBodyDataInputs.weight}
+            onChange={handleSelectChange}
             input={<OutlinedInput label="Weight" />}
-            //MenuProps={"MenuProps"}
           >
             {weight.map((num: number) => (
               <MenuItem key={num} value={num}>
@@ -106,15 +134,17 @@ export const NutrientsDistributionPreForm = ({
             },
           }}
         >
-          <InputLabel id="user-height" required>Height</InputLabel>
+          <InputLabel id="user-height" required>
+            Height
+          </InputLabel>
           <Select
-            labelId="products-single-checkbox-label"
+            labelId="user-height"
             label="Height"
-            id="products-single-checkbox"
-            value={'selectedProduct'}
-            //onChange={"handleChange"}
+            id="user-height"
+            name="height"
+            value={userBodyDataInputs.height}
+            onChange={handleSelectChange}
             input={<OutlinedInput label="Height" />}
-            //MenuProps={"MenuProps"}
           >
             {height.map((num: number) => (
               <MenuItem key={num} value={num}>
@@ -136,15 +166,17 @@ export const NutrientsDistributionPreForm = ({
             },
           }}
         >
-          <InputLabel id="user-meals-per-day" required>Meals per Day</InputLabel>
+          <InputLabel id="user-meals-per-day" required>
+            Meals per Day
+          </InputLabel>
           <Select
-            labelId="products-single-checkbox-label"
+            labelId="user-meals-per-day"
             label="Meals per Day"
-            id="products-single-checkbox"
-            value={'selectedProduct'}
-            //onChange={"handleChange"}
+            id="user-meals-per-day"
+            name="mealsPerDay"
+            value={userBodyDataInputs.mealsPerDay}
+            onChange={handleSelectChange}
             input={<OutlinedInput label="Meals per day" />}
-            //MenuProps={"MenuProps"}
           >
             {mealsPerDay.map((num: number) => (
               <MenuItem key={num} value={num}>
@@ -157,6 +189,7 @@ export const NutrientsDistributionPreForm = ({
         <Button
           variant="contained"
           sx={{ width: 'fit-content', alignSelf: 'center' }}
+          onClick={handleSaveUserData}
         >
           Save
         </Button>

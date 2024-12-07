@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Button, Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { SingleProductCheckBox } from '../components/SingleProductCheckBox';
@@ -16,6 +16,7 @@ import { AppDispatch, RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToPlate, deleteFromPlate } from '../state/plateSlice';
 import { NutrientsDistributionPreForm } from '../components/NutriensDistributionPreForm';
+import { IUserBodyData } from '../interfaces/User';
 
 export type TotalPlateNutrients = {
   calories: string;
@@ -138,7 +139,37 @@ export default function MyPlatePage() {
     }
   };
 
+  // User body data from a form for calculations
+
+  const [userBodyDataInputs, setUserBodyDataInputs] = useState<IUserBodyData>({
+    gender: '',
+    weight: 60,
+    height: 160,
+    mealsPerDay: 2,
+  });
+
+  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    setUserBodyDataInputs((prev: IUserBodyData) => ({
+      ...prev,
+      gender: name,
+    }));
+  }
+
+  const handleSelectChange = (event: SelectChangeEvent<number>) => {
+    const { name, value } = event.target;
+    setUserBodyDataInputs((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveUserData = () => {
+    console.log('userBodyData:', userBodyDataInputs);
+  };
+
   // Counting standard macronutrient distribution for a balanced diet
+
   function countHealthyPlate(plate: TotalPlateNutrients) {
     // Convert nutrient values from strings to numbers
     const totalCalories = parseFloat(plate.calories);
@@ -203,7 +234,7 @@ export default function MyPlatePage() {
     }
 
     // Return the results
-    const plateCalculationRate: PlateMacroNutrientsRate = ({
+    const plateCalculationRate: PlateMacroNutrientsRate = {
       fatHealthyRate: fatHealthyRate(),
       proteinHealthyRate: proteinHealthyRate(),
       carbHealthyRate: carbHealthyRate(),
@@ -211,7 +242,7 @@ export default function MyPlatePage() {
       carbPercentage: carbPercentage,
       proteinPercentage: proteinPercentage,
       isPlateHealthy: isCarbHealthy && isFatHealthy && isProteinHealthy,
-    });
+    };
 
     return plateCalculationRate;
   }
@@ -221,8 +252,10 @@ export default function MyPlatePage() {
     return countHealthyPlate(plateTotalToDisplay);
   }, [plateTotalToDisplay]);
 
-
-  console.log('plateCalculationRate', plateCalculationRate ? plateCalculationRate : 'no data');
+  console.log(
+    'plateCalculationRate',
+    plateCalculationRate ? plateCalculationRate : 'no data',
+  );
 
   return (
     <Box
@@ -259,7 +292,12 @@ export default function MyPlatePage() {
         }}
       >
         {!plateCalculationRate?.carbPercentage ? (
-          <NutrientsDistributionPreForm />
+          <NutrientsDistributionPreForm
+            userBodyDataInputs={userBodyDataInputs}
+            handleCheckBoxChange={handleCheckBoxChange}
+            handleSaveUserData={handleSaveUserData}
+            handleSelectChange={handleSelectChange}
+          />
         ) : (
           <MacronutrientChart userShares={plateCalculationRate} />
         )}
