@@ -27,10 +27,7 @@ export const NutrientsDistributionPreForm = ({
     { length: 220 - 130 + 1 },
     (_, index) => 130 + index,
   );
-  const weight = Array.from(
-    { length: 140 - 40 + 1 },
-    (_, index) => 40 + index,
-  );
+  const weight = Array.from({ length: 140 - 40 + 1 }, (_, index) => 40 + index);
   const mealsPerDay = Array.from(
     { length: 5 - 1 + 1 },
     (_, index) => 1 + index,
@@ -44,6 +41,7 @@ export const NutrientsDistributionPreForm = ({
           flexDirection: 'column',
           gap: '10px',
           alignItems: 'center',
+          height: '100%',
         }}
       >
         <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>

@@ -10,6 +10,8 @@ import {
   Legend,
 } from 'chart.js';
 import { PlateMacroNutrientsRate } from '../pages/MyPlatePage';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -18,7 +20,6 @@ interface MacronutrientChartProps {
 }
 
 const MacronutrientChart = ({ userShares }: MacronutrientChartProps) => {
-
   const userFat = userShares?.fatPercentage;
   const userProtein = userShares?.proteinPercentage;
   const userCarbs = userShares?.carbPercentage;
@@ -67,21 +68,27 @@ const MacronutrientChart = ({ userShares }: MacronutrientChartProps) => {
   };
 
   return (
-    <Box
+    <Card
       sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: 2,
+        padding: 0,
+        height: '100%',
+        width: '80%'
       }}
     >
-      <Typography variant="h5" gutterBottom>
-        Macronutrient Distribution
-      </Typography>
-      <Paper elevation={3} sx={{ width: '100%', padding: 2 }}>
-        <Bar data={data} options={options} />
-      </Paper>
-    </Box>
+      <CardContent sx={{ paddingBottom: 0, width: '100%' }}>
+        <Typography variant="body2" gutterBottom>
+          Macronutrient Distribution
+        </Typography>
+      </CardContent>
+      <CardContent sx={{ padding: 0, width: '100%' }}>
+        <Paper elevation={0} sx={{ width: '100%', padding: 1 }}>
+          <Bar data={data} options={options} />
+        </Paper>
+      </CardContent>
+    </Card>
   );
 };
 

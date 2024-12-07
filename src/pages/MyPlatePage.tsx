@@ -272,6 +272,12 @@ export default function MyPlatePage() {
       </Box>
       <Container
         sx={{
+          height: {
+            xs: '90%',
+            sm: '90%',
+            md: '270px',
+            lg: '300px',
+          },
           width: {
             xs: '90%',
             sm: '90%',
@@ -285,7 +291,13 @@ export default function MyPlatePage() {
             md: 'row',
             lg: 'flex-row',
           },
-          justifyContent: 'space-between',
+          gap: '10px',
+          justifyContent: {
+            xs: 'space-around',
+            sm: 'space-around',
+            md: 'space-between',
+            lg: 'space-between',
+          },
           marginTop: '50px',
           marginBottom: '50px',
           alignItems: 'center',

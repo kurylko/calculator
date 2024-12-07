@@ -15,7 +15,7 @@ export default function PlateNutrients({
                                          weight,
                                        }: TotalPlateNutrients) {
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275, height: '100%', width: '60%' }}>
       <CardContent
         sx={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
       >
