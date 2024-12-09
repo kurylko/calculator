@@ -304,7 +304,7 @@ export default function MyPlatePage() {
           alignItems: 'center',
         }}
       >
-        {!plateCalculationRate?.carbPercentage || !plateCalculationRate?.proteinPercentage || !plateCalculationRate?.fatPercentage? (
+        {!plateCalculationRate?.carbPercentage ? (
           <NutrientsDistributionPreForm
             userBodyDataInputs={userBodyDataInputs}
             handleCheckBoxChange={handleCheckBoxChange}
