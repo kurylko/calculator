@@ -154,7 +154,7 @@ export default function MyPlatePage() {
       ...prev,
       gender: name,
     }));
-  }
+  };
 
   const handleSelectChange = (event: SelectChangeEvent<number>) => {
     const { name, value } = event.target;
@@ -166,6 +166,7 @@ export default function MyPlatePage() {
 
   const handleSaveUserData = () => {
     console.log('userBodyData:', userBodyDataInputs);
+    alert("Your data saved! Let's add food to your plate.");
   };
 
   // Counting standard macronutrient distribution for a balanced diet
@@ -303,7 +304,7 @@ export default function MyPlatePage() {
           alignItems: 'center',
         }}
       >
-        {!plateCalculationRate?.carbPercentage ? (
+        {!plateCalculationRate?.carbPercentage || !plateCalculationRate?.proteinPercentage || !plateCalculationRate?.fatPercentage? (
           <NutrientsDistributionPreForm
             userBodyDataInputs={userBodyDataInputs}
             handleCheckBoxChange={handleCheckBoxChange}

@@ -2,7 +2,13 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+} from '@mui/material';
 import { IUserBodyData } from '../interfaces/User';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -34,7 +40,12 @@ export const NutrientsDistributionPreForm = ({
   );
 
   return (
-    <Card sx={{ minWidth: 275, width: {xs: '90%', sm: '80%', md: '60%', lg: '60%'}}}>
+    <Card
+      sx={{
+        minWidth: 275,
+        width: { xs: '90%', sm: '80%', md: '60%', lg: '60%' },
+      }}
+    >
       <CardContent
         sx={{
           display: 'flex',
@@ -88,70 +99,71 @@ export const NutrientsDistributionPreForm = ({
           />
         </FormGroup>
 
-        <FormControl
-          sx={{
-            m: 1,
-            margin: '0',
-            width: {
-              xs: '100%',
-              sm: '100%',
-              md: '35%',
-              lg: '200px',
-            },
-          }}
-        >
-          <InputLabel id="user-weight" required>
-            Weight
-          </InputLabel>
-          <Select
-            labelId="user-weight"
-            label="Weight"
-            id="user-weight"
-            name="weight"
-            value={userBodyDataInputs.weight}
-            onChange={handleSelectChange}
-            input={<OutlinedInput label="Weight" />}
+        <Box sx={{ display: 'flex', width: '100%', gap: '8px', justifyContent: 'center' }}>
+          <FormControl
+            sx={{
+              m: 1,
+              margin: '0',
+              width: {
+                xs: '100%',
+                sm: '100%',
+                md: '35%',
+                lg: '100px',
+              },
+            }}
           >
-            {weight.map((num: number) => (
-              <MenuItem key={num} value={num}>
-                {num} kg
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            <InputLabel id="user-weight" required>
+              Weight
+            </InputLabel>
+            <Select
+              labelId="user-weight"
+              label="Weight"
+              id="user-weight"
+              name="weight"
+              value={userBodyDataInputs.weight}
+              onChange={handleSelectChange}
+              input={<OutlinedInput label="Weight" />}
+            >
+              {weight.map((num: number) => (
+                <MenuItem key={num} value={num}>
+                  {num} kg
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        <FormControl
-          sx={{
-            m: 1,
-            margin: '0',
-            width: {
-              xs: '100%',
-              sm: '100%',
-              md: '35%',
-              lg: '200px',
-            },
-          }}
-        >
-          <InputLabel id="user-height" required>
-            Height
-          </InputLabel>
-          <Select
-            labelId="user-height"
-            label="Height"
-            id="user-height"
-            name="height"
-            value={userBodyDataInputs.height}
-            onChange={handleSelectChange}
-            input={<OutlinedInput label="Height" />}
+          <FormControl
+            sx={{
+              m: 1,
+              margin: '0',
+              width: {
+                xs: '100%',
+                sm: '100%',
+                md: '35%',
+                lg: '100px',
+              },
+            }}
           >
-            {height.map((num: number) => (
-              <MenuItem key={num} value={num}>
-                {num} cm
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
+            <InputLabel id="user-height" required>
+              Height
+            </InputLabel>
+            <Select
+              labelId="user-height"
+              label="Height"
+              id="user-height"
+              name="height"
+              value={userBodyDataInputs.height}
+              onChange={handleSelectChange}
+              input={<OutlinedInput label="Height" />}
+            >
+              {height.map((num: number) => (
+                <MenuItem key={num} value={num}>
+                  {num} cm
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
         <FormControl
           sx={{
             m: 1,
