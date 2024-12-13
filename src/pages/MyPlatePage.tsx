@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Button, Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { SingleProductCheckBox } from '../components/SingleProductCheckBox';

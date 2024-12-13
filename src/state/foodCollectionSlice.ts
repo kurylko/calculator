@@ -5,8 +5,7 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDocs,
-  updateDoc
+  getDocs
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { RootState } from './store';
