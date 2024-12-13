@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Button, Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { SingleProductCheckBox } from '../components/SingleProductCheckBox';
@@ -15,6 +15,8 @@ import useFetchUserProducts from '../hooks/useFetchUserProducts';
 import { AppDispatch, RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToPlate, deleteFromPlate } from '../state/plateSlice';
+import { NutrientsDistributionPreForm } from '../components/NutriensDistributionPreForm';
+import { IUserBodyData } from '../interfaces/User';
 
 export type TotalPlateNutrients = {
   calories: string;
@@ -137,6 +139,36 @@ export default function MyPlatePage() {
     }
   };
 
+  // User body data from a form for calculations
+
+  const [userBodyDataInputs, setUserBodyDataInputs] = useState<IUserBodyData>({
+    gender: '',
+    weight: 60,
+    height: 160,
+    mealsPerDay: 2,
+  });
+
+  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    setUserBodyDataInputs((prev: IUserBodyData) => ({
+      ...prev,
+      gender: name,
+    }));
+  };
+
+  const handleSelectChange = (event: SelectChangeEvent<number>) => {
+    const { name, value } = event.target;
+    setUserBodyDataInputs((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveUserData = () => {
+    console.log('userBodyData:', userBodyDataInputs);
+    alert("Your data saved! Let's add food to your plate.");
+  };
+
   // Counting standard macronutrient distribution for a balanced diet
 
   function countHealthyPlate(plate: TotalPlateNutrients) {
@@ -200,7 +232,7 @@ export default function MyPlatePage() {
     }
 
     // Return the results
-    return {
+    const plateCalculationRate: PlateMacroNutrientsRate = {
       fatHealthyRate: fatHealthyRate(),
       proteinHealthyRate: proteinHealthyRate(),
       carbHealthyRate: carbHealthyRate(),
@@ -209,10 +241,19 @@ export default function MyPlatePage() {
       proteinPercentage: proteinPercentage,
       isPlateHealthy: isCarbHealthy && isFatHealthy && isProteinHealthy,
     };
+
+    return plateCalculationRate;
   }
 
-  const plateCalculationRate: PlateMacroNutrientsRate =
-    countHealthyPlate(plateTotalToDisplay);
+  const plateCalculationRate: PlateMacroNutrientsRate | null = useMemo(() => {
+    if (!plateTotalToDisplay) return null;
+    return countHealthyPlate(plateTotalToDisplay);
+  }, [plateTotalToDisplay]);
+
+  console.log(
+    'plateCalculationRate',
+    plateCalculationRate ? plateCalculationRate : 'no data',
+  );
 
   return (
     <Box
@@ -229,6 +270,12 @@ export default function MyPlatePage() {
       </Box>
       <Container
         sx={{
+          height: {
+            xs: '90%',
+            sm: '90%',
+            md: '270px',
+            lg: '300px',
+          },
           width: {
             xs: '90%',
             sm: '90%',
@@ -242,13 +289,28 @@ export default function MyPlatePage() {
             md: 'row',
             lg: 'flex-row',
           },
-          justifyContent: 'space-between',
+          gap: '10px',
+          justifyContent: {
+            xs: 'space-around',
+            sm: 'space-around',
+            md: 'space-between',
+            lg: 'space-between',
+          },
           marginTop: '50px',
           marginBottom: '50px',
           alignItems: 'center',
         }}
       >
-        <MacronutrientChart userShares={plateCalculationRate} />
+        {!plateCalculationRate?.carbPercentage ? (
+          <NutrientsDistributionPreForm
+            userBodyDataInputs={userBodyDataInputs}
+            handleCheckBoxChange={handleCheckBoxChange}
+            handleSaveUserData={handleSaveUserData}
+            handleSelectChange={handleSelectChange}
+          />
+        ) : (
+          <MacronutrientChart userShares={plateCalculationRate} />
+        )}
         <PlateNutrients {...plateTotalToDisplay} />
       </Container>
       <Box
