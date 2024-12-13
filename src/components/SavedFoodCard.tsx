@@ -76,7 +76,14 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
       <FlippingCard flip={isHovered}>
         <FrontFace>
           <CardContent>
-            <Box sx={{display: 'flex', flexDirection: 'column', top: 8, right: 12,}}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+                top: 8,
+              }}
+            >
               <Button
                 variant="outlined"
                 size="small"
@@ -87,6 +94,8 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
                   fontSize: '0.9rem',
                   lineHeight: '1.2',
                   borderRadius: '4px',
+                  borderColor: 'red',
+                  color: 'red',
                 }}
                 onClick={onClick}
               >
@@ -96,9 +105,6 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
                 variant="outlined"
                 size="small"
                 sx={{
-                  position: 'absolute',
-                  top: 8,
-                  right: 12,
                   padding: '2px 4px',
                   minWidth: '24',
                   height: '24',
@@ -131,24 +137,47 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
 
         <BackFace>
           <CardContent>
-            <Button
-              variant="outlined"
-              size="small"
+            <Box
               sx={{
-                position: 'absolute',
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
                 top: 8,
-                right: 12,
-                padding: '2px 4px',
-                minWidth: '24',
-                height: '24',
-                fontSize: '0.9rem',
-                lineHeight: '1.2',
-                borderRadius: '4px',
               }}
-              onClick={onClick}
             >
-              DELETE
-            </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  padding: '2px 4px',
+                  minWidth: '24',
+                  height: '24',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2',
+                  borderRadius: '4px',
+                  borderColor: 'red',
+                  color: 'red',
+                }}
+                onClick={onClick}
+              >
+                DELETE
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  padding: '2px 4px',
+                  minWidth: '24',
+                  height: '24',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2',
+                  borderRadius: '4px',
+                }}
+                onClick={onClick}
+              >
+                EDIT
+              </Button>
+            </Box>
             <Typography
               gutterBottom
               sx={{ color: 'text.secondary', fontSize: 14 }}
