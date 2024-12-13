@@ -18,7 +18,7 @@ import CalculationsTable from '../components/CalculationsTable';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../state/store';
-import { deleteFoodItem } from '../state/foodCollectionSlice';
+import {deleteFoodItem, updateFoodItem} from '../state/foodCollectionSlice';
 import {
   deleteCalculationResult,
   saveCalculationResult,
@@ -42,6 +42,26 @@ export default function MyFoodPage() {
       console.error('No ID found for this food item');
     }
   };
+
+
+    const handleEditProduct = async (
+        foodItem: IUserFoodItem,
+    ): Promise<void> => {
+        if (foodItem.id) {
+            // const foodInputsValues: IFoodItem = {
+            //     foodName: foodItem.foodName,
+            //     fat: foodItem.fat,
+            //     protein: foodItem.protein,
+            //     carbohydrate: foodItem.carbohydrate,
+            //     calories: foodItem.calories,
+            //     weight: foodItem.weight,
+            // };
+            // dispatch(updateFoodItem({foodInputsValues, foodItem}));
+            console.log('Editing food item', foodItem);
+        } else {
+            console.error('Can`t edit this food item');
+        }
+    };
 
   // Calculations logic
   const productNames = data.map((item: IFoodItem) => item.foodName);
@@ -235,7 +255,8 @@ export default function MyFoodPage() {
               protein={item.protein}
               carbohydrate={item.carbohydrate}
               weight={item.weight}
-              onClick={() => handleDeleteProduct(item)}
+              onClickDelete={() => handleDeleteProduct(item)}
+              onClickEdit={() => handleEditProduct(item)}
               nutriValues={getNutriValuesPerKg(item)}
             />
           ))}

@@ -12,7 +12,8 @@ interface SavedFoodCardProps {
   carbohydrate: string;
   calories: string;
   weight: string;
-  onClick?: () => void;
+  onClickDelete?: () => void;
+  onClickEdit?: () => void;
   nutriValues?: INutriScorePerKg | null;
 }
 
@@ -63,7 +64,8 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
   carbohydrate,
   protein,
   weight,
-  onClick,
+  onClickDelete,
+  onClickEdit,
   nutriValues,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -97,7 +99,7 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
                   borderColor: 'red',
                   color: 'red',
                 }}
-                onClick={onClick}
+                onClick={onClickDelete}
               >
                 DELETE
               </Button>
@@ -112,7 +114,7 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
                   lineHeight: '1.2',
                   borderRadius: '4px',
                 }}
-                onClick={onClick}
+                onClick={onClickEdit}
               >
                 EDIT
               </Button>
@@ -158,7 +160,7 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
                   borderColor: 'red',
                   color: 'red',
                 }}
-                onClick={onClick}
+                onClick={onClickDelete}
               >
                 DELETE
               </Button>
@@ -173,7 +175,7 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
                   lineHeight: '1.2',
                   borderRadius: '4px',
                 }}
-                onClick={onClick}
+                onClick={onClickEdit}
               >
                 EDIT
               </Button>
