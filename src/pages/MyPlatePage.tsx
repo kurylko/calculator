@@ -174,9 +174,7 @@ export default function MyPlatePage() {
   function countHealthyPlate(plate: TotalPlateNutrients) {
     // Convert nutrient values from strings to numbers
     const totalCalories = parseFloat(plate.calories);
-    console.log('totalCalories', totalCalories);
     const carbsInGrams = parseFloat(plate.carbohydrate);
-    console.log('carbsInGrams', carbsInGrams);
     const fatInGrams = parseFloat(plate.fat);
     const proteinInGrams = parseFloat(plate.protein);
 
@@ -187,7 +185,6 @@ export default function MyPlatePage() {
 
     // Calculate the percentage of each macronutrient
     const carbPercentage = Math.round((carbCalories / totalCalories) * 100);
-    console.log('carbPercentage', carbPercentage);
     const fatPercentage = Math.round((fatCalories / totalCalories) * 100);
     const proteinPercentage = Math.round(
       (proteinCalories / totalCalories) * 100,
