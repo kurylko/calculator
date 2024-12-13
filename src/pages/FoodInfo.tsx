@@ -230,7 +230,7 @@ export default function FoodInfoPage() {
           LAST FOOD YOU ADDED
         </Typography>
         {data.length > 0 ? (
-          <FoodTable lastInputFoodItems={parsedFoodItems} />
+          <FoodTable lastInputFoodItems={parsedFoodItems}/>
         ) : (
           <h3>Add your first food!</h3>
         )}

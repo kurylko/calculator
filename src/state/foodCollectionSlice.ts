@@ -5,7 +5,7 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDocs,
+  getDocs
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { RootState } from './store';
@@ -88,6 +88,42 @@ export const createFoodItem = createAsyncThunk<
     }
   },
 );
+
+// ToDo: Implement updateFoodItem (IFoodItem vs IUserFoodItem )
+
+// export const updateFoodItem = createAsyncThunk<
+//     { foodItem: IUserFoodItem },
+//     { foodInputsValues: IFoodItem; foodItem: IUserFoodItem },
+//     { state: RootState }
+// >(
+//     'foodItem/updateFoodItem',
+//     async ({ foodInputsValues, foodItem },{ getState, rejectWithValue }) => {
+//       try {
+//         const state = getState();
+//         const currentUser = state.user.currentUser;
+//         if (currentUser) {
+//           const uid = currentUser?.uid;
+//           const foodItemId = foodItem.id;
+//             if (!foodItemId) {
+//               return rejectWithValue('No ID for user`s food item');
+//             }
+//           const docRef = doc(db, 'products', foodItemId);
+//           await updateDoc(docRef, {
+//             ...foodInputsValues,
+//             userID: uid,
+//           });
+//            return {
+//              ...foodInputsValues,
+//              userID: uid,
+//            };
+//         } else {
+//           return { ...foodInputsValues };
+//         }
+//       } catch (error: unknown) {
+//         return rejectWithValue(error);
+//       }
+//     },
+// );
 
 const foodCollectionSlice = createSlice({
   name: 'foodItem',
