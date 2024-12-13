@@ -203,7 +203,7 @@ export default function FoodInfoPage() {
             }}
           >
             <Button variant="contained" onClick={handleSubmit}>
-              Add food info
+              Add food
             </Button>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
               <Button variant="contained">Cancel</Button>

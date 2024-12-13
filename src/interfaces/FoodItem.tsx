@@ -16,6 +16,7 @@ export interface IApiFoodItem {
 }
 
 export interface IFoodItem {
+  id?: string;
   foodName: string;
   fat: string;
   protein: string;

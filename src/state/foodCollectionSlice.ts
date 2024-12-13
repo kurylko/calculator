@@ -10,6 +10,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { RootState } from './store';
+import { v4 as uuidv4 } from 'uuid';
 
 interface FoodCollectionState {
   data: IUserFoodItem[];
@@ -82,7 +83,7 @@ export const createFoodItem = createAsyncThunk<
           userID: uid,
         };
       } else {
-        return { ...foodInputsValues };
+        return { ...foodInputsValues, id: uuidv4() };
       }
     } catch (error: unknown) {
       return rejectWithValue(error);
