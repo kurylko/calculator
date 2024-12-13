@@ -6,7 +6,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  updateDoc
+  updateDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { RootState } from './store';
@@ -94,37 +94,37 @@ export const createFoodItem = createAsyncThunk<
 // ToDo: Implement updateFoodItem (IFoodItem vs IUserFoodItem )
 
 export const updateFoodItem = createAsyncThunk<
-    IUserFoodItem,
-    { foodInputsValues: IFoodItem; foodItem: IUserFoodItem },
-    { state: RootState }
+  IUserFoodItem,
+  { foodInputsValues: IFoodItem; foodItem: IUserFoodItem },
+  { state: RootState }
 >(
-    'foodItem/updateFoodItem',
-    async ({ foodInputsValues, foodItem },{ getState, rejectWithValue }) => {
-      try {
-        const state = getState();
-        const currentUser = state.user.currentUser;
-        if (currentUser) {
-          const uid = currentUser?.uid;
-          const foodItemId = foodItem.id;
-            if (!foodItemId) {
-              return rejectWithValue('No ID for user`s food item');
-            }
-          const docRef = doc(db, 'products', foodItemId);
-          await updateDoc(docRef, {
-            ...foodInputsValues,
-            userID: uid,
-          });
-           return {
-             ...foodInputsValues,
-             userID: uid,
-           };
-        } else {
-          return { ...foodInputsValues };
+  'foodItem/updateFoodItem',
+  async ({ foodInputsValues, foodItem }, { getState, rejectWithValue }) => {
+    try {
+      const state = getState();
+      const currentUser = state.user.currentUser;
+      if (currentUser) {
+        const uid = currentUser?.uid;
+        const foodItemId = foodItem.id;
+        if (!foodItemId) {
+          return rejectWithValue('No ID for user`s food item');
         }
-      } catch (error: unknown) {
-        return rejectWithValue(error);
+        const docRef = doc(db, 'products', foodItemId);
+        await updateDoc(docRef, {
+          ...foodInputsValues,
+          userID: uid,
+        });
+        return {
+          ...foodInputsValues,
+          userID: uid,
+        };
+      } else {
+        return { ...foodInputsValues };
       }
-    },
+    } catch (error: unknown) {
+      return rejectWithValue(error);
+    }
+  },
 );
 
 const foodCollectionSlice = createSlice({
@@ -178,6 +178,20 @@ const foodCollectionSlice = createSlice({
       .addCase(deleteFoodItem.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to delete food item';
+      })
+      .addCase(updateFoodItem.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateFoodItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = state.data.map(
+          (stateFoodItem) => stateFoodItem.id === action.payload.id ? action.payload : stateFoodItem,
+        );
+      })
+      .addCase(updateFoodItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to update food item';
       });
   },
 });
