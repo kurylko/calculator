@@ -1,7 +1,7 @@
 import * as React from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Button, styled } from '@mui/material';
+import { Box, Button, styled } from '@mui/material';
 import { INutriScorePerKg } from '../utils/getNutriValues';
 import { useState } from 'react';
 
@@ -76,24 +76,41 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
       <FlippingCard flip={isHovered}>
         <FrontFace>
           <CardContent>
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{
-                position: 'absolute',
-                top: 8,
-                right: 12,
-                padding: '2px 4px',
-                minWidth: '24',
-                height: '24',
-                fontSize: '0.9rem',
-                lineHeight: '1.2',
-                borderRadius: '4px',
-              }}
-              onClick={onClick}
-            >
-              DELETE
-            </Button>
+            <Box sx={{display: 'flex', flexDirection: 'column', top: 8, right: 12,}}>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  padding: '2px 4px',
+                  minWidth: '24',
+                  height: '24',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2',
+                  borderRadius: '4px',
+                }}
+                onClick={onClick}
+              >
+                DELETE
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  position: 'absolute',
+                  top: 8,
+                  right: 12,
+                  padding: '2px 4px',
+                  minWidth: '24',
+                  height: '24',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2',
+                  borderRadius: '4px',
+                }}
+                onClick={onClick}
+              >
+                EDIT
+              </Button>
+            </Box>
             <Typography
               gutterBottom
               sx={{ color: 'text.secondary', fontSize: 14 }}
