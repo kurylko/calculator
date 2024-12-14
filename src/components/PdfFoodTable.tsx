@@ -114,7 +114,7 @@ interface PdfFoodTableProps {
   data: FoodWithNutriScore[];
 }
 
-export const PdfFoodTable: React.FC<PdfFoodTableProps> = ({ data }) => (
+export const PdfFoodTable = ({ data }: PdfFoodTableProps) => (
   <Document title="Your food table">
     <Page style={styles.page} size="A4">
       <View style={styles.borderContainer}>

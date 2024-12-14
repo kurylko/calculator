@@ -57,7 +57,7 @@ const BackFace = styled(CardFace)({
   padding: '0',
 });
 
-export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
+export const SavedFoodCard = ({
   foodName,
   fat,
   calories,
@@ -67,7 +67,7 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
   onClickDelete,
   onClickEdit,
   nutriValues,
-}) => {
+}: SavedFoodCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (

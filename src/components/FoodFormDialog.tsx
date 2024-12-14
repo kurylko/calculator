@@ -24,10 +24,10 @@ interface FoodFormDialogProps {
   setOpenDialog: (value: boolean) => void;
 }
 
-export const FoodFormDialog: React.FC<FoodFormDialogProps> = ({
+export const FoodFormDialog = ({
   openDialog,
     setOpenDialog,
-}) => {
+}: FoodFormDialogProps) => {
   const handleClose = () => {
     setOpenDialog(false);
   };
