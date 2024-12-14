@@ -52,6 +52,25 @@ export default function MyFoodPage() {
     setOpenDialog(true);
   };
 
+  const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>({
+    foodName: '',
+    fat: '',
+    protein: '',
+    carbohydrate: '',
+    calories: '',
+    weight: '',
+  });
+
+  function handleChangeFoodInputsValues(
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) {
+    const { target: { value } = {} } = e;
+    setFoodInputsValues({
+      ...foodInputsValues,
+      [e.target.name]: value,
+    });
+  }
+
   const handleEditProduct = async (foodItem: IUserFoodItem): Promise<void> => {
     if (foodItem.id) {
       // const foodInputsValues: IFoodItem = {
@@ -68,7 +87,6 @@ export default function MyFoodPage() {
       console.error('Can`t edit this food item');
     }
   };
-
 
   // ---- Calculations logic -----
   const productNames = data.map((item: IFoodItem) => item.foodName);
@@ -156,6 +174,9 @@ export default function MyFoodPage() {
       <FoodFormDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
+        foodInputsValues={foodInputsValues}
+        handleChange={handleChangeFoodInputsValues}
+        handleEditProduct={handleEditProduct}
       />
       <Box sx={{ width: '85%', maxWidth: 700 }}>
         <Typography variant="h3">LET'S COUNT NUTRIENTS</Typography>

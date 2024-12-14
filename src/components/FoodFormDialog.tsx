@@ -7,8 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import {Box} from "@mui/material";
+import { FoodInputsForm } from './FoodInputsForm';
+import { IFoodItem, IUserFoodItem } from '../interfaces/FoodItem';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -22,14 +22,22 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 interface FoodFormDialogProps {
   openDialog: boolean;
   setOpenDialog: (value: boolean) => void;
+  foodInputsValues: IFoodItem;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleEditProduct: (foodItem: IUserFoodItem) => Promise<void>;
 }
 
 export const FoodFormDialog = ({
   openDialog,
-    setOpenDialog,
+  setOpenDialog,
+  foodInputsValues,
+  handleChange,
+  handleEditProduct,
 }: FoodFormDialogProps) => {
   const handleClose = () => {
-    setOpenDialog(false);
+    handleEditProduct(foodInputsValues)
+      .then((r) => setOpenDialog(false))
+      .catch((e) => console.error('Error editing food item:', e));
   };
 
   return (
@@ -55,7 +63,10 @@ export const FoodFormDialog = ({
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Box>Form</Box>
+          <FoodInputsForm
+            foodInputsValues={foodInputsValues}
+            handleChange={handleChange}
+          />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

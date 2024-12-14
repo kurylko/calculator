@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, TextField } from '@mui/material';
 import {IFoodItem} from "../interfaces/FoodItem";
 
-interface FoodInputsFormProps {
+export interface FoodInputsFormProps {
   foodInputsValues: IFoodItem;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
