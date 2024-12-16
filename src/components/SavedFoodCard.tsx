@@ -1,7 +1,7 @@
 import * as React from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Button, styled } from '@mui/material';
+import { Box, Button, styled } from '@mui/material';
 import { INutriScorePerKg } from '../utils/getNutriValues';
 import { useState } from 'react';
 
@@ -12,7 +12,8 @@ interface SavedFoodCardProps {
   carbohydrate: string;
   calories: string;
   weight: string;
-  onClick?: () => void;
+  onClickDelete?: () => void;
+  onClickEdit?: () => void;
   nutriValues?: INutriScorePerKg | null;
 }
 
@@ -56,16 +57,17 @@ const BackFace = styled(CardFace)({
   padding: '0',
 });
 
-export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
+export const SavedFoodCard = ({
   foodName,
   fat,
   calories,
   carbohydrate,
   protein,
   weight,
-  onClick,
+  onClickDelete,
+  onClickEdit,
   nutriValues,
-}) => {
+}: SavedFoodCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -76,24 +78,47 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
       <FlippingCard flip={isHovered}>
         <FrontFace>
           <CardContent>
-            <Button
-              variant="outlined"
-              size="small"
+            <Box
               sx={{
-                position: 'absolute',
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
                 top: 8,
-                right: 12,
-                padding: '2px 4px',
-                minWidth: '24',
-                height: '24',
-                fontSize: '0.9rem',
-                lineHeight: '1.2',
-                borderRadius: '4px',
               }}
-              onClick={onClick}
             >
-              DELETE
-            </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  padding: '2px 4px',
+                  minWidth: '24',
+                  height: '24',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2',
+                  borderRadius: '4px',
+                  borderColor: 'red',
+                  color: 'red',
+                }}
+                onClick={onClickDelete}
+              >
+                DELETE
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  padding: '2px 4px',
+                  minWidth: '24',
+                  height: '24',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2',
+                  borderRadius: '4px',
+                }}
+                onClick={onClickEdit}
+              >
+                EDIT
+              </Button>
+            </Box>
             <Typography
               gutterBottom
               sx={{ color: 'text.secondary', fontSize: 14 }}
@@ -114,24 +139,47 @@ export const SavedFoodCard: React.FC<SavedFoodCardProps> = ({
 
         <BackFace>
           <CardContent>
-            <Button
-              variant="outlined"
-              size="small"
+            <Box
               sx={{
-                position: 'absolute',
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
                 top: 8,
-                right: 12,
-                padding: '2px 4px',
-                minWidth: '24',
-                height: '24',
-                fontSize: '0.9rem',
-                lineHeight: '1.2',
-                borderRadius: '4px',
               }}
-              onClick={onClick}
             >
-              DELETE
-            </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  padding: '2px 4px',
+                  minWidth: '24',
+                  height: '24',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2',
+                  borderRadius: '4px',
+                  borderColor: 'red',
+                  color: 'red',
+                }}
+                onClick={onClickDelete}
+              >
+                DELETE
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  padding: '2px 4px',
+                  minWidth: '24',
+                  height: '24',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2',
+                  borderRadius: '4px',
+                }}
+                onClick={onClickEdit}
+              >
+                EDIT
+              </Button>
+            </Box>
             <Typography
               gutterBottom
               sx={{ color: 'text.secondary', fontSize: 14 }}

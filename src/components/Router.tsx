@@ -13,7 +13,7 @@ interface AppRoutesProps {
   children?: React.ReactNode;
 }
 
-const AppRoutes: React.FC<AppRoutesProps> = ({ children }) => {
+const AppRoutes = ({ children }: AppRoutesProps) => {
   return (
     <Router>
       <Routes>

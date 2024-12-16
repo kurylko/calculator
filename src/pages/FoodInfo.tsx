@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { Box, Button } from '@mui/material';
-import { TextField } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IFoodItem } from '../interfaces/FoodItem';
@@ -13,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { createFoodItem } from '../state/foodCollectionSlice';
 import { AppDispatch } from '../state/store';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
+import { FoodInputsForm } from '../components/FoodInputsForm';
 
 export default function FoodInfoPage() {
   const dispatch: AppDispatch = useDispatch();
@@ -95,100 +95,10 @@ export default function FoodInfoPage() {
           >
             ADD FOOD INFO
           </Typography>
-          <Box
-            sx={{
-              width: { xs: '85%', sm: '85%', md: '100%', lg: '100%' },
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '10px',
-              paddingBottom: '30px',
-              marginBottom: '30px',
-              alignItems: {
-                xs: 'center',
-                sm: 'center',
-                md: 'flex-start',
-                lg: 'flex-start',
-              },
-              justifyContent: {
-                xs: 'center',
-                sm: 'center',
-                md: 'flex-start',
-                lg: 'flex-start',
-              },
-            }}
-          >
-            <TextField
-              required
-              id="outlined-required"
-              label="Food name"
-              name="foodName"
-              value={foodInputsValues.foodName}
-              onChange={handleChange}
-              sx={{
-                width: { xs: '90%', sm: '45%', md: '20%', lg: '20%' },
-              }}
-            />
-            <TextField
-              required
-              id="outlined-number"
-              label="Fat"
-              type="number"
-              name="fat"
-              value={foodInputsValues.fat}
-              onChange={handleChange}
-              sx={{
-                width: { xs: '90%', sm: '45%', md: '20%', lg: '20%' },
-              }}
-            />
-            <TextField
-              required
-              id="outlined-number"
-              label="Protein"
-              type="number"
-              name="protein"
-              value={foodInputsValues.protein}
-              onChange={handleChange}
-              sx={{
-                width: { xs: '90%', sm: '45%', md: '20%', lg: '20%' },
-              }}
-            />
-            <TextField
-              required
-              id="outlined-number"
-              label="Carbohydrate"
-              type="number"
-              name="carbohydrate"
-              value={foodInputsValues.carbohydrate}
-              onChange={handleChange}
-              sx={{
-                width: { xs: '90%', sm: '45%', md: '20%', lg: '20%' },
-              }}
-            />
-            <TextField
-              required
-              id="outlined-number"
-              label="Calories, kcal"
-              type="number"
-              name="calories"
-              value={foodInputsValues.calories}
-              onChange={handleChange}
-              sx={{
-                width: { xs: '90%', sm: '45%', md: '20%', lg: '20%' },
-              }}
-            />
-            <TextField
-              required
-              id="outlined-number"
-              label="Standard pack weight, g"
-              type="number"
-              name="weight"
-              value={foodInputsValues.weight}
-              onChange={handleChange}
-              sx={{
-                width: { xs: '90%', sm: '45%', md: '20%', lg: '25%' },
-              }}
-            />
-          </Box>
+          <FoodInputsForm
+            foodInputsValues={foodInputsValues}
+            handleChange={handleChange}
+          />
           <Box
             sx={{
               display: 'flex',
@@ -203,7 +113,7 @@ export default function FoodInfoPage() {
             }}
           >
             <Button variant="contained" onClick={handleSubmit}>
-              Add food info
+              Add food
             </Button>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
               <Button variant="contained">Cancel</Button>
@@ -230,7 +140,7 @@ export default function FoodInfoPage() {
           LAST FOOD YOU ADDED
         </Typography>
         {data.length > 0 ? (
-          <FoodTable lastInputFoodItems={parsedFoodItems}/>
+          <FoodTable lastInputFoodItems={parsedFoodItems} />
         ) : (
           <h3>Add your first food!</h3>
         )}
