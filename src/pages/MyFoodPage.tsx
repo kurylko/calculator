@@ -44,14 +44,9 @@ export default function MyFoodPage() {
     }
   };
 
-  // Dialog with a Form with food inputs to edit the food item
+  // Dialog with a Form to edit the food item
 
   const [openDialog, setOpenDialog] = React.useState(false);
-
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true);
-  };
-
   const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>({
     foodName: '',
     fat: '',
@@ -60,6 +55,11 @@ export default function MyFoodPage() {
     calories: '',
     weight: '',
   });
+
+  const handleClickOpenDialog = (foodItemInEdit: IFoodItem) => {
+    setFoodInputsValues(foodItemInEdit);
+    setOpenDialog(true);
+  };
 
   function handleChangeFoodInputsValues(
     e: React.ChangeEvent<HTMLInputElement>,
@@ -82,7 +82,7 @@ export default function MyFoodPage() {
       //     weight: foodItem.weight,
       // };
       // dispatch(updateFoodItem({foodInputsValues, foodItem}));
-      console.log('Editing food item', foodItem);
+      console.log('Editing food item with redux', foodItem);
     } else {
       console.error('Can`t edit this food item');
     }
@@ -281,6 +281,7 @@ export default function MyFoodPage() {
           data.map((item) => (
             <SavedFoodCard
               key={item.foodName}
+              id={item.id}
               foodName={item.foodName}
               fat={item.fat}
               calories={item.calories}
@@ -288,7 +289,7 @@ export default function MyFoodPage() {
               carbohydrate={item.carbohydrate}
               weight={item.weight}
               onClickDelete={() => handleDeleteProduct(item)}
-              onClickEdit={() => handleClickOpenDialog()}
+              onClickEdit={() => handleClickOpenDialog(item)}
               nutriValues={getNutriValuesPerKg(item)}
             />
           ))}
