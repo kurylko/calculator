@@ -6,7 +6,6 @@ import { INutriScorePerKg } from '../utils/getNutriValues';
 import { useState } from 'react';
 
 interface SavedFoodCardProps {
-  id?: string;
   foodName: string;
   fat: string;
   protein: string;
@@ -59,7 +58,6 @@ const BackFace = styled(CardFace)({
 });
 
 export const SavedFoodCard = ({
-  id,
   foodName,
   fat,
   calories,

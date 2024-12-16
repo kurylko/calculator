@@ -117,9 +117,13 @@ export const updateFoodItem = createAsyncThunk<
         return {
           ...foodInputsValues,
           userID: uid,
+          id: foodItem.id,
         };
       } else {
-        return { ...foodInputsValues };
+        return {
+          ...foodInputsValues,
+          id: foodItem.id,
+        };
       }
     } catch (error: unknown) {
       return rejectWithValue(error);

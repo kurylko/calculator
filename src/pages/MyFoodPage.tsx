@@ -71,18 +71,19 @@ export default function MyFoodPage() {
     });
   }
 
+ // Edit food Item with redux (with or without db)
+
   const handleEditProduct = async (foodItem: IUserFoodItem): Promise<void> => {
     if (foodItem.id) {
-      // const foodInputsValues: IFoodItem = {
-      //     foodName: foodItem.foodName,
-      //     fat: foodItem.fat,
-      //     protein: foodItem.protein,
-      //     carbohydrate: foodItem.carbohydrate,
-      //     calories: foodItem.calories,
-      //     weight: foodItem.weight,
-      // };
-      // dispatch(updateFoodItem({foodInputsValues, foodItem}));
-      console.log('Editing food item with redux', foodItem);
+      const foodInputsValues: IFoodItem = {
+          foodName: foodItem.foodName,
+          fat: foodItem.fat,
+          protein: foodItem.protein,
+          carbohydrate: foodItem.carbohydrate,
+          calories: foodItem.calories,
+          weight: foodItem.weight,
+      };
+      dispatch(updateFoodItem({foodInputsValues, foodItem}));
     } else {
       console.error('Can`t edit this food item');
     }
@@ -145,7 +146,6 @@ export default function MyFoodPage() {
       return;
     }
     dispatch(saveCalculationResult({ result }));
-    console.log('result saved:', result);
   };
 
   // Calculations of user (redux persist)
@@ -281,7 +281,6 @@ export default function MyFoodPage() {
           data.map((item) => (
             <SavedFoodCard
               key={item.foodName}
-              id={item.id}
               foodName={item.foodName}
               fat={item.fat}
               calories={item.calories}
