@@ -17,6 +17,17 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
+  '& .MuiPaper-root': {
+    width: '90%',
+    maxWidth: '90%',
+    margin: 0,
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '80%',
+    },
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: '70%',
+    },
+  },
 }));
 
 interface FoodFormDialogProps {
@@ -46,6 +57,8 @@ export const FoodFormDialog = ({
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={openDialog}
+        maxWidth="xl"
+        fullWidth
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Edit food info
