@@ -18,7 +18,7 @@ interface FoodTableProps {
   lastInputFoodItems: FoodWithNutriScore[];
 }
 
-const FoodTable: React.FC<FoodTableProps> = ({ lastInputFoodItems }) => {
+const FoodTable = ({ lastInputFoodItems }: FoodTableProps) => {
   return (
     <Box display="flex" justifyContent="center" p={2} sx={{ width: '100%' }}>
       <TableContainer component={Paper} sx={{ width: '100%', maxWidth: 1200 }}>

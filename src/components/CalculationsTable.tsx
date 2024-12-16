@@ -17,11 +17,11 @@ interface CalculationsTableProps {
   plateCalculation: boolean;
 }
 
-const FoodTable: React.FC<CalculationsTableProps> = ({
+const FoodTable = ({
   results,
   handleDelete,
   plateCalculation,
-}) => {
+}: CalculationsTableProps) => {
   if (!results || results.length === 0) {
     return (
       <Box sx={{ width: '100%', marginBottom: '50px' }}>

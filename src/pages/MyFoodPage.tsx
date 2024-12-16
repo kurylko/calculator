@@ -18,11 +18,12 @@ import CalculationsTable from '../components/CalculationsTable';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../state/store';
-import { deleteFoodItem } from '../state/foodCollectionSlice';
+import { deleteFoodItem, updateFoodItem } from '../state/foodCollectionSlice';
 import {
   deleteCalculationResult,
   saveCalculationResult,
 } from '../state/calculationsCollectionSlice';
+import { FoodFormDialog } from '../components/FoodFormDialog';
 
 export default function MyFoodPage() {
   // Users food list from db or localstorage (redux-persist)
@@ -43,7 +44,52 @@ export default function MyFoodPage() {
     }
   };
 
-  // Calculations logic
+  // Dialog with a Form to edit the food item
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>({
+    foodName: '',
+    fat: '',
+    protein: '',
+    carbohydrate: '',
+    calories: '',
+    weight: '',
+  });
+
+  const handleClickOpenDialog = (foodItemInEdit: IFoodItem) => {
+    setFoodInputsValues(foodItemInEdit);
+    setOpenDialog(true);
+  };
+
+  function handleChangeFoodInputsValues(
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) {
+    const { target: { value } = {} } = e;
+    setFoodInputsValues({
+      ...foodInputsValues,
+      [e.target.name]: value,
+    });
+  }
+
+ // Edit food Item with redux (with or without db)
+
+  const handleEditProduct = async (foodItem: IUserFoodItem): Promise<void> => {
+    if (foodItem.id) {
+      const foodInputsValues: IFoodItem = {
+          foodName: foodItem.foodName,
+          fat: foodItem.fat,
+          protein: foodItem.protein,
+          carbohydrate: foodItem.carbohydrate,
+          calories: foodItem.calories,
+          weight: foodItem.weight,
+      };
+      dispatch(updateFoodItem({foodInputsValues, foodItem}));
+    } else {
+      console.error('Can`t edit this food item');
+    }
+  };
+
+  // ---- Calculations logic -----
   const productNames = data.map((item: IFoodItem) => item.foodName);
 
   const [estimateFoodInputsValues, setEstimateFoodInputsValues] =
@@ -100,7 +146,6 @@ export default function MyFoodPage() {
       return;
     }
     dispatch(saveCalculationResult({ result }));
-    console.log('result saved:', result);
   };
 
   // Calculations of user (redux persist)
@@ -126,6 +171,13 @@ export default function MyFoodPage() {
         paddingTop: '50px',
       }}
     >
+      <FoodFormDialog
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        foodInputsValues={foodInputsValues}
+        handleChange={handleChangeFoodInputsValues}
+        handleEditProduct={handleEditProduct}
+      />
       <Box sx={{ width: '85%', maxWidth: 700 }}>
         <Typography variant="h3">LET'S COUNT NUTRIENTS</Typography>
       </Box>
@@ -235,7 +287,8 @@ export default function MyFoodPage() {
               protein={item.protein}
               carbohydrate={item.carbohydrate}
               weight={item.weight}
-              onClick={() => handleDeleteProduct(item)}
+              onClickDelete={() => handleDeleteProduct(item)}
+              onClickEdit={() => handleClickOpenDialog(item)}
               nutriValues={getNutriValuesPerKg(item)}
             />
           ))}
