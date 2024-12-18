@@ -14,6 +14,7 @@ import UserSlice from './userSlice';
 import FoodCollectionSlice from './foodCollectionSlice';
 import CalculationsCollectionSlice from "./calculationsCollectionSlice";
 import plateSlice from "./plateSlice";
+import UserBodyDataSlice from "./userBodyDataSlice";
 
 // Persist configuration
 const persistConfig = {
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   foodCollection: FoodCollectionSlice,
   calculationsCollection: CalculationsCollectionSlice,
   plate: plateSlice,
+  userBodyData: UserBodyDataSlice,
 });
 
 // Persisted reducer using the persistConfig

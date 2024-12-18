@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToPlate, deleteFromPlate } from '../state/plateSlice';
 import { NutrientsDistributionPreForm } from '../components/NutriensDistributionPreForm';
 import { IUserBodyData } from '../interfaces/User';
+import {saveUserBodyData} from "../state/userBodyDataSlice";
 
 export type TotalPlateNutrients = {
   calories: string;
@@ -165,8 +166,8 @@ export default function MyPlatePage() {
   };
 
   const handleSaveUserData = () => {
-    console.log('userBodyData:', userBodyDataInputs);
     alert("Your data saved! Let's add food to your plate.");
+    dispatch(saveUserBodyData({ userBodyData: userBodyDataInputs }));
   };
 
   // Counting standard macronutrient distribution for a balanced diet
