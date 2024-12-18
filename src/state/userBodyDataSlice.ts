@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {IUserBodyData} from "../interfaces/User";
-import {EstimateCalculationResult} from "../interfaces/EstimateCalculationResult";
 
 interface UserBodyDataState {
     userBodyData: IUserBodyData;
