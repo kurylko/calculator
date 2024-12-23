@@ -9,7 +9,7 @@ import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEs
 import { EstimateCalculationResult } from '../interfaces/EstimateCalculationResult';
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
 import PlateNutrients from '../components/PlateNutrients';
-import CalculationsTable from '../components/CalculationsTable';
+import { CalculationsTable } from '../components/CalculationsTable';
 import MacronutrientChart from '../components/MacronutrientChart';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
 import { AppDispatch, RootState } from '../state/store';

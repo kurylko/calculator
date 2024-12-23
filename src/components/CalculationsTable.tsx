@@ -17,7 +17,7 @@ interface CalculationsTableProps {
   plateCalculation: boolean;
 }
 
-const FoodTable = ({
+export const CalculationsTable = ({
   results,
   handleDelete,
   plateCalculation,
@@ -36,19 +36,11 @@ const FoodTable = ({
           <TableHead>
             <TableRow>
               <TableCell>Food</TableCell>
-              <TableCell align="right">
-                {!plateCalculation ? `Calories (kcal / kg)` : `Calories`}
-              </TableCell>
-              <TableCell align="right">
-                {!plateCalculation ? `Fat (g, /kg)` : `Fat`}
-              </TableCell>
-              <TableCell align="right">
-                {!plateCalculation ? `Carbs (g, /kg)` : `Carbs`}
-              </TableCell>
-              <TableCell align="right">
-                {!plateCalculation ? `Protein (g, /kg)` : `Protein`}
-              </TableCell>
-              <TableCell align="right">Weight&nbsp;(g)</TableCell>
+              <TableCell align="right">Calories (kcal)</TableCell>
+              <TableCell align="right">Fat (g)</TableCell>
+              <TableCell align="right">Carbs (g)</TableCell>
+              <TableCell align="right">Protein (g)</TableCell>
+              <TableCell align="right">Weight (g)</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -62,26 +54,20 @@ const FoodTable = ({
                   {result.foodName}
                 </TableCell>
                 <TableCell align="right">
-                  {!plateCalculation
-                    ? `${result.calories} (${result?.calories ?? '-'})`
-                    : `${result.calories}`}
+                  {`${result.calories ? Math.round(parseFloat(result.calories)) : '-'}`}
                 </TableCell>
                 <TableCell align="right">
-                  {!plateCalculation
-                    ? `${result.fat} (${result?.fat ?? '-'})`
-                    : `${result.fat}`}
+                  {`${result.fat ? Math.round(parseFloat(result.fat)) : '-'}`}
                 </TableCell>
                 <TableCell align="right">
-                  {!plateCalculation
-                    ? `${result.carbohydrate} (${result?.carbohydrate ?? '-'})`
-                    : `${result.carbohydrate}`}
+                  {`${result.carbohydrate ? Math.round(parseFloat(result.carbohydrate)) : '-'}`}
                 </TableCell>
                 <TableCell align="right">
-                  {!plateCalculation
-                    ? `${result.protein} (${result?.protein ?? '-'})`
-                    : `${result.protein}`}
+                  {`${result.protein ? Math.round(parseFloat(result.protein)) : '-'}`}
                 </TableCell>
-                <TableCell align="right">{result.weight}</TableCell>
+                <TableCell align="right">
+                  {result.weight ? Math.round(parseFloat(result.weight)) : '-'}
+                </TableCell>
                 <TableCell align="center">
                   <Button
                     variant="outlined"
@@ -99,5 +85,3 @@ const FoodTable = ({
     </Box>
   );
 };
-
-export default FoodTable;
