@@ -12,9 +12,9 @@ import {
 import storage from 'redux-persist/lib/storage';
 import UserSlice from './userSlice';
 import FoodCollectionSlice from './foodCollectionSlice';
-import CalculationsCollectionSlice from "./calculationsCollectionSlice";
-import plateSlice from "./plateSlice";
-import UserBodyDataSlice from "./userBodyDataSlice";
+import CalculationsCollectionSlice from './calculationsCollectionSlice';
+import plateSlice from './plateSlice';
+import UserBodyDataSlice from './userBodyDataSlice';
 
 // Persist configuration
 const persistConfig = {
@@ -40,11 +40,11 @@ export const makeStore = () => {
   const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-          serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-          },
-        }),
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
   });
 
   // Persistor created after store

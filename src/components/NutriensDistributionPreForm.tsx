@@ -99,7 +99,14 @@ export const NutrientsDistributionPreForm = ({
           />
         </FormGroup>
 
-        <Box sx={{ display: 'flex', width: '100%', gap: '8px', justifyContent: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            width: '100%',
+            gap: '8px',
+            justifyContent: 'center',
+          }}
+        >
           <FormControl
             sx={{
               m: 1,

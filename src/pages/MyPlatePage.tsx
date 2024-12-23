@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToPlate, deleteFromPlate } from '../state/plateSlice';
 import { NutrientsDistributionPreForm } from '../components/NutriensDistributionPreForm';
 import { IUserBodyData } from '../interfaces/User';
-import {saveUserBodyData} from "../state/userBodyDataSlice";
+import { saveUserBodyData } from '../state/userBodyDataSlice';
 
 export type TotalPlateNutrients = {
   calories: string;

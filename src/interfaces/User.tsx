@@ -5,7 +5,6 @@ export interface IUser {
   password?: string;
 }
 
-
 export interface IUserBodyData {
   gender?: string;
   weight: number;

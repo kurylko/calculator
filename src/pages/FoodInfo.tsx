@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IFoodItem } from '../interfaces/FoodItem';
+import { IFoodItemUserInputs } from '../interfaces/FoodItem';
 import FoodTable from '../components/FoodTable';
 import { getNutriValuesPerKg } from '../utils/getNutriValues';
 import { PdfFoodTable } from '../components/PdfFoodTable';
@@ -18,14 +18,16 @@ export default function FoodInfoPage() {
   const dispatch: AppDispatch = useDispatch();
   const { data } = useFetchUserProducts();
 
-  const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>({
-    foodName: '',
-    fat: '',
-    protein: '',
-    carbohydrate: '',
-    calories: '',
-    weight: '',
-  });
+  const [foodInputsValues, setFoodInputsValues] = useState<IFoodItemUserInputs>(
+    {
+      foodName: '',
+      fat: '',
+      protein: '',
+      carbohydrate: '',
+      calories: '',
+      weight: '',
+    },
+  );
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { target: { value } = {} } = e;
