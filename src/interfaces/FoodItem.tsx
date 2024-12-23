@@ -25,6 +25,8 @@ export interface IFoodItem {
   weight: string;
 }
 
+export type IFoodItemUserInputs = Omit<IFoodItem, 'id'>;
+
 export interface IUserFoodItem extends IFoodItem {
   id?: string;
   userID?: string;

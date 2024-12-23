@@ -15,9 +15,7 @@ export const getCalculateSingleEstimateProduct = ({
   data,
   estimateFoodInputsValues,
 }: GetCalculateSingleEstimateProductProps) => {
-  const matchedProduct = data.find(
-    (item) => item.foodName === selectedProduct,
-  );
+  const matchedProduct = data.find((item) => item.foodName === selectedProduct);
 
   if (!matchedProduct) {
     return null;

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { IUserFoodItem, IFoodItem } from '../interfaces/FoodItem';
+import { IUserFoodItem, IFoodItemUserInputs } from '../interfaces/FoodItem';
 import {
   addDoc,
   collection,
@@ -63,7 +63,7 @@ export const deleteFoodItem = createAsyncThunk<string, IUserFoodItem>(
 
 export const createFoodItem = createAsyncThunk<
   IUserFoodItem,
-  { foodInputsValues: IFoodItem },
+  { foodInputsValues: IFoodItemUserInputs },
   { state: RootState }
 >(
   'foodItem/createFoodItem',
@@ -95,7 +95,7 @@ export const createFoodItem = createAsyncThunk<
 
 export const updateFoodItem = createAsyncThunk<
   IUserFoodItem,
-  { foodInputsValues: IFoodItem; foodItem: IUserFoodItem },
+  { foodInputsValues: IFoodItemUserInputs; foodItem: IUserFoodItem },
   { state: RootState }
 >(
   'foodItem/updateFoodItem',
@@ -189,8 +189,10 @@ const foodCollectionSlice = createSlice({
       })
       .addCase(updateFoodItem.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = state.data.map(
-          (stateFoodItem) => stateFoodItem.id === action.payload.id ? action.payload : stateFoodItem,
+        state.data = state.data.map((stateFoodItem) =>
+          stateFoodItem.id === action.payload.id
+            ? action.payload
+            : stateFoodItem,
         );
       })
       .addCase(updateFoodItem.rejected, (state, action) => {

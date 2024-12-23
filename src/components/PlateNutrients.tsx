@@ -3,23 +3,35 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import {TotalPlateNutrients} from "../pages/MyPlatePage";
-
-
+import { TotalPlateNutrients } from '../pages/MyPlatePage';
 
 export default function PlateNutrients({
-                                         calories,
-                                         carbohydrate,
-                                         fat,
-                                         protein,
-                                         weight,
-                                       }: TotalPlateNutrients) {
+  calories,
+  carbohydrate,
+  fat,
+  protein,
+  weight,
+}: TotalPlateNutrients) {
   return (
-    <Card sx={{ minWidth: 275, height: '100%', width: {xs: '90%', sm: '80%', md: '60%', lg: '60%'} }}>
+    <Card
+      sx={{
+        minWidth: 275,
+        height: '100%',
+        width: { xs: '90%', sm: '80%', md: '60%', lg: '60%' },
+      }}
+    >
       <CardContent
-        sx={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'center' }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '4px',
+          alignItems: 'center',
+        }}
       >
-        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14, paddingBottom: 2 }}>
+        <Typography
+          gutterBottom
+          sx={{ color: 'text.secondary', fontSize: 14, paddingBottom: 2 }}
+        >
           Nutrients in your plate
         </Typography>
         <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
@@ -40,9 +52,7 @@ export default function PlateNutrients({
             {' '}
             Protein:{' '}
           </Typography>
-          <Typography variant="body2">
-            {protein} g
-          </Typography>
+          <Typography variant="body2">{protein} g</Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
           <Typography
@@ -52,11 +62,16 @@ export default function PlateNutrients({
             {' '}
             Carbohydrate:
           </Typography>
-          <Typography variant="body2">
-            {carbohydrate} g
-          </Typography>
+          <Typography variant="body2">{carbohydrate} g</Typography>
         </Box>
-        <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start', marginTop: 3 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '30px',
+            alignItems: 'flex-start',
+            marginTop: 3,
+          }}
+        >
           <Typography
             variant="body2"
             sx={{ minWidth: '100px', textAlign: 'center' }}
@@ -64,9 +79,7 @@ export default function PlateNutrients({
             {' '}
             Calories:
           </Typography>
-          <Typography variant="body2">
-            {calories} kCal
-          </Typography>
+          <Typography variant="body2">{calories} kCal</Typography>
         </Box>
         <Box
           sx={{

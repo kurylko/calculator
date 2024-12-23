@@ -4,12 +4,12 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import avatar from './../assets/images/avocado-face.png';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppDispatch, RootState} from '../state/store';
-import {logOutUser} from "../state/userSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../state/store';
+import { logOutUser } from '../state/userSlice';
 
 export default function Menu() {
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: RootState) => state.user);
 

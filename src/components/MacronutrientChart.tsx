@@ -75,7 +75,7 @@ const MacronutrientChart = ({ userShares }: MacronutrientChartProps) => {
         alignItems: 'center',
         padding: 0,
         height: '100%',
-        width: '80%'
+        width: '80%',
       }}
     >
       <CardContent sx={{ paddingBottom: 0, width: '100%' }}>

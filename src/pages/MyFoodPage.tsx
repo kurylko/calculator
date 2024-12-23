@@ -3,6 +3,7 @@ import { SavedFoodCard } from '../components/SavedFoodCard';
 import {
   IFoodEstimateValues,
   IFoodItem,
+  IFoodItemUserInputs,
   IUserFoodItem,
 } from '../interfaces/FoodItem';
 import { getNutriValuesPerKg } from '../utils/getNutriValues';
@@ -47,14 +48,16 @@ export default function MyFoodPage() {
   // Dialog with a Form to edit the food item
 
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [foodInputsValues, setFoodInputsValues] = useState<IFoodItem>({
-    foodName: '',
-    fat: '',
-    protein: '',
-    carbohydrate: '',
-    calories: '',
-    weight: '',
-  });
+  const [foodInputsValues, setFoodInputsValues] = useState<IFoodItemUserInputs>(
+    {
+      foodName: '',
+      fat: '',
+      protein: '',
+      carbohydrate: '',
+      calories: '',
+      weight: '',
+    },
+  );
 
   const handleClickOpenDialog = (foodItemInEdit: IFoodItem) => {
     setFoodInputsValues(foodItemInEdit);
@@ -71,19 +74,19 @@ export default function MyFoodPage() {
     });
   }
 
- // Edit food Item with redux (with or without db)
+  // Edit food Item with redux (with or without db)
 
   const handleEditProduct = async (foodItem: IUserFoodItem): Promise<void> => {
     if (foodItem.id) {
-      const foodInputsValues: IFoodItem = {
-          foodName: foodItem.foodName,
-          fat: foodItem.fat,
-          protein: foodItem.protein,
-          carbohydrate: foodItem.carbohydrate,
-          calories: foodItem.calories,
-          weight: foodItem.weight,
+      const foodInputsValues: IFoodItemUserInputs = {
+        foodName: foodItem.foodName,
+        fat: foodItem.fat,
+        protein: foodItem.protein,
+        carbohydrate: foodItem.carbohydrate,
+        calories: foodItem.calories,
+        weight: foodItem.weight,
       };
-      dispatch(updateFoodItem({foodInputsValues, foodItem}));
+      dispatch(updateFoodItem({ foodInputsValues, foodItem }));
     } else {
       console.error('Can`t edit this food item');
     }
