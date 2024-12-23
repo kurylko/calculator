@@ -15,7 +15,7 @@ import { SingleProductCheckBox } from '../components/SingleProductCheckBox';
 import { EstimateUserFoodInputsForm } from '../components/EstimateUserFoodInputsForm';
 import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEstimateProduct';
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
-import CalculationsTable from '../components/CalculationsTable';
+import { CalculationsTable } from '../components/CalculationsTable';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../state/store';

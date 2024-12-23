@@ -26,10 +26,10 @@ const FoodTable = ({ lastInputFoodItems }: FoodTableProps) => {
           <TableHead>
             <TableRow>
               <TableCell>Food</TableCell>
-              <TableCell align="right">Calories (kcal/kg)</TableCell>
-              <TableCell align="right">Fat&nbsp;(g, /kg)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g, /kg)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g, /kg)</TableCell>
+              <TableCell align="right">Calories (kcal / kg)</TableCell>
+              <TableCell align="right">Fat&nbsp;(g, / kg)</TableCell>
+              <TableCell align="right">Carbs&nbsp;(g, / kg)</TableCell>
+              <TableCell align="right">Protein&nbsp;(g, / kg)</TableCell>
               <TableCell align="right">Weight&nbsp;(g)</TableCell>
             </TableRow>
           </TableHead>
@@ -42,10 +42,10 @@ const FoodTable = ({ lastInputFoodItems }: FoodTableProps) => {
                 <TableCell component="th" scope="row">
                   {food.foodName}
                 </TableCell>
-                <TableCell align="right">{`${food.calories} (${food?.nutriScorePerKg?.caloriesValuePerKg ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${food.fat} (${food?.nutriScorePerKg?.fatValuePerKg ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${food.carbohydrate} (${food?.nutriScorePerKg?.carbohydrateValuePerKg ?? '-'})`}</TableCell>
-                <TableCell align="right">{`${food.protein} (${food?.nutriScorePerKg?.proteinValuePerKg ?? '-'})`}</TableCell>
+                <TableCell align="right">{`${food.calories} (${food?.nutriScorePerKg?.caloriesValuePerKg ? Math.round(Number(food.nutriScorePerKg.caloriesValuePerKg)) : '-'})`}</TableCell>
+                <TableCell align="right">{`${food.fat} (${food?.nutriScorePerKg?.fatValuePerKg ? Math.round(Number(food.nutriScorePerKg.fatValuePerKg)) : '-'})`}</TableCell>
+                <TableCell align="right">{`${food.carbohydrate} (${food?.nutriScorePerKg?.carbohydrateValuePerKg ? Math.round(Number(food.nutriScorePerKg.carbohydrateValuePerKg)) : '-'})`}</TableCell>
+                <TableCell align="right">{`${food.protein} (${food?.nutriScorePerKg?.proteinValuePerKg ? Math.round(Number(food.nutriScorePerKg.proteinValuePerKg)) : '-'})`}</TableCell>
                 <TableCell align="right">{food.weight}</TableCell>
               </TableRow>
             ))}

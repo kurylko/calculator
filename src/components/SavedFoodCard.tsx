@@ -184,7 +184,9 @@ export const SavedFoodCard = ({
               gutterBottom
               sx={{ color: 'text.secondary', fontSize: 14 }}
             >
-              {`${nutriValues?.caloriesValuePerKg} kcal`}
+              {nutriValues?.caloriesValuePerKg != null
+                ? `${parseFloat(nutriValues.caloriesValuePerKg).toFixed(0)} kcal`
+                : '- kcal'}
             </Typography>
             <Typography variant="h5" component="div">
               {foodName}
@@ -193,7 +195,9 @@ export const SavedFoodCard = ({
               1 kg
             </Typography>
             <Typography variant="body2">
-              {`Fat: ${nutriValues?.fatValuePerKg}g  Protein: ${nutriValues?.proteinValuePerKg}g  Carbs: ${nutriValues?.carbohydrateValuePerKg}g`}
+              {`Fat: ${nutriValues?.fatValuePerKg ? parseFloat(nutriValues.fatValuePerKg).toFixed(0) : '-'}g  
+    Protein: ${nutriValues?.proteinValuePerKg ? parseFloat(nutriValues.proteinValuePerKg).toFixed(0) : '-'}g  
+    Carbs: ${nutriValues?.carbohydrateValuePerKg ? parseFloat(nutriValues.carbohydrateValuePerKg).toFixed(0) : '-'}g`}
             </Typography>
           </CardContent>
         </BackFace>

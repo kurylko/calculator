@@ -16,18 +16,10 @@ export function getNutriValuesPerKg(
 
   const weightInKg = 1000 / parseFloat(foodItem.weight);
 
-  const fatValuePerKg = Math.round(
-    parseFloat(foodItem.fat) * weightInKg,
-  ).toString();
-  const proteinValuePerKg = Math.round(
-    parseFloat(foodItem.protein) * weightInKg,
-  ).toString();
-  const carbohydrateValuePerKg = Math.round(
-    parseFloat(foodItem.carbohydrate) * weightInKg,
-  ).toString();
-  const caloriesValuePerKg = Math.round(
-    parseFloat(foodItem.calories) * weightInKg,
-  ).toString();
+  const fatValuePerKg = (parseFloat(foodItem.fat) * weightInKg).toFixed(2).toString();
+  const proteinValuePerKg = (parseFloat(foodItem.protein) * weightInKg).toFixed(2).toString();
+  const carbohydrateValuePerKg = (parseFloat(foodItem.carbohydrate) * weightInKg).toFixed(2).toString();
+  const caloriesValuePerKg = (parseFloat(foodItem.calories) * weightInKg).toFixed(2).toString();
 
   return {
     fatValuePerKg,
