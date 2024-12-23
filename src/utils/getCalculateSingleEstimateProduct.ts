@@ -32,13 +32,13 @@ export const getCalculateSingleEstimateProduct = ({
       (parseFloat(estimateFoodInputsValues.calories) / caloriesValue) * 1000,
     );
     const calculatedFat = Math.round(
-      (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
+      (parseFloat(nutriValues.fatValuePerKg) / 1000) * calculatedWeight,
     );
     const calculatedProtein = Math.round(
-      (parseFloat(nutriValues.proteinValuePerKg) / 10000) * calculatedWeight,
+      (parseFloat(nutriValues.proteinValuePerKg) / 1000) * calculatedWeight,
     );
     const calculatedCarbohydrate = Math.round(
-      (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
+      (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
         calculatedWeight,
     );
 
@@ -59,14 +59,14 @@ export const getCalculateSingleEstimateProduct = ({
       (parseFloat(estimateFoodInputsValues.fat) / fatValue) * 1000,
     );
     const calculatedProtein = Math.round(
-      (parseFloat(nutriValues.proteinValuePerKg) / 10000) * calculatedWeight,
+      (parseFloat(nutriValues.proteinValuePerKg) / 1000) * calculatedWeight,
     );
     const calculatedCarbohydrate = Math.round(
-      (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
+      (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
         calculatedWeight,
     );
     const calculatedCalories = Math.round(
-      (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
+      (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
         calculatedWeight,
     );
     return {
@@ -110,13 +110,13 @@ export const getCalculateSingleEstimateProduct = ({
         1000,
     );
     const calculatedFat = Math.round(
-      (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
+      (parseFloat(nutriValues.fatValuePerKg) / 1000) * calculatedWeight,
     );
     const calculatedProtein = Math.round(
-      (parseFloat(nutriValues.proteinValuePerKg) / 10000) * calculatedWeight,
+      (parseFloat(nutriValues.proteinValuePerKg) / 1000) * calculatedWeight,
     );
     const calculatedCalories = Math.round(
-      (parseFloat(nutriValues.caloriesValuePerKg) / 10000) * calculatedWeight,
+      (parseFloat(nutriValues.caloriesValuePerKg) / 1000) * calculatedWeight,
     );
     return {
       calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
