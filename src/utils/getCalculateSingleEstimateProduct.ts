@@ -1,4 +1,4 @@
-// Calculate single product nutrition estimate
+// Calculate single product nutrition values by estimate users values
 
 import { IUserFoodItem } from '../interfaces/FoodItem';
 import { getNutriValuesPerKg } from './getNutriValues';
@@ -82,21 +82,16 @@ export const getCalculateSingleEstimateProduct = ({
 
   const calculateForEstimateProtein = () => {
     const proteinValue = parseFloat(nutriValues.proteinValuePerKg);
-    const calculatedWeight = Math.round(
-      (parseFloat(estimateFoodInputsValues.protein) / proteinValue) * 1000,
-    );
-    console.warn(calculatedWeight);
-    const calculatedFat = Math.round(
-      (parseFloat(nutriValues.fatValuePerKg) / 10000) * calculatedWeight,
-    );
-    const calculatedCarbohydrate = Math.round(
-      (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
-        calculatedWeight,
-    );
-    const calculatedCalories = Math.round(
-      (parseFloat(nutriValues.carbohydrateValuePerKg) / 10000) *
-        calculatedWeight,
-    );
+    const calculatedWeight =
+      (parseFloat(estimateFoodInputsValues.protein) / proteinValue) * 1000;
+    const calculatedFat =
+      (parseFloat(nutriValues.fatValuePerKg) / 1000) * calculatedWeight;
+    const calculatedCarbohydrate =
+      (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
+      calculatedWeight;
+    const calculatedCalories =
+      (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
+      calculatedWeight;
     return {
       calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
       foodName: selectedProduct,
