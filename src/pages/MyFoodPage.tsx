@@ -104,6 +104,7 @@ export default function MyFoodPage() {
     });
   const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [result, setResult] = useState<EstimateCalculationResult | null>(null);
+    console.log("result: ", result, "product: ", selectedProduct, "estimateFoodInputsValues :", estimateFoodInputsValues);
 
   // Handle change for single product
   const handleChangeSingleProduct = (event: SelectChangeEvent<string>) => {
