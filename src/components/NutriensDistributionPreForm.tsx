@@ -23,22 +23,22 @@ interface NutrientsDistributionPreFormProps {
   handleSelectChange: (e: SelectChangeEvent<number>) => void;
 }
 
+const activityLevel = {
+  1: 'Low',
+  2: 'Moderate',
+  3: 'High',
+};
+
+const height = Array.from({ length: 220 - 130 + 1 }, (_, index) => 130 + index);
+const weight = Array.from({ length: 140 - 40 + 1 }, (_, index) => 40 + index);
+const mealsPerDay = Array.from({ length: 5 - 1 + 1 }, (_, index) => 1 + index);
+
 export const NutrientsDistributionPreForm = ({
   userBodyDataInputs,
   handleSaveUserData,
   handleCheckBoxChange,
   handleSelectChange,
 }: NutrientsDistributionPreFormProps) => {
-  const height = Array.from(
-    { length: 220 - 130 + 1 },
-    (_, index) => 130 + index,
-  );
-  const weight = Array.from({ length: 140 - 40 + 1 }, (_, index) => 40 + index);
-  const mealsPerDay = Array.from(
-    { length: 5 - 1 + 1 },
-    (_, index) => 1 + index,
-  );
-
   return (
     <Card
       sx={{
@@ -202,7 +202,37 @@ export const NutrientsDistributionPreForm = ({
             ))}
           </Select>
         </FormControl>
-
+        <FormControl
+          sx={{
+            m: 1,
+            margin: '0',
+            width: {
+              xs: '100%',
+              sm: '100%',
+              md: '35%',
+              lg: '200px',
+            },
+          }}
+        >
+          <InputLabel id="user-activity-level">Activity level</InputLabel>
+          <Select
+            labelId="user-activity-level"
+            label="Activity level"
+            id="user-activity-level"
+            name="activityLevel"
+            value={userBodyDataInputs.activityLevel}
+            onChange={handleSelectChange}
+            input={<OutlinedInput label="Activity level" />}
+          >
+            {Object.entries(activityLevel).map(([key, value]) => {
+              return (
+                <MenuItem key={key} value={key}>
+                  {value}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
         <Button
           variant="contained"
           sx={{ width: 'fit-content', alignSelf: 'center' }}

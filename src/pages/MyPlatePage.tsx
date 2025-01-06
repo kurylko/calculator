@@ -147,6 +147,7 @@ export default function MyPlatePage() {
     weight: 60,
     height: 160,
     mealsPerDay: 2,
+    activityLevel: 1,
   });
 
   const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -10,4 +10,5 @@ export interface IUserBodyData {
   weight: number;
   height: number;
   mealsPerDay: number;
+  activityLevel: number;
 }
