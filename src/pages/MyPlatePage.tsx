@@ -290,7 +290,7 @@ export default function MyPlatePage() {
             md: 'row',
             lg: 'flex-row',
           },
-          gap: '10px',
+          gap: { xs: '20px', sm: '20px', md: '20px', lg: '30px' },
           justifyContent: {
             xs: 'space-around',
             sm: 'space-around',
