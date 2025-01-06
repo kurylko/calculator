@@ -48,7 +48,7 @@ export default function CalculationResultDisplay({
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={result.fat}
+          primary={result.fat ? Math.round(parseFloat(result.fat)) : 0}
           secondary="fat,g"
           sx={{
             width: 'fit-content',
@@ -65,7 +65,7 @@ export default function CalculationResultDisplay({
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={result.protein}
+          primary={result.protein ? Math.round(parseFloat(result.protein)) : 0}
           secondary="protein,g"
           sx={{
             width: 'fit-content',
@@ -82,7 +82,11 @@ export default function CalculationResultDisplay({
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={result.carbohydrate}
+          primary={
+            result.carbohydrate
+              ? Math.round(parseFloat(result.carbohydrate))
+              : 0
+          }
           secondary="carbohydrate,g"
           sx={{
             width: 'fit-content',
@@ -99,7 +103,9 @@ export default function CalculationResultDisplay({
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={result.calories}
+          primary={
+            result.calories ? Math.round(parseFloat(result.calories)) : 0
+          }
           secondary="calories, kcal"
           sx={{
             width: 'fit-content',
@@ -116,7 +122,7 @@ export default function CalculationResultDisplay({
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={result.weight}
+          primary={result.weight ? Math.round(parseFloat(result.weight)) : 0}
           secondary="weight, g"
           sx={{
             width: 'fit-content',

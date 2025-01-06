@@ -14,7 +14,7 @@ const useCurrentUser = () => {
   const handleGetUserData = () => dispatch(getCurrentUser());
 
   useEffect(() => {
-      handleGetUserData();
+    handleGetUserData();
   }, [uid]);
 
   return { currentUser, handleGetUserData, loading: isLoading, error };

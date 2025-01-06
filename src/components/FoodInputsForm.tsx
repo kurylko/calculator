@@ -1,14 +1,16 @@
 import React from 'react';
 import { Box, TextField } from '@mui/material';
-import {IFoodItem} from "../interfaces/FoodItem";
+import { IFoodItemUserInputs } from '../interfaces/FoodItem';
 
 export interface FoodInputsFormProps {
-  foodInputsValues: IFoodItem;
+  foodInputsValues: IFoodItemUserInputs;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const FoodInputsForm = ({ foodInputsValues, handleChange }: FoodInputsFormProps) => {
-
+export const FoodInputsForm = ({
+  foodInputsValues,
+  handleChange,
+}: FoodInputsFormProps) => {
   return (
     <Box
       sx={{

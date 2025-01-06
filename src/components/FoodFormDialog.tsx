@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { FoodInputsForm } from './FoodInputsForm';
-import { IFoodItem, IUserFoodItem } from '../interfaces/FoodItem';
+import { IFoodItemUserInputs, IUserFoodItem } from '../interfaces/FoodItem';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -33,7 +33,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 interface FoodFormDialogProps {
   openDialog: boolean;
   setOpenDialog: (value: boolean) => void;
-  foodInputsValues: IFoodItem;
+  foodInputsValues: IFoodItemUserInputs;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleEditProduct: (foodItem: IUserFoodItem) => Promise<void>;
 }

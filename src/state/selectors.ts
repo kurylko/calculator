@@ -15,6 +15,9 @@ export const selectFoodCollection = createSelector(
   (foodCollectionState) => foodCollectionState.data,
 );
 
-const calculationsCollectionState = (state: RootState) => state.calculationsCollection;
+const calculationsCollectionState = (state: RootState) =>
+  state.calculationsCollection;
 
 const plateState = (state: RootState) => state.plate;
+
+const userBodyDataState = (state: RootState) => state.userBodyData;
