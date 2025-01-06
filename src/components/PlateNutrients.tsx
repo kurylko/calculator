@@ -43,7 +43,7 @@ export default function PlateNutrients({
               {' '}
               Fat:{' '}
             </Typography>
-            <Typography variant="body2"> {fat} g</Typography>
+            <Typography variant="body2"> {Math.round(parseFloat(fat))} g</Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
             <Typography
@@ -53,7 +53,7 @@ export default function PlateNutrients({
               {' '}
               Protein:{' '}
             </Typography>
-            <Typography variant="body2">{protein} g</Typography>
+            <Typography variant="body2">{Math.round(parseFloat(protein))} g</Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
             <Typography
@@ -63,7 +63,7 @@ export default function PlateNutrients({
               {' '}
               Carbohydrate:
             </Typography>
-            <Typography variant="body2">{carbohydrate} g</Typography>
+            <Typography variant="body2">{Math.round(parseFloat(carbohydrate))} g</Typography>
           </Box>
           <Box
             sx={{
@@ -80,7 +80,7 @@ export default function PlateNutrients({
               {' '}
               Calories:
             </Typography>
-            <Typography variant="body2">{calories} kCal</Typography>
+            <Typography variant="body2">{Math.round(parseFloat(calories))} kCal</Typography>
           </Box>
           <Box
             sx={{
@@ -105,7 +105,7 @@ export default function PlateNutrients({
               variant="body2"
               sx={{ color: 'text.secondary', fontSize: 14 }}
             >
-              {weight} g
+                {Math.round(parseFloat(weight))} g
             </Typography>
           </Box>
         </Box>
