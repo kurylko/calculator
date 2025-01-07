@@ -152,7 +152,7 @@ export default function MyPlatePage() {
     weight: userBodyData ? userBodyData.weight: 60,
     height: userBodyData ? userBodyData.height : 160,
     mealsPerDay: userBodyData ? userBodyData.mealsPerDay : 2,
-    activityLevel: userBodyData ? userBodyData.activityLevel : 2,
+    activityLevel: userBodyData ? userBodyData?.activityLevel : 2,
   });
 
   const [openDialog, setOpenDialog] = React.useState(false);
