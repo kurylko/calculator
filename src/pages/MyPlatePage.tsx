@@ -145,13 +145,14 @@ export default function MyPlatePage() {
   };
 
   // User body data from a form for calculations
+  const { userBodyData } = useSelector((state: RootState) => state.userBodyData);
 
   const [userBodyDataInputs, setUserBodyDataInputs] = useState<IUserBodyData>({
-    gender: '',
-    weight: 60,
-    height: 160,
-    mealsPerDay: 2,
-    activityLevel: 2,
+    gender: userBodyData ? userBodyData.gender : '',
+    weight: userBodyData ? userBodyData.weight: 60,
+    height: userBodyData ? userBodyData.height : 160,
+    mealsPerDay: userBodyData ? userBodyData.mealsPerDay : 2,
+    activityLevel: userBodyData ? userBodyData.activityLevel : 2,
   });
 
   const [openDialog, setOpenDialog] = React.useState(false);

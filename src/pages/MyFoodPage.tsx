@@ -46,7 +46,6 @@ export default function MyFoodPage() {
   };
 
   // Dialog with a Form to edit the food item
-
   const [openDialog, setOpenDialog] = React.useState(false);
   const [foodInputsValues, setFoodInputsValues] = useState<IFoodItemUserInputs>(
     {

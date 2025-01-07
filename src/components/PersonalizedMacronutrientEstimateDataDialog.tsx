@@ -127,7 +127,7 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
                 gutterBottom
                 sx={{ color: 'text.secondary', fontSize: 14, paddingBottom: 2 }}
               >
-                Your calories per day:{' '}
+                Suggested calories per day:{' '}
                 {personalizedMacronutrientEstimateData?.personalizedCalories}{' '}
                 kCal
               </Typography>
@@ -135,7 +135,7 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
                   gutterBottom
                   sx={{ color: 'text.secondary', fontSize: 14,}}
               >
-                Your nutrients per day:
+                 Nutrients per day:
               </Typography>
               <Typography
                 gutterBottom
