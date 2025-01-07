@@ -16,7 +16,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
-interface NutrientsDistributionPreFormProps {
+interface UserBodyDataFormProps {
   userBodyDataInputs: IUserBodyData;
   handleSaveUserData: () => void;
   handleCheckBoxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -33,12 +33,12 @@ const height = Array.from({ length: 220 - 130 + 1 }, (_, index) => 130 + index);
 const weight = Array.from({ length: 140 - 40 + 1 }, (_, index) => 40 + index);
 const mealsPerDay = Array.from({ length: 5 - 1 + 1 }, (_, index) => 1 + index);
 
-export const NutrientsDistributionPreForm = ({
+export const UserBodyDataForm = ({
   userBodyDataInputs,
   handleSaveUserData,
   handleCheckBoxChange,
   handleSelectChange,
-}: NutrientsDistributionPreFormProps) => {
+}: UserBodyDataFormProps) => {
   return (
     <Card
       sx={{
@@ -57,7 +57,7 @@ export const NutrientsDistributionPreForm = ({
         }}
       >
         <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-          Calculation would be based on your data
+          Personalized calculation
         </Typography>
 
         <FormGroup
