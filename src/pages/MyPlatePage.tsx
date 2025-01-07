@@ -18,6 +18,10 @@ import { addToPlate, deleteFromPlate } from '../state/plateSlice';
 import { NutrientsDistributionPreForm } from '../components/NutriensDistributionPreForm';
 import { IUserBodyData } from '../interfaces/User';
 import { saveUserBodyData } from '../state/userBodyDataSlice';
+import {
+  PersonalizedMacronutrientEstimateData,
+  PersonalizedMacronutrientEstimateDataChart,
+} from '../components/PersonalizedMacronutrientEstimateDataChart';
 
 export type TotalPlateNutrients = {
   calories: string;
@@ -150,6 +154,8 @@ export default function MyPlatePage() {
     activityLevel: 2,
   });
 
+  const [showPersonalizedChart, setShowPersonalizedChart] = useState(false);
+
   const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.target;
     setUserBodyDataInputs((prev: IUserBodyData) => ({
@@ -169,7 +175,15 @@ export default function MyPlatePage() {
   const handleSaveUserData = () => {
     alert("Your data saved! Let's add food to your plate.");
     dispatch(saveUserBodyData({ userBodyData: userBodyDataInputs }));
+    setShowPersonalizedChart(true);
   };
+
+  // Counting personalized macronutrient distribution for a balanced diet
+
+  const [
+    personalizedMacronutrientEstimateData,
+    setPersonalizedMacronutrientEstimateData,
+  ] = useState<PersonalizedMacronutrientEstimateData | null>(null);
 
   // Counting standard macronutrient distribution for a balanced diet
 
@@ -270,6 +284,14 @@ export default function MyPlatePage() {
       <Box sx={{ width: '85%', maxWidth: 700 }}>
         <Typography variant="h3">LET'S COUNT A DISH</Typography>
       </Box>
+      {showPersonalizedChart && (
+        <PersonalizedMacronutrientEstimateDataChart
+          userBodyDataInputs={userBodyDataInputs}
+          personalizedMacronutrientEstimateData={
+            personalizedMacronutrientEstimateData
+          }
+        />
+      )}
       <Container
         sx={{
           height: {
