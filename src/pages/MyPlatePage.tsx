@@ -176,6 +176,7 @@ export default function MyPlatePage() {
     alert("Your data saved! Let's add food to your plate.");
     dispatch(saveUserBodyData({ userBodyData: userBodyDataInputs }));
     setShowPersonalizedChart(true);
+    totalCaloriesNeedsCalculation(userBodyDataInputs);
   };
 
   // Counting personalized macronutrient distribution for a balanced diet
@@ -184,6 +185,26 @@ export default function MyPlatePage() {
     personalizedMacronutrientEstimateData,
     setPersonalizedMacronutrientEstimateData,
   ] = useState<PersonalizedMacronutrientEstimateData | null>(null);
+
+  const totalCaloriesNeedsCalculation = (userBodyDataInputs: IUserBodyData) => {
+    if (!userBodyDataInputs.weight || !userBodyDataInputs.height) {
+      return;
+    }
+    const { weight, height, activityLevel } = userBodyDataInputs;
+    const baselineAge = 30;
+    const ageFactor = (userBodyDataInputs.gender === "Male") ? (5 - (5 * baselineAge)) : (-161 - (5 * baselineAge));
+    const basalMetabolicRate = (10 * weight) + (6.25 * height) + ageFactor;
+    const activityFactor = (activityLevel === 1) ? 1.2 : (activityLevel === 2) ? 1.55 : 1.9;
+    const totalDailyEnergyExpenditure = basalMetabolicRate * activityFactor;
+    setPersonalizedMacronutrientEstimateData({
+      personalizedFat: '',
+      personalizedProtein: '',
+      personalizedCarbohydrate: '',
+      personalizedCalories: totalDailyEnergyExpenditure.toString()
+    });
+
+    return personalizedMacronutrientEstimateData;
+  };
 
   // Counting standard macronutrient distribution for a balanced diet
 
