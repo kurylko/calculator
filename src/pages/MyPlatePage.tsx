@@ -192,15 +192,19 @@ export default function MyPlatePage() {
     }
     const { weight, height, activityLevel } = userBodyDataInputs;
     const baselineAge = 30;
-    const ageFactor = (userBodyDataInputs.gender === "Male") ? (5 - (5 * baselineAge)) : (-161 - (5 * baselineAge));
-    const basalMetabolicRate = (10 * weight) + (6.25 * height) + ageFactor;
-    const activityFactor = (activityLevel === 1) ? 1.2 : (activityLevel === 2) ? 1.55 : 1.9;
+    const ageFactor =
+      userBodyDataInputs.gender === 'male'
+        ? 5 - 5 * baselineAge
+        : -161 - 5 * baselineAge;
+    const basalMetabolicRate = 10 * weight + 6.25 * height + ageFactor;
+    const activityFactor =
+      activityLevel === 1 ? 1.2 : activityLevel === 2 ? 1.55 : 1.9;
     const totalDailyEnergyExpenditure = basalMetabolicRate * activityFactor;
     setPersonalizedMacronutrientEstimateData({
       personalizedFat: '',
       personalizedProtein: '',
       personalizedCarbohydrate: '',
-      personalizedCalories: totalDailyEnergyExpenditure.toString()
+      personalizedCalories: Math.round(totalDailyEnergyExpenditure).toString(),
     });
 
     return personalizedMacronutrientEstimateData;

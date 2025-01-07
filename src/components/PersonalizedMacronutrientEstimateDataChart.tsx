@@ -24,7 +24,7 @@ export const PersonalizedMacronutrientEstimateDataChart = ({
         gutterBottom
         sx={{ color: 'text.secondary', fontSize: 14, paddingBottom: 2 }}
     >
-      Estimate calories per Day: {personalizedMacronutrientEstimateData?.personalizedCalories} kcal
+      Your estimate calories per Day: {personalizedMacronutrientEstimateData?.personalizedCalories} kCal
     </Typography>
   </Box>
 };
