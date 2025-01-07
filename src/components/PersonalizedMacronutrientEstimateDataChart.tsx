@@ -26,5 +26,23 @@ export const PersonalizedMacronutrientEstimateDataChart = ({
     >
       Your estimate calories per Day: {personalizedMacronutrientEstimateData?.personalizedCalories} kCal
     </Typography>
+    <Typography
+        gutterBottom
+        sx={{ color: 'text.secondary', fontSize: 14 }}
+    >
+      Fat: {personalizedMacronutrientEstimateData?.personalizedFat} g
+    </Typography>
+    <Typography
+        gutterBottom
+        sx={{ color: 'text.secondary', fontSize: 14 }}
+    >
+      Protein: {personalizedMacronutrientEstimateData?.personalizedProtein} g
+    </Typography>
+    <Typography
+        gutterBottom
+        sx={{ color: 'text.secondary', fontSize: 14 }}
+    >
+      Carbs: {personalizedMacronutrientEstimateData?.personalizedCarbohydrate} g
+    </Typography>
   </Box>
 };

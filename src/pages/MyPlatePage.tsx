@@ -199,11 +199,16 @@ export default function MyPlatePage() {
     const basalMetabolicRate = 10 * weight + 6.25 * height + ageFactor;
     const activityFactor =
       activityLevel === 1 ? 1.2 : activityLevel === 2 ? 1.55 : 1.9;
+
     const totalDailyEnergyExpenditure = basalMetabolicRate * activityFactor;
+    const protein = totalDailyEnergyExpenditure * 0.3;
+    const fat = totalDailyEnergyExpenditure * 0.3;
+    const carbs = totalDailyEnergyExpenditure * 0.4;
+
     setPersonalizedMacronutrientEstimateData({
-      personalizedFat: '',
-      personalizedProtein: '',
-      personalizedCarbohydrate: '',
+      personalizedFat: Math.round(fat).toString(),
+      personalizedProtein: Math.round(protein).toString(),
+      personalizedCarbohydrate: Math.round(carbs).toString(),
       personalizedCalories: Math.round(totalDailyEnergyExpenditure).toString(),
     });
 
