@@ -15,9 +15,13 @@ import useFetchUserProducts from '../hooks/useFetchUserProducts';
 import { AppDispatch, RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToPlate, deleteFromPlate } from '../state/plateSlice';
-import { NutrientsDistributionPreForm } from '../components/NutriensDistributionPreForm';
+import { UserBodyDataForm } from '../components/UserBodyDataForm';
 import { IUserBodyData } from '../interfaces/User';
 import { saveUserBodyData } from '../state/userBodyDataSlice';
+import {
+  PersonalizedMacronutrientEstimateData,
+  PersonalizedMacronutrientEstimateDataDialog,
+} from '../components/PersonalizedMacronutrientEstimateDataDialog';
 
 export type TotalPlateNutrients = {
   calories: string;
@@ -147,7 +151,13 @@ export default function MyPlatePage() {
     weight: 60,
     height: 160,
     mealsPerDay: 2,
+    activityLevel: 2,
   });
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
 
   const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.target;
@@ -166,8 +176,52 @@ export default function MyPlatePage() {
   };
 
   const handleSaveUserData = () => {
-    alert("Your data saved! Let's add food to your plate.");
     dispatch(saveUserBodyData({ userBodyData: userBodyDataInputs }));
+    totalCaloriesAndNutrientsNeedsCalculation(userBodyDataInputs);
+    handleClickOpenDialog();
+  };
+
+  // Counting personalized macronutrient distribution for a balanced diet
+
+  const [
+    personalizedMacronutrientEstimateData,
+    setPersonalizedMacronutrientEstimateData,
+  ] = useState<PersonalizedMacronutrientEstimateData | null>(null);
+
+  const totalCaloriesAndNutrientsNeedsCalculation = (
+    userBodyDataInputs: IUserBodyData,
+  ) => {
+    if (!userBodyDataInputs.weight || !userBodyDataInputs.height) {
+      return;
+    }
+    const { weight, height, activityLevel } = userBodyDataInputs;
+    const baselineAge = 30;
+    const ageFactor =
+      userBodyDataInputs.gender === 'male'
+        ? 5 - 5 * baselineAge
+        : -161 - 5 * baselineAge;
+    const basalMetabolicRate = 10 * weight + 6.25 * height + ageFactor;
+    const activityFactor =
+      activityLevel === 1 ? 1.2 : activityLevel === 2 ? 1.55 : 1.9;
+
+    const totalDailyEnergyExpenditure = basalMetabolicRate * activityFactor;
+    // ToDo: calculation for different goals and activity levels
+    // Weight Maintenance: 40% carbs, 30% protein, 30% fat
+    // Weight Loss: 40% carbs, 35% protein, 25% fat
+    // Muscle Gain: 50% carbs, 25% protein, 25% fat
+    // Fat: 1 gram = 9 calories, Protein: 1 gram = 4 calories; Carbohydrates: 1 gram = 4 calories
+    const protein = (totalDailyEnergyExpenditure * 0.3) / 4;
+    const fat = (totalDailyEnergyExpenditure * 0.3) / 9;
+    const carbs = (totalDailyEnergyExpenditure * 0.4) / 4;
+
+    setPersonalizedMacronutrientEstimateData({
+      personalizedFat: Math.round(fat).toString(),
+      personalizedProtein: Math.round(protein).toString(),
+      personalizedCarbohydrate: Math.round(carbs).toString(),
+      personalizedCalories: Math.round(totalDailyEnergyExpenditure).toString(),
+    });
+
+    return personalizedMacronutrientEstimateData;
   };
 
   // Counting standard macronutrient distribution for a balanced diet
@@ -269,6 +323,14 @@ export default function MyPlatePage() {
       <Box sx={{ width: '85%', maxWidth: 700 }}>
         <Typography variant="h3">LET'S COUNT A DISH</Typography>
       </Box>
+      <PersonalizedMacronutrientEstimateDataDialog
+        userBodyDataInputs={userBodyDataInputs}
+        personalizedMacronutrientEstimateData={
+          personalizedMacronutrientEstimateData
+        }
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+      />
       <Container
         sx={{
           height: {
@@ -290,7 +352,7 @@ export default function MyPlatePage() {
             md: 'row',
             lg: 'flex-row',
           },
-          gap: '10px',
+          gap: { xs: '20px', sm: '20px', md: '20px', lg: '30px' },
           justifyContent: {
             xs: 'space-around',
             sm: 'space-around',
@@ -303,7 +365,7 @@ export default function MyPlatePage() {
         }}
       >
         {!plateCalculationRate?.carbPercentage ? (
-          <NutrientsDistributionPreForm
+          <UserBodyDataForm
             userBodyDataInputs={userBodyDataInputs}
             handleCheckBoxChange={handleCheckBoxChange}
             handleSaveUserData={handleSaveUserData}

@@ -13,6 +13,7 @@ const initialState: UserBodyDataState = {
     weight: 60,
     height: 160,
     mealsPerDay: 2,
+    activityLevel: 1,
   },
   isLoading: false,
   error: null,
