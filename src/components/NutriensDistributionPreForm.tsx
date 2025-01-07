@@ -43,6 +43,7 @@ export const NutrientsDistributionPreForm = ({
     <Card
       sx={{
         minWidth: 275,
+        minHeight: '100%',
         width: { xs: '90%', sm: '80%', md: '60%', lg: '60%' },
       }}
     >
@@ -102,21 +103,16 @@ export const NutrientsDistributionPreForm = ({
         <Box
           sx={{
             display: 'flex',
-            width: '100%',
-            gap: '8px',
-            justifyContent: 'center',
+            width: '90%',
+            gap: '10px',
+            justifyContent: 'space-between',
           }}
         >
           <FormControl
             sx={{
               m: 1,
               margin: '0',
-              width: {
-                xs: '100%',
-                sm: '100%',
-                md: '35%',
-                lg: '100px',
-              },
+              width: '100%',
             }}
           >
             <InputLabel id="user-weight" required>
@@ -143,12 +139,7 @@ export const NutrientsDistributionPreForm = ({
             sx={{
               m: 1,
               margin: '0',
-              width: {
-                xs: '100%',
-                sm: '100%',
-                md: '35%',
-                lg: '100px',
-              },
+              width: '100%',
             }}
           >
             <InputLabel id="user-height" required>
@@ -171,68 +162,68 @@ export const NutrientsDistributionPreForm = ({
             </Select>
           </FormControl>
         </Box>
-        <FormControl
+
+        <Box
           sx={{
-            m: 1,
-            margin: '0',
-            width: {
-              xs: '100%',
-              sm: '100%',
-              md: '35%',
-              lg: '200px',
-            },
+            display: 'flex',
+            width: '90%',
+            gap: '10px',
+            justifyContent: 'space-between',
           }}
         >
-          <InputLabel id="user-meals-per-day" required>
-            Meals per Day
-          </InputLabel>
-          <Select
-            labelId="user-meals-per-day"
-            label="Meals per Day"
-            id="user-meals-per-day"
-            name="mealsPerDay"
-            value={userBodyDataInputs.mealsPerDay}
-            onChange={handleSelectChange}
-            input={<OutlinedInput label="Meals per day" />}
+          <FormControl
+            sx={{
+              m: 1,
+              margin: '0',
+              width: '100%',
+            }}
           >
-            {mealsPerDay.map((num: number) => (
-              <MenuItem key={num} value={num}>
-                {num} Meals
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl
-          sx={{
-            m: 1,
-            margin: '0',
-            width: {
-              xs: '100%',
-              sm: '100%',
-              md: '35%',
-              lg: '200px',
-            },
-          }}
-        >
-          <InputLabel id="user-activity-level">Activity level</InputLabel>
-          <Select
-            labelId="user-activity-level"
-            label="Activity level"
-            id="user-activity-level"
-            name="activityLevel"
-            value={userBodyDataInputs.activityLevel}
-            onChange={handleSelectChange}
-            input={<OutlinedInput label="Activity level" />}
-          >
-            {Object.entries(activityLevel).map(([key, value]) => {
-              return (
-                <MenuItem key={key} value={key}>
-                  {value}
+            <InputLabel id="user-meals-per-day" required>
+              Meals per Day
+            </InputLabel>
+            <Select
+              labelId="user-meals-per-day"
+              label="Meals per Day"
+              id="user-meals-per-day"
+              name="mealsPerDay"
+              value={userBodyDataInputs.mealsPerDay}
+              onChange={handleSelectChange}
+              input={<OutlinedInput label="Meals per day" />}
+            >
+              {mealsPerDay.map((num: number) => (
+                <MenuItem key={num} value={num}>
+                  {num} Meals
                 </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl
+            sx={{
+              m: 1,
+              margin: '0',
+              width: '100%',
+            }}
+          >
+            <InputLabel id="user-activity-level">Activity</InputLabel>
+            <Select
+              labelId="user-activity-level"
+              label="Activity level"
+              id="user-activity-level"
+              name="activityLevel"
+              value={userBodyDataInputs.activityLevel}
+              onChange={handleSelectChange}
+              input={<OutlinedInput label="Activity level" />}
+            >
+              {Object.entries(activityLevel).map(([key, value]) => {
+                return (
+                  <MenuItem key={key} value={key}>
+                    {value}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Box>
         <Button
           variant="contained"
           sx={{ width: 'fit-content', alignSelf: 'center' }}
