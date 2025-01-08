@@ -10,7 +10,6 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { Box, Typography, useTheme } from '@mui/material';
 import { PieChart } from '@mui/x-charts';
-import { PieSeriesType } from '@mui/x-charts';
 
 export interface PersonalizedMacronutrientEstimateData {
   personalizedFat: string;
