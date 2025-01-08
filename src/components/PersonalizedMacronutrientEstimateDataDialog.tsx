@@ -1,7 +1,5 @@
 import React from 'react';
 import { IUserBodyData } from '../interfaces/User';
-import Typography from '@mui/material/Typography';
-import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -10,6 +8,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { Box, Typography, useTheme } from '@mui/material';
+import { PieChart } from '@mui/x-charts';
 
 export interface PersonalizedMacronutrientEstimateData {
   personalizedFat: string;
@@ -54,6 +54,18 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
   const handleClose = () => {
     setOpenDialog(false);
   };
+
+  const carbs = personalizedMacronutrientEstimateData ? parseFloat(personalizedMacronutrientEstimateData.personalizedCarbohydrate) : 0;
+  const fat = personalizedMacronutrientEstimateData ? parseFloat(personalizedMacronutrientEstimateData.personalizedFat) : 0;
+  const protein = personalizedMacronutrientEstimateData ? parseFloat(personalizedMacronutrientEstimateData.personalizedProtein) : 0;
+
+  const data = [
+    { id: 'Fat', value: fat, color: 'red' },
+    { id: 'Protein', value: protein, color: 'blue' },
+    { id: 'Carbs', value: carbs, color: 'green' },
+  ];
+
+  const theme = useTheme();
 
   return (
     <React.Fragment>
@@ -127,15 +139,15 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
                 gutterBottom
                 sx={{ color: 'text.secondary', fontSize: 14, paddingBottom: 2 }}
               >
-                Your calories per day:{' '}
+                Suggested calories per day:{' '}
                 {personalizedMacronutrientEstimateData?.personalizedCalories}{' '}
                 kCal
               </Typography>
               <Typography
-                  gutterBottom
-                  sx={{ color: 'text.secondary', fontSize: 14,}}
+                gutterBottom
+                sx={{ color: 'text.secondary', fontSize: 14 }}
               >
-                Your nutrients per day:
+                Nutrients per day:
               </Typography>
               <Typography
                 gutterBottom
@@ -160,6 +172,43 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
                 }{' '}
                 g
               </Typography>
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              alignSelf="flex-end"
+              justifyContent="center"
+            >
+              <Typography variant="h5" gutterBottom>
+                Macronutrient Breakdown
+              </Typography>
+              <PieChart
+                width={400}
+                height={400}
+                series={[
+                  {
+                    data: data.map((item) => ({
+                      id: item.id,
+                      value: item.value,
+                      label: item.id,
+                      color: item.color,
+                    })),
+                    outerRadius: 150,
+                    innerRadius: 60,
+                    highlightScope: {
+                      fade: 'global',
+                      highlight: 'item',
+                    },
+                  },
+                ]}
+                sx={{
+                  '.MuiChartsHighlight': {
+                    stroke: theme.palette.primary.main,
+                    strokeWidth: 3,
+                  },
+                }}
+              />
             </Box>
           </Box>
         </DialogContent>
