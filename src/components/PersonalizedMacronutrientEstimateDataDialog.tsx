@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { Box, Typography, useTheme } from '@mui/material';
-import { PieChart } from '@mui/x-charts';
+import { PieChart } from '@mui/x-charts/PieChart';
 
 export interface PersonalizedMacronutrientEstimateData {
   personalizedFat: string;
@@ -33,14 +33,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
   '& .MuiPaper-root': {
-    width: '90%',
-    maxWidth: '90%',
+    width: '80%',
+    maxWidth: '80%',
     margin: 0,
     [theme.breakpoints.up('md')]: {
       maxWidth: '80%',
     },
     [theme.breakpoints.up('lg')]: {
-      maxWidth: '70%',
+      maxWidth: '55%',
     },
   },
 }));
@@ -55,17 +55,24 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
     setOpenDialog(false);
   };
 
-  const carbs = personalizedMacronutrientEstimateData ? parseFloat(personalizedMacronutrientEstimateData.personalizedCarbohydrate) : 0;
-  const fat = personalizedMacronutrientEstimateData ? parseFloat(personalizedMacronutrientEstimateData.personalizedFat) : 0;
-  const protein = personalizedMacronutrientEstimateData ? parseFloat(personalizedMacronutrientEstimateData.personalizedProtein) : 0;
+  const carbs = personalizedMacronutrientEstimateData
+    ? parseFloat(personalizedMacronutrientEstimateData.personalizedCarbohydrate)
+    : 0;
+  const fat = personalizedMacronutrientEstimateData
+    ? parseFloat(personalizedMacronutrientEstimateData.personalizedFat)
+    : 0;
+  const protein = personalizedMacronutrientEstimateData
+    ? parseFloat(personalizedMacronutrientEstimateData.personalizedProtein)
+    : 0;
 
   const data = [
-    { id: 'Fat', value: fat, color: 'red' },
-    { id: 'Protein', value: protein, color: 'blue' },
-    { id: 'Carbs', value: carbs, color: 'green' },
+    { id: 'Fat', value: fat, label: 'Fat', color: '#ef5350' },
+    { id: 'Protein', value: protein, label: 'Protein', color: '#1976d2' },
+    { id: 'Carbs', value: carbs, label: 'Carbs', color: '#2e7d32' },
   ];
 
   const theme = useTheme();
+  const valueFormatter = ({ value }: { value: number }) => `${value} g`;
 
   return (
     <React.Fragment>
@@ -92,7 +99,19 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Box sx={{ display: 'flex' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: {
+                xs: 'column',
+                sm: 'column',
+                md: 'row',
+                lg: 'row',
+              },
+              justifyContent: 'space-around',
+              gap: 2,
+            }}
+          >
             <Box
               sx={{
                 paddingRight: {
@@ -105,31 +124,31 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
             >
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14, paddingBottom: 2 }}
+                sx={{ color: 'text.primary', fontSize: 14, paddingBottom: 2 }}
               >
                 Your data:
               </Typography>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
                 Weight: {userBodyDataInputs.weight} kg
               </Typography>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
                 Height: {userBodyDataInputs.height} cm
               </Typography>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
                 Meals per day: {userBodyDataInputs.activityLevel} meals
               </Typography>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
                 Activity: {userBodyDataInputs.activityLevel} level
               </Typography>
@@ -137,34 +156,45 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
             <Box>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14, paddingBottom: 2 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
-                Suggested calories per day:{' '}
+                {' '}
+                Suggested calories per day:
+              </Typography>
+              <Typography
+                gutterBottom
+                sx={{
+                  color: 'text.primary',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  marginBottom: 2,
+                }}
+              >
                 {personalizedMacronutrientEstimateData?.personalizedCalories}{' '}
                 kCal
               </Typography>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
                 Nutrients per day:
               </Typography>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
                 Fat: {personalizedMacronutrientEstimateData?.personalizedFat} g
               </Typography>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
                 Protein:{' '}
                 {personalizedMacronutrientEstimateData?.personalizedProtein} g
               </Typography>
               <Typography
                 gutterBottom
-                sx={{ color: 'text.secondary', fontSize: 14 }}
+                sx={{ color: 'text.primary', fontSize: 14 }}
               >
                 Carbs:{' '}
                 {
@@ -178,34 +208,64 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
               flexDirection="column"
               alignItems="center"
               alignSelf="flex-end"
-              justifyContent="center"
+              sx={{
+                justifyContent: {
+                  xs: 'flex-start',
+                  sm: 'flex-start',
+                  md: 'flex-start',
+                  lg: 'flex-end',
+                },
+                paddingLeft: {
+                  xs: '20px',
+                  sm: '0',
+                  md: '0',
+                  lg: '0',
+                },
+              }}
             >
-              <Typography variant="h5" gutterBottom>
+              <Typography
+                variant="h5"
+                gutterBottom
+                sx={{ marginBottom: '20px' }}
+              >
                 Macronutrient Breakdown
               </Typography>
               <PieChart
                 width={400}
-                height={400}
+                height={300}
                 series={[
                   {
                     data: data.map((item) => ({
                       id: item.id,
                       value: item.value,
-                      label: item.id,
+                      label: item.label,
                       color: item.color,
                     })),
-                    outerRadius: 150,
-                    innerRadius: 60,
+                    outerRadius: 100,
+                    innerRadius: 37,
+                    cx: 162,
+                    cy: 100,
                     highlightScope: {
                       fade: 'global',
                       highlight: 'item',
                     },
+                    valueFormatter: valueFormatter,
                   },
                 ]}
+                slotProps={{
+                  legend: {
+                    position: { horizontal: 'right', vertical: 'middle' },
+                    padding: 5,
+                    labelStyle: { fontSize: 14 },
+                  },
+                }}
                 sx={{
                   '.MuiChartsHighlight': {
                     stroke: theme.palette.primary.main,
                     strokeWidth: 3,
+                  },
+                  '.MuiChartsSurface-root': {
+                    height: '100%',
                   },
                 }}
               />
