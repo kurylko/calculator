@@ -234,17 +234,20 @@ export default function MyPlatePage() {
     const fatInGrams = parseFloat(plate.fat);
     const proteinInGrams = parseFloat(plate.protein);
 
+    console.log('grams', fatInGrams, proteinInGrams, carbsInGrams, totalCalories);
+
     // Calculate calories from each macronutrient
     const carbCalories = carbsInGrams * 4;
     const fatCalories = fatInGrams * 9;
     const proteinCalories = proteinInGrams * 4;
 
+    console.log('cals', fatCalories, proteinCalories, carbCalories, totalCalories);
+
     // Calculate the percentage of each macronutrient
-    const carbPercentage = Math.round((carbCalories / totalCalories) * 100);
-    const fatPercentage = Math.round((fatCalories / totalCalories) * 100);
+    const carbPercentage = Math.round((carbCalories * 100 ) / totalCalories);
+    const fatPercentage = Math.round((fatCalories * 100 )  / totalCalories);
     const proteinPercentage = Math.round(
-      (proteinCalories / totalCalories) * 100,
-    );
+      (proteinCalories * 100 ) / totalCalories);
 
     // Determine if each macronutrient is within the healthy range
     const isCarbHealthy = carbPercentage >= 45 && carbPercentage <= 65;
