@@ -156,8 +156,7 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
                 gutterBottom
                 sx={{ color: 'text.primary', fontSize: 14 }}
               >
-                Activity: {activityLevel[userBodyDataInputs.activityLevel]}{' '}
-                level
+                Activity: {activityLevel[userBodyDataInputs.activityLevel]}
               </Typography>
             </Box>
             <Box>
