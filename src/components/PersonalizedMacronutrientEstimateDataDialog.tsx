@@ -45,6 +45,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+const activityLevel: Record<number, string> = {
+  1: 'Low',
+  2: 'Moderate',
+  3: 'High',
+};
+
 export const PersonalizedMacronutrientEstimateDataDialog = ({
   userBodyDataInputs,
   personalizedMacronutrientEstimateData,
@@ -144,13 +150,14 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
                 gutterBottom
                 sx={{ color: 'text.primary', fontSize: 14 }}
               >
-                Meals per day: {userBodyDataInputs.activityLevel} meals
+                Meals per day: {userBodyDataInputs.mealsPerDay} meals
               </Typography>
               <Typography
                 gutterBottom
                 sx={{ color: 'text.primary', fontSize: 14 }}
               >
-                Activity: {userBodyDataInputs.activityLevel} level
+                Activity: {activityLevel[userBodyDataInputs.activityLevel]}{' '}
+                level
               </Typography>
             </Box>
             <Box>
