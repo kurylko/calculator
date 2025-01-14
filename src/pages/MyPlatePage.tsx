@@ -185,7 +185,7 @@ export default function MyPlatePage() {
   };
 
   // Counting personalized macronutrient distribution for a balanced diet
-
+  // ToDo: add to persist personalizedMacronutrientEstimateData
   const [
     personalizedMacronutrientEstimateData,
     setPersonalizedMacronutrientEstimateData,
