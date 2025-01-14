@@ -59,8 +59,7 @@ export const getCalculateSingleEstimateProduct = ({
       (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
       calculatedWeight;
     const calculatedCalories =
-      (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
-      calculatedWeight;
+      (parseFloat(nutriValues.caloriesValuePerKg) / 1000) * calculatedWeight;
     return {
       calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
       foodName: selectedProduct,
@@ -82,8 +81,7 @@ export const getCalculateSingleEstimateProduct = ({
       (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
       calculatedWeight;
     const calculatedCalories =
-      (parseFloat(nutriValues.carbohydrateValuePerKg) / 1000) *
-      calculatedWeight;
+      (parseFloat(nutriValues.caloriesValuePerKg) / 1000) * calculatedWeight;
     return {
       calculationId: (Math.floor(Math.random() * 1000) + 1).toString(),
       foodName: selectedProduct,

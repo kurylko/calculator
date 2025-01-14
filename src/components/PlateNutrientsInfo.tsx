@@ -4,14 +4,23 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { TotalPlateNutrients } from '../pages/MyPlatePage';
+import { Button } from '@mui/material';
+import { IUserBodyData } from '../interfaces/User';
+import { PersonalizedMacronutrientEstimateData } from './PersonalizedMacronutrientEstimateDataDialog';
 
-export default function PlateNutrients({
-  calories,
-  carbohydrate,
-  fat,
-  protein,
-  weight,
-}: TotalPlateNutrients) {
+interface PlateNutrientsInfoProps {
+  plateTotalToDisplay: TotalPlateNutrients;
+  handleClickOpenDialog: () => void;
+  userBodyDataInputs: IUserBodyData;
+  personalizedMacronutrientEstimateData: PersonalizedMacronutrientEstimateData | null;
+}
+
+export const PlateNutrientsInfo: React.FC<PlateNutrientsInfoProps> = ({
+  plateTotalToDisplay: { calories, carbohydrate, fat, protein, weight },
+  handleClickOpenDialog,
+  userBodyDataInputs,
+  personalizedMacronutrientEstimateData,
+}) => {
   return (
     <Card
       sx={{
@@ -117,8 +126,17 @@ export default function PlateNutrients({
               {Math.round(parseFloat(weight))} g
             </Typography>
           </Box>
+          {personalizedMacronutrientEstimateData && (
+            <Button
+              variant="outlined"
+              sx={{ width: 'fit-content', marginTop: '20px' }}
+              onClick={handleClickOpenDialog}
+            >
+              See my recommendations
+            </Button>
+          )}
         </Box>
       </CardContent>
     </Card>
   );
-}
+};
