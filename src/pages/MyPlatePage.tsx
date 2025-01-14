@@ -8,7 +8,7 @@ import { EstimateUserFoodInputsForm } from '../components/EstimateUserFoodInputs
 import { getCalculateSingleEstimateProduct } from '../utils/getCalculateSingleEstimateProduct';
 import { EstimateCalculationResult } from '../interfaces/EstimateCalculationResult';
 import CalculationResultDisplay from '../components/CalculationResultDisplay';
-import PlateNutrients from '../components/PlateNutrients';
+import { PlateNutrientsInfo } from '../components/PlateNutrientsInfo';
 import { CalculationsTable } from '../components/CalculationsTable';
 import MacronutrientChart from '../components/MacronutrientChart';
 import useFetchUserProducts from '../hooks/useFetchUserProducts';
@@ -145,11 +145,13 @@ export default function MyPlatePage() {
   };
 
   // User body data from a form for calculations
-  const { userBodyData } = useSelector((state: RootState) => state.userBodyData);
+  const { userBodyData } = useSelector(
+    (state: RootState) => state.userBodyData,
+  );
 
   const [userBodyDataInputs, setUserBodyDataInputs] = useState<IUserBodyData>({
     gender: userBodyData ? userBodyData.gender : '',
-    weight: userBodyData ? userBodyData.weight: 60,
+    weight: userBodyData ? userBodyData.weight : 60,
     height: userBodyData ? userBodyData.height : 160,
     mealsPerDay: userBodyData ? userBodyData.mealsPerDay : 2,
     activityLevel: userBodyData ? userBodyData?.activityLevel : 2,
@@ -234,20 +236,17 @@ export default function MyPlatePage() {
     const fatInGrams = parseFloat(plate.fat);
     const proteinInGrams = parseFloat(plate.protein);
 
-    console.log('grams', fatInGrams, proteinInGrams, carbsInGrams, totalCalories);
-
     // Calculate calories from each macronutrient
     const carbCalories = carbsInGrams * 4;
     const fatCalories = fatInGrams * 9;
     const proteinCalories = proteinInGrams * 4;
 
-    console.log('cals', fatCalories, proteinCalories, carbCalories, totalCalories);
-
     // Calculate the percentage of each macronutrient
-    const carbPercentage = Math.round((carbCalories * 100 ) / totalCalories);
-    const fatPercentage = Math.round((fatCalories * 100 )  / totalCalories);
+    const carbPercentage = Math.round((carbCalories * 100) / totalCalories);
+    const fatPercentage = Math.round((fatCalories * 100) / totalCalories);
     const proteinPercentage = Math.round(
-      (proteinCalories * 100 ) / totalCalories);
+      (proteinCalories * 100) / totalCalories,
+    );
 
     // Determine if each macronutrient is within the healthy range
     const isCarbHealthy = carbPercentage >= 45 && carbPercentage <= 65;
@@ -308,11 +307,6 @@ export default function MyPlatePage() {
     if (!plateTotalToDisplay) return null;
     return countHealthyPlate(plateTotalToDisplay);
   }, [plateTotalToDisplay]);
-
-  console.log(
-    'plateCalculationRate',
-    plateCalculationRate ? plateCalculationRate : 'no data',
-  );
 
   return (
     <Box
@@ -378,7 +372,12 @@ export default function MyPlatePage() {
         ) : (
           <MacronutrientChart userShares={plateCalculationRate} />
         )}
-        <PlateNutrients {...plateTotalToDisplay} />
+        <PlateNutrientsInfo
+          plateTotalToDisplay={plateTotalToDisplay}
+          handleClickOpenDialog={handleClickOpenDialog}
+          userBodyDataInputs={userBodyDataInputs}
+          personalizedMacronutrientEstimateData={personalizedMacronutrientEstimateData}
+        />
       </Container>
       <Box
         sx={{
