@@ -230,17 +230,17 @@ export default function MyPlatePage() {
 
   // Counting standard macronutrient distribution for a balanced diet
   function countHealthyPlate(plate: TotalPlateNutrients) {
-    const calories = parseFloat(plate.calories) || 0;
+    //const calories = parseFloat(plate.calories) || 0;
     const carbs = parseFloat(plate.carbohydrate) || 0;
     const fat = parseFloat(plate.fat) || 0;
     const protein = parseFloat(plate.protein) || 0;
-    const weight = parseFloat(plate.weight) || 1;
+  //  const weight = parseFloat(plate.weight) || 1;
 
     // per kg (optional)
-    const carbsPerKg = (carbs / weight) * 1000;
-    const fatPerKg = (fat / weight) * 1000;
-    const proteinPerKg = (protein / weight) * 1000;
-    const caloriesPerKg = (calories / weight) * 1000;
+    // const carbsPerKg = (carbs / weight) * 1000;
+    //  const fatPerKg = (fat / weight) * 1000;
+    // const proteinPerKg = (protein / weight) * 1000;
+    // const caloriesPerKg = (calories / weight) * 1000;
 
     // macro calories
     const carbCalories = carbs * 4;
