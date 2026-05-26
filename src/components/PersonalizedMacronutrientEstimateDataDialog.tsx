@@ -71,7 +71,7 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
     ? parseFloat(personalizedMacronutrientEstimateData.personalizedProtein)
     : 0;
 
-  const data = [
+  const nutrientsPerDay = [
     { id: 'Fat', value: fat, label: 'Fat', color: '#ef5350' },
     { id: 'Protein', value: protein, label: 'Protein', color: '#1976d2' },
     { id: 'Carbs', value: carbs, label: 'Carbs', color: '#2e7d32' },
@@ -90,7 +90,7 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
         fullWidth
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Your data saved! Let's add food to your plate.
+          Your data saved! Let's add some food to your plate.
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -241,7 +241,7 @@ export const PersonalizedMacronutrientEstimateDataDialog = ({
                 height={300}
                 series={[
                   {
-                    data: data.map((item) => ({
+                    data: nutrientsPerDay.map((item) => ({
                       id: item.id,
                       value: item.value,
                       label: item.label,
