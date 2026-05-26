@@ -51,7 +51,7 @@ export default function MyPlatePage() {
   const productNames = data.map((item: IFoodItem) => item.foodName);
   const [selectedProduct, setSelectedProduct] = useState<string>('');
 
-  const handleChangeSingleProduct = (event: SelectChangeEvent<string>) => {
+  const handleChangeSingleProduct = (event: SelectChangeEvent) => {
     const value = event.target.value;
     setSelectedProduct(value);
   };
@@ -130,6 +130,7 @@ export default function MyPlatePage() {
     if (!result) {
       return;
     }
+
     dispatch(addToPlate({ result }));
     setResult(null);
   };
@@ -228,79 +229,57 @@ export default function MyPlatePage() {
   };
 
   // Counting standard macronutrient distribution for a balanced diet
-
   function countHealthyPlate(plate: TotalPlateNutrients) {
-    // Convert nutrient values from strings to numbers
-    const totalCalories = parseFloat(plate.calories);
-    const carbsInGrams = parseFloat(plate.carbohydrate);
-    const fatInGrams = parseFloat(plate.fat);
-    const proteinInGrams = parseFloat(plate.protein);
+    const calories = parseFloat(plate.calories) || 0;
+    const carbs = parseFloat(plate.carbohydrate) || 0;
+    const fat = parseFloat(plate.fat) || 0;
+    const protein = parseFloat(plate.protein) || 0;
+    const weight = parseFloat(plate.weight) || 1;
 
-    // Calculate calories from each macronutrient
-    const carbCalories = carbsInGrams * 4;
-    const fatCalories = fatInGrams * 9;
-    const proteinCalories = proteinInGrams * 4;
+    // per kg (optional)
+    const carbsPerKg = (carbs / weight) * 1000;
+    const fatPerKg = (fat / weight) * 1000;
+    const proteinPerKg = (protein / weight) * 1000;
+    const caloriesPerKg = (calories / weight) * 1000;
 
-    // Calculate the percentage of each macronutrient
-    const carbPercentage = Math.round((carbCalories * 100) / totalCalories);
-    const fatPercentage = Math.round((fatCalories * 100) / totalCalories);
-    const proteinPercentage = Math.round(
-      (proteinCalories * 100) / totalCalories,
-    );
+    // macro calories
+    const carbCalories = carbs * 4;
+    const fatCalories = fat * 9;
+    const proteinCalories = protein * 4;
 
-    // Determine if each macronutrient is within the healthy range
-    const isCarbHealthy = carbPercentage >= 45 && carbPercentage <= 65;
-    const isFatHealthy = fatPercentage >= 20 && fatPercentage <= 35;
-    const isProteinHealthy = proteinPercentage >= 10 && proteinPercentage <= 35;
+    const totalCalories = carbCalories + fatCalories + proteinCalories;
+    //  use calculated total
+    const safeTotal = totalCalories || 1;
 
-    function fatHealthyRate() {
-      let fatRate = '';
-      if (fatPercentage < 20) {
-        fatRate = 'too low';
-      } else if (fatPercentage > 35) {
-        fatRate = 'too high';
-      } else {
-        fatRate = 'good';
-      }
-      return fatRate;
-    }
+    const carbPercentage = Math.round((carbCalories * 100) / safeTotal);
+    const fatPercentage = Math.round((fatCalories * 100) / safeTotal);
+    const proteinPercentage = Math.round((proteinCalories * 100) / safeTotal);
 
-    function proteinHealthyRate() {
-      let proteinRate = '';
-      if (proteinPercentage < 10) {
-        proteinRate = 'too low';
-      } else if (proteinPercentage > 35) {
-        proteinRate = 'too high';
-      } else {
-        proteinRate = 'good';
-      }
-      return proteinRate;
-    }
-
-    function carbHealthyRate() {
-      let carbRate = '';
-      if (carbPercentage < 45) {
-        carbRate = 'too low';
-      } else if (carbPercentage > 65) {
-        carbRate = 'too high';
-      } else {
-        carbRate = 'good';
-      }
-      return carbRate;
-    }
-
-    // Return the results
-    const plateCalculationRate: PlateMacroNutrientsRate = {
-      fatHealthyRate: fatHealthyRate(),
-      proteinHealthyRate: proteinHealthyRate(),
-      carbHealthyRate: carbHealthyRate(),
-      fatPercentage: fatPercentage,
-      carbPercentage: carbPercentage,
-      proteinPercentage: proteinPercentage,
-      isPlateHealthy: isCarbHealthy && isFatHealthy && isProteinHealthy,
+    const rate = (value: number, low: number, high: number) => {
+      if (value < low) return "too low";
+      if (value > high) return "too high";
+      return "good";
     };
 
-    return plateCalculationRate;
+    const result: PlateMacroNutrientsRate = {
+      fatHealthyRate: rate(fatPercentage, 20, 35),
+      proteinHealthyRate: rate(proteinPercentage, 10, 35),
+      carbHealthyRate: rate(carbPercentage, 45, 65),
+
+      fatPercentage,
+      carbPercentage,
+      proteinPercentage,
+
+      isPlateHealthy:
+          carbPercentage >= 45 &&
+          carbPercentage <= 65 &&
+          fatPercentage >= 20 &&
+          fatPercentage <= 35 &&
+          proteinPercentage >= 10 &&
+          proteinPercentage <= 35,
+    };
+
+    return result;
   }
 
   const plateCalculationRate: PlateMacroNutrientsRate | null = useMemo(() => {
